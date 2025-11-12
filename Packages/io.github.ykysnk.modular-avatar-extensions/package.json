@@ -1,11 +1,13 @@
 {
   "name": "io.github.ykysnk.modular-avatar-extensions",
   "displayName": "Modular Avatar Extensions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extensions for ModularAvatar",
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.avatars": "3.9.0"
+    "com.vrchat.avatars": ">=3.9.0",
+    "io.github.ykysnk.auto-hook": ">=0.0.1",
+    "io.github.ykysnk.utils": ">=0.0.1"
   },
   "author": {
     "name": "yukiyosanako / \u3086\u304d\u3088\u3055\u306a\u3053",
