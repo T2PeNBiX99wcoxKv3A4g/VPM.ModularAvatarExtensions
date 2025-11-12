@@ -34,9 +34,9 @@ public abstract class RootTransformPathEditorBase<T> : UnityEditor.Editor where 
         EditorGUILayout.PropertyField(Reference, Utils.Label("Root Transform"));
         OnInspectorGUIDraw();
         EditorGUILayout.HelpBox(
-            string.IsNullOrEmpty(component?.reference?.referencePath)
+            string.IsNullOrEmpty(component.reference?.referencePath)
                 ? $"Input any object want to become {RootTransformType} root transform"
-                : $"Object of '{component?.reference?.referencePath}' will become {RootTransformType} root transform",
+                : $"Object of '{component.reference?.referencePath}' will become {RootTransformType} root transform",
             MessageType.Info,
             true);
 

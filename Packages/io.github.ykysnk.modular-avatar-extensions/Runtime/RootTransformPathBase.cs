@@ -1,4 +1,3 @@
-using HarmonyLib;
 using io.github.ykysnk.autohook;
 using io.github.ykysnk.utils;
 using JetBrains.Annotations;
@@ -12,13 +11,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [Autohook] public T? component;
         public AvatarObjectReference? reference;
         [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
-
-        [PublicAPI]
-        protected Transform SetRootTransform
-        {
-            get => Traverse.Create(component).Field<Transform>(RootTransformFieldName).Value;
-            set => Traverse.Create(component).Field<Transform>(RootTransformFieldName).Value = value;
-        }
 
         protected virtual void OnValidate()
         {
@@ -41,13 +33,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected virtual void SetPath()
         {
+#if UNITY_EDITOR
             var isInPrefab = Utils.IsInPrefab();
             if (isInPrefab || reference == null) return;
             var obj = reference.Get(this);
             if (!obj) return;
             var getTransform = obj.transform;
-            if (!component || SetRootTransform == getTransform) return;
-            SetRootTransform = getTransform;
+            if (!component) return;
+            var proxy = new RootTransformProxy(component!, RootTransformFieldName);
+            if (proxy.rootTransform == getTransform) return;
+            proxy.rootTransform = getTransform;
+#endif
         }
 
         public override void OnInspectorGUI()

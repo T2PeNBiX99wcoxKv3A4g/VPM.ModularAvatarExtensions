@@ -65,9 +65,9 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
                     continue;
                 }
 
-                var setComponentProxy = new RootTransformProxy(setComponent);
+                var setComponentProxy = new RootTransformProxy(setComponent!);
 
-                if (string.IsNullOrEmpty(rootTransformPathBase.Reference.referencePath))
+                if (string.IsNullOrEmpty(rootTransformPathBase.Reference?.referencePath))
                 {
                     Log(
                         $"Root transform reference path of \"{component.FullName()}\" is null, will be skip in the build.",
@@ -75,10 +75,10 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
                     continue;
                 }
 
-                var rootTransform = ctx.AvatarRootTransform.Find(rootTransformPathBase.Reference.referencePath);
+                var rootTransform = ctx.AvatarRootTransform.Find(rootTransformPathBase.Reference?.referencePath);
                 if (!rootTransform)
                 {
-                    LogError($"Can't find anything using path \"{rootTransformPathBase.Reference.referencePath}\"",
+                    LogError($"Can't find anything using path \"{rootTransformPathBase.Reference?.referencePath}\"",
                         $"Check the root transform path of {component.FullName()}");
                     continue;
                 }
