@@ -552,8 +552,8 @@ MonoBehaviour:
     y: 0
     width: 523
     height: 911
-  m_MinSize: {x: 275, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 30}
   m_Panes:
   - {fileID: 30}
@@ -635,9 +635,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: acaaffff
-      m_LastClickedID: -21844
-      m_ExpandedIDs: 7044feff2248feff3a4bfeffbc4cfeff044efeff824ffeff1652feffa253feff1e55feff9857feff8459feffee5afeff6e5dfefffa5efeff7e60feff9062feff8464feff7866feff6468feff4a6afeff3a6cfeffaa6efeff7470feff5873feff2a80feff2c83feffec8cfeff828efeff4291feff0c95feff5e96feff9ac0feff10c4feffbec5feffbeaaffff
+      m_SelectedIDs: 26570000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 24f8ffffd0f8ffffdaf8ffff76f9ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.0020046455, y: 0.9905488, z: -0.13636848, w: -0.0145611465}
     speed: 2
-    m_Value: {x: -0.0020046462, y: 0.99054915, z: -0.13636853, w: -0.014561152}
+    m_Value: {x: -0.0020046455, y: 0.99054873, z: -0.13636848, w: -0.014561146}
   m_Size:
     m_Target: 10.45
     speed: 2
@@ -1328,7 +1328,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Packages/io.github.ykysnk.modular-avatar-extensions
+    - Packages/io.github.ykysnk.modular-avatar-extensions/Runtime
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1336,16 +1336,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Packages/io.github.ykysnk.modular-avatar-extensions
+  - Packages/io.github.ykysnk.modular-avatar-extensions/Runtime
   m_LastFoldersGridSize: 16
   m_LastProjectPath: L:\VRChatProjects\VPM.ModularAvatarExtensions
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 351}
-    m_SelectedIDs: 8e950000
-    m_LastClickedID: 38286
-    m_ExpandedIDs: 00000000d2400000305a0000165b0000565b00008e9500009295000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 75}
+    m_SelectedIDs: 0a5a0000
+    m_LastClickedID: 23050
+    m_ExpandedIDs: 00000000045a0000065a0000085a00000a5a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1373,7 +1373,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 
+    m_ExpandedIDs: 00000000045a0000065a0000085a00000a5a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -1,6 +1,5 @@
 using io.github.ykysnk.utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace io.github.ykysnk.ModularAvatarExtensions;
 

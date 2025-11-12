@@ -1,9 +1,9 @@
+using HarmonyLib;
 using io.github.ykysnk.autohook;
 using io.github.ykysnk.utils;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
-using HarmonyLib;
 
 namespace io.github.ykysnk.ModularAvatarExtensions;
 
