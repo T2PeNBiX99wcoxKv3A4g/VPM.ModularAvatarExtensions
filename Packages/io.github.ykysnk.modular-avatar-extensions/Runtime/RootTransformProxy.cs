@@ -2,18 +2,19 @@ using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
 using UnityEngine;
 
-namespace io.github.ykysnk.ModularAvatarExtensions;
-
-public readonly struct RootTransformProxy
+namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    private readonly Component _component;
-
-    public RootTransformProxy(Component component) => _component = component;
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public Transform rootTransform
+    public readonly struct RootTransformProxy
     {
-        get => Traverse.Create(_component).Field<Transform>(nameof(rootTransform)).Value;
-        set => Traverse.Create(_component).Field<Transform>(nameof(rootTransform)).Value = value;
+        private readonly Component _component;
+
+        public RootTransformProxy(Component component) => _component = component;
+
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public Transform rootTransform
+        {
+            get => Traverse.Create(_component).Field<Transform>(nameof(rootTransform)).Value;
+            set => Traverse.Create(_component).Field<Transform>(nameof(rootTransform)).Value = value;
+        }
     }
 }

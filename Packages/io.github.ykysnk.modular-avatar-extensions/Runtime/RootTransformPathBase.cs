@@ -5,53 +5,54 @@ using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
 
-namespace io.github.ykysnk.ModularAvatarExtensions;
-
-public abstract class RootTransformPathBase<T> : YkyEditorComponent, IRootTransformPathBase where T : Component
+namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    [Autohook] public T? component;
-    public AvatarObjectReference? reference;
-    [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
-
-    [PublicAPI]
-    protected Transform SetRootTransform
+    public abstract class RootTransformPathBase<T> : YkyEditorComponent, IRootTransformPathBase where T : Component
     {
-        get => Traverse.Create(component).Field<Transform>(RootTransformFieldName).Value;
-        set => Traverse.Create(component).Field<Transform>(RootTransformFieldName).Value = value;
-    }
+        [Autohook] public T? component;
+        public AvatarObjectReference? reference;
+        [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
 
-    protected virtual void OnValidate()
-    {
-        if (!component)
-            component = GetComponent<T>();
-        SetPath();
-    }
+        [PublicAPI]
+        protected Transform SetRootTransform
+        {
+            get => Traverse.Create(component).Field<Transform>(RootTransformFieldName).Value;
+            set => Traverse.Create(component).Field<Transform>(RootTransformFieldName).Value = value;
+        }
 
-    public AvatarObjectReference? Reference
-    {
-        get => reference;
-        set => reference = value;
-    }
+        protected virtual void OnValidate()
+        {
+            if (!component)
+                component = GetComponent<T>();
+            SetPath();
+        }
 
-    public Component? Component
-    {
-        get => component;
-        set => component = (T?)value;
-    }
+        public AvatarObjectReference? Reference
+        {
+            get => reference;
+            set => reference = value;
+        }
 
-    protected virtual void SetPath()
-    {
-        var isInPrefab = Utils.IsInPrefab();
-        if (isInPrefab || reference == null) return;
-        var obj = reference.Get(this);
-        if (!obj) return;
-        var getTransform = obj.transform;
-        if (!component || SetRootTransform == getTransform) return;
-        SetRootTransform = getTransform;
-    }
+        public Component? Component
+        {
+            get => component;
+            set => component = (T?)value;
+        }
 
-    public override void OnInspectorGUI()
-    {
-        SetPath();
+        protected virtual void SetPath()
+        {
+            var isInPrefab = Utils.IsInPrefab();
+            if (isInPrefab || reference == null) return;
+            var obj = reference.Get(this);
+            if (!obj) return;
+            var getTransform = obj.transform;
+            if (!component || SetRootTransform == getTransform) return;
+            SetRootTransform = getTransform;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            SetPath();
+        }
     }
 }

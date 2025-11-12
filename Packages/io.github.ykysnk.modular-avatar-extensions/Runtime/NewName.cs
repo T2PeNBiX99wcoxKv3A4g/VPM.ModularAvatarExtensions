@@ -1,20 +1,21 @@
 using io.github.ykysnk.utils;
 using UnityEngine;
 
-namespace io.github.ykysnk.ModularAvatarExtensions;
-
-[DisallowMultipleComponent]
-[AddComponentMenu("Modular Avatar EX/MAEX New Name")]
-public class NewName : YkyEditorComponent
+namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    public string? newName;
-    public bool changeOnInspector;
-
-    private void OnValidate()
+    [DisallowMultipleComponent]
+    [AddComponentMenu("Modular Avatar EX/MAEX New Name")]
+    public class NewName : YkyEditorComponent
     {
-        if (string.IsNullOrEmpty(newName))
-            newName = gameObject.name;
-        if (gameObject.name == newName || !changeOnInspector || Utils.IsInPrefab()) return;
-        gameObject.name = newName!;
+        public string? newName;
+        public bool changeOnInspector;
+
+        private void OnValidate()
+        {
+            if (string.IsNullOrEmpty(newName))
+                newName = gameObject.name;
+            if (gameObject.name == newName || !changeOnInspector || Utils.IsInPrefab()) return;
+            gameObject.name = newName!;
+        }
     }
 }
