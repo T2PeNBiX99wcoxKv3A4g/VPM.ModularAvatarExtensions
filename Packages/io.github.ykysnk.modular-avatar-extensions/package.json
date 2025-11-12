@@ -1,0 +1,18 @@
+{
+  "name": "io.github.ykysnk.modular-avatar-extensions",
+  "displayName": "Modular Avatar Extensions",
+  "version": "0.0.1",
+  "description": "Extensions for ModularAvatar",
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.avatars": "3.9.0"
+  },
+  "author": {
+    "name": "yukiyosanako / \u3086\u304d\u3088\u3055\u306a\u3053",
+    "email": "github.qszdy@aleeas.com",
+    "url": "https://github.com/T2PeNBiX99wcoxKv3A4g"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "localPath": "L:\\VRChatProjects\\VPM.ModularAvatarExtensions\\Packages\\io.github.ykysnk.modular-avatar-extensions"
+}
