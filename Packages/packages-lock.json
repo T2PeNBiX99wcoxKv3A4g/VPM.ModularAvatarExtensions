@@ -202,6 +202,24 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
+    "dev.hai-vr.animator-as-code.v1": {
+      "version": "file:dev.hai-vr.animator-as-code.v1",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "dev.hai-vr.animator-as-code.v1.modular-avatar": {
+      "version": "file:dev.hai-vr.animator-as-code.v1.modular-avatar",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "dev.hai-vr.animator-as-code.v1.vrchat": {
+      "version": "file:dev.hai-vr.animator-as-code.v1.vrchat",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "io.github.ykysnk.auto-hook": {
       "version": "file:io.github.ykysnk.auto-hook",
       "depth": 0,

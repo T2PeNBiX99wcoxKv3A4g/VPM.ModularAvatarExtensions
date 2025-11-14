@@ -8,6 +8,15 @@
     },
     "io.github.ykysnk.auto-hook": {
       "version": "0.0.1"
+    },
+    "dev.hai-vr.animator-as-code.v1": {
+      "version": "1.2.0"
+    },
+    "dev.hai-vr.animator-as-code.v1.vrchat": {
+      "version": "1.1.2"
+    },
+    "dev.hai-vr.animator-as-code.v1.modular-avatar": {
+      "version": "1.1.2"
     }
   },
   "locked": {
@@ -41,6 +50,25 @@
     "io.github.ykysnk.auto-hook": {
       "version": "0.0.3",
       "dependencies": {}
+    },
+    "dev.hai-vr.animator-as-code.v1": {
+      "version": "1.2.0",
+      "dependencies": {}
+    },
+    "dev.hai-vr.animator-as-code.v1.vrchat": {
+      "version": "1.1.2",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.5.2 <999.0.0-a",
+        "dev.hai-vr.animator-as-code.v1": ">=1.1.0 <2.0.0-a"
+      }
+    },
+    "dev.hai-vr.animator-as-code.v1.modular-avatar": {
+      "version": "1.1.2",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.5.2 <999.0.0-a",
+        "dev.hai-vr.animator-as-code.v1": ">=1.1.0 <2.0.0-a",
+        "nadena.dev.modular-avatar": ">=1.9.9 <2.0.0-a"
+      }
     }
   }
 }
