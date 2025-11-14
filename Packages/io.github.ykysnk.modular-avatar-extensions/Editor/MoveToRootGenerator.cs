@@ -51,7 +51,8 @@ public class MoveToRootGenerator : Plugin<MoveToRootGenerator>, IMaexPlugin
             Object.DestroyImmediate(moveToRoot);
         }
 
-        var autoMoveToRootOfTransforms = avatar.GetComponentsInChildren<MoveToRootOfReference>(true).Where(c => c).ToArray();
+        var autoMoveToRootOfTransforms =
+            avatar.GetComponentsInChildren<MoveToRootOfReference>(true).Where(c => c).ToArray();
 
         Log($"Find {autoMoveToRootOfTransforms.Length} move to root inside \"{avatar.FullName()}\"");
 

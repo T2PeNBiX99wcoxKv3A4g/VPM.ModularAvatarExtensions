@@ -10,8 +10,7 @@
         "nadena.dev.modular-avatar.core",
         "io.github.ykysnk.utils.Editor",
         "io.github.ykysnk.utils",
-        "io.github.ykysnk.modular-avatar-extensions",
-        "AnimatorAsCode.V1"
+        "io.github.ykysnk.modular-avatar-extensions"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,13 +1,16 @@
+#if MODULAR_AVATAR_EX_DISABLE
 using System.Collections.Generic;
-using System.Linq;
 using AnimatorAsCode.V1;
+using nadena.dev.modular_avatar.core;
+using UnityEditor;
+using VRC.SDK3.Avatars.Components;
+#endif
+
+using System.Linq;
 using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
-using nadena.dev.modular_avatar.core;
 using nadena.dev.ndmf;
-using UnityEditor;
 using UnityEngine;
-using VRC.SDK3.Avatars.Components;
 
 [assembly: ExportsPlugin(typeof(TurnOffInBuildGenerator))]
 
@@ -43,7 +46,9 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
     {
         var avatar = ctx.AvatarRootObject;
         var turnOffInBuilds = avatar.GetComponentsInChildren<TurnOffInBuild>(true).Where(c => c).ToArray();
+#if MODULAR_AVATAR_EX_DISABLE
         var animObjs = new List<GameObject>();
+#endif
 
         Log($"Find {turnOffInBuilds.Length} turn off in build inside \"{avatar.FullName()}\"");
 
@@ -58,11 +63,13 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
             }
 
             obj.SetActive(false);
+#if MODULAR_AVATAR_EX_DISABLE
             animObjs.Add(obj);
+#endif
             Log($"Game Object \"{obj.FullName()}\" is now inactive");
             Object.DestroyImmediate(turnOffInBuild);
         }
-
+#if MODULAR_AVATAR_EX_DISABLE
         var aac = AacV1.Create(new()
         {
             SystemName = SystemName,
@@ -95,8 +102,10 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
         mergeAnimator!.layerPriority = -999999;
         mergeAnimator.deleteAttachedAnimator = true;
         mergeAnimator.matchAvatarWriteDefaults = true;
+#endif
     }
 
+#if MODULAR_AVATAR_EX_DISABLE
     // Copy from MaAc
     private ModularAvatarMergeAnimator? NewMergeAnimator(AacFlController controller,
         VRCAvatarDescriptor.AnimLayerType layerType)
@@ -115,4 +124,5 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
         mergeAnimator.pathMode = MergeAnimatorPathMode.Absolute;
         return mergeAnimator;
     }
+#endif
 }
