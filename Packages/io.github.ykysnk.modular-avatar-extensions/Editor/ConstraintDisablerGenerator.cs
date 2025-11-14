@@ -43,16 +43,16 @@ public class ConstraintDisablerGenerator : Plugin<ConstraintDisablerGenerator>, 
         foreach (var constraintDisabler in constraintDisables)
         {
             var constraint = constraintDisabler.constraint;
-            if (!constraint)
+            if (constraint == null)
                 constraint = constraintDisabler.GetComponent<VRCConstraintBase>();
-            if (!constraint)
+            if (constraint == null)
             {
                 LogError($"Can't find constraint of \"{constraintDisabler.FullName()}\"",
                     $"Check the constraint path of {constraintDisabler.FullName()}");
                 continue;
             }
 
-            if (!constraint!.IsActive)
+            if (!constraint.IsActive)
                 constraint.IsActive = true;
             Object.DestroyImmediate(constraintDisabler);
         }

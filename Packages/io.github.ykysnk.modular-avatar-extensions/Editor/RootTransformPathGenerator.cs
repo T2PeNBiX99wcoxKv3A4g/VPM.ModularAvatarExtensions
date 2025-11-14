@@ -3,6 +3,7 @@ using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 using UnityEngine;
+using VRC.Utility;
 
 [assembly: ExportsPlugin(typeof(RootTransformPathGenerator))]
 
@@ -56,16 +57,16 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
             {
                 if (component is not IRootTransformPathBase rootTransformPathBase) continue;
                 var setComponent = rootTransformPathBase.Component;
-                if (!setComponent)
+                if (setComponent == null)
                     setComponent = component.GetComponent(findType);
-                if (!setComponent)
+                if (setComponent == null)
                 {
                     LogError($"Can't find {findType.Name} of \"{component.FullName()}\"",
                         $"Check the {findType.Name} path of {component.FullName()}");
                     continue;
                 }
 
-                var setComponentProxy = new RootTransformProxy(setComponent!);
+                var setComponentProxy = new RootTransformProxy(setComponent);
 
                 if (string.IsNullOrEmpty(rootTransformPathBase.Reference?.referencePath))
                 {
@@ -76,7 +77,7 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
                 }
 
                 var rootTransform = ctx.AvatarRootTransform.Find(rootTransformPathBase.Reference?.referencePath);
-                if (!rootTransform)
+                if (rootTransform == null)
                 {
                     LogError($"Can't find anything using path \"{rootTransformPathBase.Reference?.referencePath}\"",
                         $"Check the root transform path of {component.FullName()}");

@@ -60,7 +60,7 @@ public class MoveToRootGenerator : Plugin<MoveToRootGenerator>, IMaexPlugin
         {
             var found = ctx.AvatarRootTransform.Find(moveToRootOfTransform?.reference?.referencePath);
 
-            if (!found)
+            if (found == null)
             {
                 LogError($"Can't find anything using path \"{moveToRootOfTransform?.reference?.referencePath}\"",
                     $"Check the root transform path of {moveToRootOfTransform?.FullName()}");
