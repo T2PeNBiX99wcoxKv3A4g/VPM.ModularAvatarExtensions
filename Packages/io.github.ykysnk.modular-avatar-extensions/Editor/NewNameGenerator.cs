@@ -29,7 +29,7 @@ public class NewNameGenerator : Plugin<NewNameGenerator>, IMaexPlugin
     }
 
     protected override void Configure() =>
-        InPhase(BuildPhase.Resolving).Run($"Generate {DisplayName}", Generate);
+        InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
 
     private void Generate(BuildContext ctx)
     {

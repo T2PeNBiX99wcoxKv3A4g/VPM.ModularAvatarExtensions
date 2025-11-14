@@ -31,7 +31,7 @@ public class ConstraintDisablerGenerator : Plugin<ConstraintDisablerGenerator>, 
     }
 
     protected override void Configure() =>
-        InPhase(BuildPhase.Resolving).Run($"Generate {DisplayName}", Generate);
+        InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
 
     private void Generate(BuildContext ctx)
     {

@@ -37,7 +37,7 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
     }
 
     protected override void Configure() =>
-        InPhase(BuildPhase.Resolving).Run($"Generate {DisplayName}", Generate);
+        InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
 
     private void Generate(BuildContext ctx)
     {
@@ -52,13 +52,14 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
             var obj = turnOffInBuild.gameObject;
             if (!obj.activeSelf)
             {
-                Log($"Game Object \"{obj.FullName()}\" already is non active");
+                Log($"Game Object \"{obj.FullName()}\" already is inactive");
+                Object.DestroyImmediate(turnOffInBuild);
                 continue;
             }
 
             obj.SetActive(false);
             animObjs.Add(obj);
-            Log($"Game Object \"{obj.FullName()}\" is now non active");
+            Log($"Game Object \"{obj.FullName()}\" is now inactive");
             Object.DestroyImmediate(turnOffInBuild);
         }
 
