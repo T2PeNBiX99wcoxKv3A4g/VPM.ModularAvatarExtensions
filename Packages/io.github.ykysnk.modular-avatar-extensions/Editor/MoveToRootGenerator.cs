@@ -1,3 +1,4 @@
+using System.Linq;
 using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -32,7 +33,7 @@ public class MoveToRootGenerator : Plugin<MoveToRootGenerator>, IMaexPlugin
     private void Generate(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var autoMoveToRoots = avatar.GetComponentsInChildren<MoveToRoot>(true);
+        var autoMoveToRoots = avatar.GetComponentsInChildren<MoveToRoot>(true).Where(c => c).ToArray();
 
         Log($"Find {autoMoveToRoots.Length} move to root inside \"{avatar.FullName()}\"");
 
@@ -47,9 +48,10 @@ public class MoveToRootGenerator : Plugin<MoveToRootGenerator>, IMaexPlugin
 
             obj.transform.SetParent(ctx.AvatarRootTransform);
             Log($"New Path: \"{obj.FullName()}\"");
+            Object.DestroyImmediate(moveToRoot);
         }
 
-        var autoMoveToRootOfTransforms = avatar.GetComponentsInChildren<MoveToRootOfReference>(true);
+        var autoMoveToRootOfTransforms = avatar.GetComponentsInChildren<MoveToRootOfReference>(true).Where(c => c).ToArray();
 
         Log($"Find {autoMoveToRootOfTransforms.Length} move to root inside \"{avatar.FullName()}\"");
 
@@ -66,6 +68,7 @@ public class MoveToRootGenerator : Plugin<MoveToRootGenerator>, IMaexPlugin
 
             found.transform.SetParent(ctx.AvatarRootTransform);
             Log($"New Path: \"{found.FullName()}\"");
+            Object.DestroyImmediate(moveToRootOfTransform);
         }
     }
 }

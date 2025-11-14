@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AnimatorAsCode.V1;
 using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
@@ -41,7 +42,7 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
     private void Generate(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var turnOffInBuilds = avatar.GetComponentsInChildren<TurnOffInBuild>(true);
+        var turnOffInBuilds = avatar.GetComponentsInChildren<TurnOffInBuild>(true).Where(c => c).ToArray();
         var animObjs = new List<GameObject>();
 
         Log($"Find {turnOffInBuilds.Length} turn off in build inside \"{avatar.FullName()}\"");
@@ -58,6 +59,7 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
             obj.SetActive(false);
             animObjs.Add(obj);
             Log($"Game Object \"{obj.FullName()}\" is now non active");
+            Object.DestroyImmediate(turnOffInBuild);
         }
 
         var aac = AacV1.Create(new()

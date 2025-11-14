@@ -42,7 +42,7 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
 
         foreach (var type in types)
         {
-            var components = avatar.GetComponentsInChildren(type, true);
+            var components = avatar.GetComponentsInChildren(type, true).Where(c => c).ToArray();
 
             Log($"Find {components.Length} {type.Name} inside \"{avatar.FullName()}\"");
 
@@ -87,6 +87,7 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
                     continue;
 
                 setComponentProxy.rootTransform = rootTransform;
+                Object.DestroyImmediate(component);
             }
         }
     }

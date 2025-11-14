@@ -1,3 +1,4 @@
+using System.Linq;
 using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -35,7 +36,7 @@ public class ConstraintDisablerGenerator : Plugin<ConstraintDisablerGenerator>, 
     private void Generate(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var constraintDisables = avatar.GetComponentsInChildren<ConstraintDisabler>(true);
+        var constraintDisables = avatar.GetComponentsInChildren<ConstraintDisabler>(true).Where(c => c).ToArray();
 
         Log($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
 
@@ -53,6 +54,7 @@ public class ConstraintDisablerGenerator : Plugin<ConstraintDisablerGenerator>, 
 
             if (!constraint!.IsActive)
                 constraint.IsActive = true;
+            Object.DestroyImmediate(constraintDisabler);
         }
     }
 }

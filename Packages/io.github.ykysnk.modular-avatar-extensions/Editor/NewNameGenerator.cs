@@ -1,3 +1,4 @@
+using System.Linq;
 using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -33,7 +34,7 @@ public class NewNameGenerator : Plugin<NewNameGenerator>, IMaexPlugin
     private void Generate(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var autoChangeNames = avatar.GetComponentsInChildren<NewName>(true);
+        var autoChangeNames = avatar.GetComponentsInChildren<NewName>(true).Where(c => c).ToArray();
 
         Log($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
 
@@ -51,6 +52,7 @@ public class NewNameGenerator : Plugin<NewNameGenerator>, IMaexPlugin
 
             Log($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
             obj.name = newName;
+            Object.DestroyImmediate(comp);
         }
     }
 }
