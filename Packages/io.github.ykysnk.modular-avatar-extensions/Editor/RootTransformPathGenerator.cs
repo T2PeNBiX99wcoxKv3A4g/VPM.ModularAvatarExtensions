@@ -27,6 +27,12 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
         var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.Error);
         ErrorReport.ReportError(error);
     }
+    
+    public void LogNonFatal(string detail, string hint)
+    {
+        var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.NonFatal);
+        ErrorReport.ReportError(error);
+    }
 
     protected override void Configure() =>
         InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
@@ -61,7 +67,7 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
                     setComponent = component.GetComponent(findType);
                 if (setComponent == null)
                 {
-                    LogError($"Can't find {findType.Name} of \"{component.FullName()}\"",
+                    LogNonFatal($"Can't find {findType.Name} of \"{component.FullName()}\"",
                         $"Check the {findType.Name} path of {component.FullName()}");
                     continue;
                 }

@@ -27,6 +27,12 @@ public class NewNameGenerator : Plugin<NewNameGenerator>, IMaexPlugin
         var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.Error);
         ErrorReport.ReportError(error);
     }
+    
+    public void LogNonFatal(string detail, string hint)
+    {
+        var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.NonFatal);
+        ErrorReport.ReportError(error);
+    }
 
     protected override void Configure() =>
         InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
