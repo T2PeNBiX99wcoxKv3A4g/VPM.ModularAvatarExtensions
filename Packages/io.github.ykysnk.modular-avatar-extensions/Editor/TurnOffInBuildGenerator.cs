@@ -20,8 +20,10 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
 {
     public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOffInBuild";
     public override string DisplayName => "Modular Avatar Extensions Turn Off In Build Generator";
+#if MODULAR_AVATAR_EX_DISABLE
     private const string SystemName = "Modular Avatar EX";
     private const string GenName = "Turn Off In Build";
+#endif
     private int _mergeAnimatorIndex;
     private GameObject? _root;
 
