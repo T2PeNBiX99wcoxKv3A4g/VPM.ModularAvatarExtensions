@@ -17,10 +17,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public Transform rootTransform
+        public Transform? rootTransform
         {
-            get => Traverse.Create(_component).Field<Transform>(_rootTransformFieldName).Value;
-            set => Traverse.Create(_component).Field<Transform>(_rootTransformFieldName).Value = value;
+            get => Traverse.Create(_component).Field<Transform?>(_rootTransformFieldName).Value;
+            set => Traverse.Create(_component).Field<Transform?>(_rootTransformFieldName).Value = value;
         }
     }
 }

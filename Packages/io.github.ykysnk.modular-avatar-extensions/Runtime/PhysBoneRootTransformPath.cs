@@ -20,20 +20,24 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected override void SetPath()
         {
             base.SetPath();
-            if (!component || Utils.IsInPrefab()) return;
+            if (component == null || Utils.IsInPrefab()) return;
             if (ignoreTransformsReferences is { Count: > 0 })
-                component!.ignoreTransforms = (from t in ignoreTransformsReferences
+                component.ignoreTransforms = (from t in ignoreTransformsReferences
                     select t.Get(this)
                     into obj
                     where obj
                     select obj.transform).ToList();
+            else
+                component.ignoreTransforms = new();
 
             if (colliderReferences is { Count: > 0 })
-                component!.colliders = (from t in colliderReferences
+                component.colliders = (from t in colliderReferences
                     select t.Get(this)
                     into obj
                     where obj
                     select obj.GetComponent<VRCPhysBoneColliderBase>()).ToList();
+            else
+                component.colliders = new();
         }
     }
 }

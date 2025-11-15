@@ -47,11 +47,12 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
 
                 var setComponentProxy = new RootTransformProxy(setComponent);
 
-                if (!rootTransformPathBase.IsValid())
+                if (string.IsNullOrEmpty(rootTransformPathBase.Reference?.referencePath))
                 {
-                    LogNonFatal(
-                        $"Root transform reference path of \"{component.FullName()}\" is invalid, will be skip in the build.",
-                        $"Check the root transform path of {component.FullName()}");
+                    if (!rootTransformPathBase.IsValid())
+                        LogNonFatal(
+                            $"Root transform reference path of \"{component.FullName()}\" is invalid, will be skip in the build.",
+                            $"Check the root transform path of {component.FullName()}");
                     continue;
                 }
 

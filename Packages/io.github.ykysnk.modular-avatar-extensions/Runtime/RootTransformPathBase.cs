@@ -39,11 +39,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #if UNITY_EDITOR
             var isInPrefab = Utils.IsInPrefab();
             if (isInPrefab || reference == null) return;
-            var obj = reference.Get(this);
-            if (!obj) return;
-            var getTransform = obj.transform;
             if (!component) return;
             var proxy = new RootTransformProxy(component!, RootTransformFieldName);
+            var obj = reference.Get(this);
+            if (!obj)
+            {
+                proxy.rootTransform = null;
+                return;
+            }
+
+            var getTransform = obj.transform;
             if (proxy.rootTransform == getTransform) return;
             proxy.rootTransform = getTransform;
 #endif

@@ -48,7 +48,7 @@ public static class RootTransformPathMenu
 
                 var reference = new AvatarObjectReference();
 
-                reference.Set(componentProxy.rootTransform.gameObject);
+                reference.Set(componentProxy.rootTransform?.gameObject);
                 rootTransformPathBase.Reference = reference;
             }
         }
