@@ -1,6 +1,7 @@
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
+using UnityEngine.Animations;
 using VRC.Dynamics;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -22,16 +23,27 @@ internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
         {
             var constraint = constraintDisabler.constraint;
             if (constraint == null)
-                constraint = constraintDisabler.GetComponent<VRCConstraintBase>();
-            if (constraint == null)
             {
                 LogError($"Can't find constraint of \"{constraintDisabler.FullName()}\"",
                     $"Check the constraint path of {constraintDisabler.FullName()}");
                 continue;
             }
 
-            if (!constraint.IsActive)
-                constraint.IsActive = true;
+            switch (constraint)
+            {
+                case VRCConstraintBase { IsActive: false } vrcConstraintBase:
+                    vrcConstraintBase.IsActive = true;
+                    break;
+                case IConstraint _:
+                    var constraintProxy = new ConstraintProxy(constraint);
+                    if (!constraintProxy.constraintActive)
+                        constraintProxy.constraintActive = true;
+                    break;
+                default:
+                    LogError($"The target component is not constraint component: {constraintDisabler.FullName()}",
+                        $"Check the constraint path of {constraintDisabler.FullName()}");
+                    break;
+            }
         }
     }
 }
