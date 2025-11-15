@@ -38,6 +38,15 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
                 var setComponent = rootTransformPathBase.Component;
                 if (setComponent == null)
                     setComponent = component.GetComponent(findType);
+
+                if (setComponent == null)
+                {
+                    // Avatar Pose System moves all phys bone to APS_PB when building, so try to find it.
+                    var apsTransform = component.transform.Find("APS_PB");
+                    if (apsTransform)
+                        setComponent = apsTransform.GetComponent(findType);
+                }
+
                 if (setComponent == null)
                 {
                     LogNonFatal($"Can't find {findType.Name} of \"{component.FullName()}\"",

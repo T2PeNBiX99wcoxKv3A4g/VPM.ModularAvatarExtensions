@@ -21,7 +21,7 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run(NewNamePass.Instance);
         seq.Run(RootTransformPathPass.Instance);
         seq.Run(TurnOffInBuildPass.Instance);
-        
+
         seq = InPhase(BuildPhase.Transforming);
 
         seq.Run("Purge ModularAvatar EX components", ctx =>
