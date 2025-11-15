@@ -6,12 +6,11 @@ using VRC.SDKBase;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [PublicAPI]
+    [DefaultExecutionOrder(-9999)]
     public abstract class AvatarMaexComponent : MonoBehaviour, IEditorOnly
     {
-        public virtual void OnInspectorGUI()
+        protected virtual void OnDestroy()
         {
-            if (RuntimeUtil.IsPlaying) return;
-            OnChange(false);
         }
 
         protected virtual void OnValidate()
@@ -20,8 +19,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             OnChange(true);
         }
 
-        protected virtual void OnDestroy()
+        public virtual void OnInspectorGUI()
         {
+            if (RuntimeUtil.IsPlaying) return;
+            OnChange(false);
         }
 
         protected virtual void OnChange(bool isValidate)

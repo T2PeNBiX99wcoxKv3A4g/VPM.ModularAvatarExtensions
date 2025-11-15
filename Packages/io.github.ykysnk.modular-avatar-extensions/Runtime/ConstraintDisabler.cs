@@ -14,10 +14,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected override void OnChange(bool isValidate)
         {
             if (isValidate)
-            {
                 if (!constraint)
                     constraint = GetComponent<VRCConstraintBase>();
-            }
 
             if (!constraint || Application.isPlaying || stopDisable) return;
             if (constraint!.IsActive)

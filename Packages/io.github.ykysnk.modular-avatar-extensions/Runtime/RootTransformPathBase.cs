@@ -12,16 +12,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public AvatarObjectReference? reference;
         [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
 
-        protected override void OnChange(bool isValidate)
-        {
-            if (isValidate)
-            {
-                if (!component)
-                    component = GetComponent<T>();
-            }
-            SetPath();
-        }
-
         public AvatarObjectReference? Reference
         {
             get => reference;
@@ -35,6 +25,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         public bool IsValid() => CheckIsValid();
+
+        protected override void OnChange(bool isValidate)
+        {
+            if (isValidate)
+                if (!component)
+                    component = GetComponent<T>();
+            SetPath();
+        }
 
         protected virtual bool CheckIsValid() => !string.IsNullOrEmpty(reference?.referencePath);
 

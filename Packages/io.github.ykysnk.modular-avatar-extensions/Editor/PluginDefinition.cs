@@ -23,7 +23,7 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run(TurnOffInBuildPass.Instance);
 
         seq = InPhase(BuildPhase.Transforming);
-        
+
         seq.Run("Purge ModularAvatar EX components", ctx =>
         {
             foreach (var component in ctx.AvatarRootTransform.GetComponentsInChildren<AvatarMaexComponent>(true))
