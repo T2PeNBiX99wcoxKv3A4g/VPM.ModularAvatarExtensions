@@ -238,6 +238,18 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "jp.lilxyzw.avatar-utils": {
+      "version": "file:jp.lilxyzw.avatar-utils",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "file:jp.lilxyzw.editortoolbox",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "jp.lilxyzw.liltoon": {
       "version": "file:jp.lilxyzw.liltoon",
       "depth": 0,

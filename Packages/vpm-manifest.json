@@ -23,6 +23,12 @@
     },
     "jp.lilxyzw.liltoon": {
       "version": "2.3.2"
+    },
+    "jp.lilxyzw.avatar-utils": {
+      "version": "2.1.2"
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "1.11.0"
     }
   },
   "locked": {
@@ -82,6 +88,14 @@
     },
     "jp.lilxyzw.liltoon": {
       "version": "2.3.2",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.avatar-utils": {
+      "version": "2.1.2",
+      "dependencies": {}
+    },
+    "jp.lilxyzw.editortoolbox": {
+      "version": "1.11.0",
       "dependencies": {}
     }
   }
