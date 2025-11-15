@@ -36,7 +36,7 @@ public class ConstraintDisablerEditor : MaexEditor
             EditorGUILayout.HelpBox("The target component is not constraint component", MessageType.Error, true);
 
         EditorGUILayout.HelpBox(
-            "This constraint component will be disable, active when avatar is in building",
+            "The constraint component will be disable, active when avatar is in building",
             MessageType.Info, true);
     }
 }
