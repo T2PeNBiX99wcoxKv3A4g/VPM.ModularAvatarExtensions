@@ -22,6 +22,7 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run(RootTransformPathPass.Instance);
         seq.Run(TurnOffInBuildPass.Instance);
 
+#if TEMP_DISABLE
         seq = InPhase(BuildPhase.Transforming);
 
         seq.Run("Purge ModularAvatar EX components", ctx =>
@@ -29,5 +30,6 @@ internal class PluginDefinition : Plugin<PluginDefinition>
             foreach (var component in ctx.AvatarRootTransform.GetComponentsInChildren<AvatarMaexComponent>(true))
                 Object.DestroyImmediate(component);
         });
+#endif
     }
 }

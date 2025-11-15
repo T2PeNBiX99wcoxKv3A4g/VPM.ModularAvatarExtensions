@@ -46,20 +46,21 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
                 }
 
                 var setComponentProxy = new RootTransformProxy(setComponent);
+                var referencePath = rootTransformPathBase.Reference?.referencePath;
 
-                if (string.IsNullOrEmpty(rootTransformPathBase.Reference?.referencePath))
+                if (string.IsNullOrEmpty(referencePath))
                 {
                     if (!rootTransformPathBase.IsValid())
                         LogNonFatal(
-                            $"Root transform reference path of \"{component.FullName()}\" is invalid, will be skip in the build.",
+                            $"Reference path of \"{component.FullName()}\" is invalid, will be skip in the build.",
                             $"Check the root transform path of {component.FullName()}");
                     continue;
                 }
 
-                var rootTransform = ctx.AvatarRootTransform.Find(rootTransformPathBase.Reference?.referencePath);
+                var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
                 if (rootTransform == null)
                 {
-                    LogError($"Can't find anything using path \"{rootTransformPathBase.Reference?.referencePath}\"",
+                    LogError($"Can't find anything using path \"{referencePath}\"",
                         $"Check the root transform path of {component.FullName()}");
                     continue;
                 }

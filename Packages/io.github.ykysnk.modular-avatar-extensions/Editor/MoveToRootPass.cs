@@ -36,11 +36,20 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
 
         foreach (var moveToRootOfTransform in autoMoveToRootOfTransforms)
         {
-            var found = ctx.AvatarRootTransform.Find(moveToRootOfTransform?.reference?.referencePath);
+            var referencePath = moveToRootOfTransform?.reference?.referencePath;
+
+            if (string.IsNullOrEmpty(referencePath))
+            {
+                LogError($"Reference path of \"{moveToRootOfTransform?.FullName()}\" is invalid.",
+                    $"Check the root transform path of {moveToRootOfTransform?.FullName()}");
+                continue;
+            }
+
+            var found = ctx.AvatarRootTransform.Find(referencePath);
 
             if (found == null)
             {
-                LogError($"Can't find anything using path \"{moveToRootOfTransform?.reference?.referencePath}\"",
+                LogError($"Can't find anything using path \"{referencePath}\"",
                     $"Check the root transform path of {moveToRootOfTransform?.FullName()}");
                 continue;
             }
