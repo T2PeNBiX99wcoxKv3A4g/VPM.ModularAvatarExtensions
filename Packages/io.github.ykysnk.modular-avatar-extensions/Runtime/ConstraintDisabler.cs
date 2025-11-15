@@ -1,5 +1,4 @@
 using io.github.ykysnk.autohook;
-using io.github.ykysnk.utils;
 using UnityEngine;
 using VRC.Dynamics;
 
@@ -7,28 +6,22 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("Modular Avatar EX/MAEX Constraint Disabler")]
-    public class ConstraintDisabler : YkyEditorComponent
+    public class ConstraintDisabler : AvatarMaexComponent
     {
         [Autohook] public VRCConstraintBase? constraint;
         public bool stopDisable;
 
-        private void OnValidate()
+        protected override void OnChange(bool isValidate)
         {
-            if (!constraint)
-                constraint = GetComponent<VRCConstraintBase>();
-            Disable();
-        }
+            if (isValidate)
+            {
+                if (!constraint)
+                    constraint = GetComponent<VRCConstraintBase>();
+            }
 
-        private void Disable()
-        {
             if (!constraint || Application.isPlaying || stopDisable) return;
             if (constraint!.IsActive)
                 constraint.IsActive = false;
-        }
-
-        public override void OnInspectorGUI()
-        {
-            Disable();
         }
     }
 }

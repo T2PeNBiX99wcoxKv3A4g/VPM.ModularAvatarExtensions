@@ -7,5 +7,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     {
         AvatarObjectReference? Reference { get; set; }
         Component? Component { get; set; }
+        bool IsValid();
     }
 }

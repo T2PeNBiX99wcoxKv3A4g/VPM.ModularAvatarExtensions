@@ -7,50 +7,25 @@ using VRC.SDK3.Avatars.Components;
 #endif
 
 using System.Linq;
-using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
-using UnityEngine;
-
-[assembly: ExportsPlugin(typeof(TurnOffInBuildGenerator))]
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlugin
+internal class TurnOffInBuildPass : MaexPass<TurnOffInBuildPass>
 {
     public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOffInBuild";
     public override string DisplayName => "Modular Avatar Extensions Turn Off In Build Generator";
+
 #if MODULAR_AVATAR_EX_DISABLE
     private const string SystemName = "Modular Avatar EX";
     private const string GenName = "Turn Off In Build";
-#endif
+
     private int _mergeAnimatorIndex;
     private GameObject? _root;
+#endif
 
-    public void Log(object message) => Debug.Log($"[{DisplayName}] {message}");
-
-    public void Log(string detail, string hint)
-    {
-        var error = new SimpleStringError($"{DisplayName} Warning", detail, hint, ErrorSeverity.Information);
-        ErrorReport.ReportError(error);
-    }
-
-    public void LogError(string detail, string hint)
-    {
-        var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.Error);
-        ErrorReport.ReportError(error);
-    }
-    
-    public void LogNonFatal(string detail, string hint)
-    {
-        var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.NonFatal);
-        ErrorReport.ReportError(error);
-    }
-
-    protected override void Configure() =>
-        InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
-
-    private void Generate(BuildContext ctx)
+    protected override void Execute(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
         var turnOffInBuilds = avatar.GetComponentsInChildren<TurnOffInBuild>(true).Where(c => c).ToArray();
@@ -66,7 +41,6 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
             if (!obj.activeSelf)
             {
                 Log($"Game Object \"{obj.FullName()}\" already is inactive");
-                Object.DestroyImmediate(turnOffInBuild);
                 continue;
             }
 
@@ -75,7 +49,6 @@ public class TurnOffInBuildGenerator : Plugin<TurnOffInBuildGenerator>, IMaexPlu
             animObjs.Add(obj);
 #endif
             Log($"Game Object \"{obj.FullName()}\" is now inactive");
-            Object.DestroyImmediate(turnOffInBuild);
         }
 #if MODULAR_AVATAR_EX_DISABLE
         var aac = AacV1.Create(new()

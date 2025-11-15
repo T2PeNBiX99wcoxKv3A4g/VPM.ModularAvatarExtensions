@@ -4,7 +4,7 @@ using UnityEditor;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(NewName))]
-public class NewNameEditor : UnityEditor.Editor
+public class NewNameEditor : MaexEditor
 {
     private const string NewNameProp = "newName";
     private const string ChangeOnInspectorProp = "changeOnInspector";

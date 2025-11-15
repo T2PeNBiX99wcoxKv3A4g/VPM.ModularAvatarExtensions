@@ -1,4 +1,3 @@
-using io.github.ykysnk.utils;
 using UnityEditor;
 using Utils = io.github.ykysnk.utils.Editor.Utils;
 
@@ -24,7 +23,7 @@ public class ConstraintDisablerEditor : UnityEditor.Editor
         serializedObject.Update();
         EditorGUI.BeginChangeCheck();
 
-        var component = (YkyEditorComponent)target;
+        var component = (ConstraintDisabler)target;
 
         component.OnInspectorGUI();
 

@@ -6,16 +6,19 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    public abstract class RootTransformPathBase<T> : YkyEditorComponent, IRootTransformPathBase where T : Component
+    public abstract class RootTransformPathBase<T> : AvatarMaexComponent, IRootTransformPathBase where T : Component
     {
         [Autohook] public T? component;
         public AvatarObjectReference? reference;
         [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
 
-        protected virtual void OnValidate()
+        protected override void OnChange(bool isValidate)
         {
-            if (!component)
-                component = GetComponent<T>();
+            if (isValidate)
+            {
+                if (!component)
+                    component = GetComponent<T>();
+            }
             SetPath();
         }
 
@@ -31,6 +34,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             set => component = (T?)value;
         }
 
+        public bool IsValid() => CheckIsValid();
+
+        protected virtual bool CheckIsValid() => !string.IsNullOrEmpty(reference?.referencePath);
+
         protected virtual void SetPath()
         {
 #if UNITY_EDITOR
@@ -44,11 +51,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (proxy.rootTransform == getTransform) return;
             proxy.rootTransform = getTransform;
 #endif
-        }
-
-        public override void OnInspectorGUI()
-        {
-            SetPath();
         }
     }
 }

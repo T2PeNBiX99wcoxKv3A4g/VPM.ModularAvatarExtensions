@@ -7,6 +7,7 @@
         "VRC.SDKBase",
         "VRC.SDKBase.Editor",
         "nadena.dev.ndmf",
+        "nadena.dev.ndmf.runtime",
         "nadena.dev.modular-avatar.core",
         "io.github.ykysnk.utils.Editor",
         "io.github.ykysnk.utils",

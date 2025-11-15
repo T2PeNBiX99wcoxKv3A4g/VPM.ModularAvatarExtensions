@@ -6,7 +6,8 @@
     "VRC.SDKBase",
     "nadena.dev.modular-avatar.core",
     "io.github.ykysnk.utils",
-    "io.github.ykysnk.auto-hook"
+    "io.github.ykysnk.auto-hook",
+    "nadena.dev.ndmf.runtime"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

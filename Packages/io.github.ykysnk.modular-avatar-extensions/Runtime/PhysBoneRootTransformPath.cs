@@ -14,6 +14,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public List<AvatarObjectReference>? ignoreTransformsReferences;
         public List<AvatarObjectReference>? colliderReferences;
 
+        protected override bool CheckIsValid() => base.CheckIsValid() || ignoreTransformsReferences is { Count: > 0 } || colliderReferences is { Count: > 0 };
+
         protected override void SetPath()
         {
             base.SetPath();

@@ -1,49 +1,22 @@
 using System.Linq;
-using io.github.ykysnk.ModularAvatarExtensions.Editor;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
-using UnityEngine;
-using VRC.Utility;
-
-[assembly: ExportsPlugin(typeof(RootTransformPathGenerator))]
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IMaexPlugin
+[RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
+internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
 {
     public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.RootTransformPath";
-    public override string DisplayName => "Modular Avatar Extensions Root Transform Path Generator";
+    public override string DisplayName => "Modular Avatar Extensions Root Transform Path";
 
-    public void Log(object message) => Debug.Log($"[{DisplayName}] {message}");
-
-    public void Log(string detail, string hint)
-    {
-        var error = new SimpleStringError($"{DisplayName} Warning", detail, hint, ErrorSeverity.Information);
-        ErrorReport.ReportError(error);
-    }
-
-    public void LogError(string detail, string hint)
-    {
-        var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.Error);
-        ErrorReport.ReportError(error);
-    }
-    
-    public void LogNonFatal(string detail, string hint)
-    {
-        var error = new SimpleStringError($"{DisplayName} Failed", detail, hint, ErrorSeverity.NonFatal);
-        ErrorReport.ReportError(error);
-    }
-
-    protected override void Configure() =>
-        InPhase(BuildPhase.Generating).Run($"Generate {DisplayName}", Generate);
-
-    private void Generate(BuildContext ctx)
+    protected override void Execute(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
         var baseType = typeof(RootTransformPathBase<>);
         var assembly = baseType.Assembly;
         var types = assembly.GetTypes()
-            .Where(t => t.IsClass && !t.IsAbstract && !t.IsInterface)
+            .Where(t => t.IsClass && t is { IsAbstract: false, IsInterface: false })
             .Where(t => t.BaseType is { IsGenericType: true } && t.BaseType.GetGenericTypeDefinition() == baseType)
             .ToList();
 
@@ -74,10 +47,10 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
 
                 var setComponentProxy = new RootTransformProxy(setComponent);
 
-                if (string.IsNullOrEmpty(rootTransformPathBase.Reference?.referencePath))
+                if (!rootTransformPathBase.IsValid())
                 {
-                    Log(
-                        $"Root transform reference path of \"{component.FullName()}\" is null, will be skip in the build.",
+                    LogNonFatal(
+                        $"Root transform reference path of \"{component.FullName()}\" is invalid, will be skip in the build.",
                         $"Check the root transform path of {component.FullName()}");
                     continue;
                 }
@@ -94,7 +67,6 @@ public class RootTransformPathGenerator : Plugin<RootTransformPathGenerator>, IM
                     continue;
 
                 setComponentProxy.rootTransform = rootTransform;
-                Object.DestroyImmediate(component);
             }
         }
     }

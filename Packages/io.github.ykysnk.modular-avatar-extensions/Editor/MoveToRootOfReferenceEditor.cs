@@ -4,7 +4,7 @@ using UnityEditor;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(MoveToRootOfReference))]
-public class MoveToRootOfReferenceEditor : UnityEditor.Editor
+public class MoveToRootOfReferenceEditor : MaexEditor
 {
     private const string ReferenceProp = "reference";
     private SerializedProperty? _reference;
