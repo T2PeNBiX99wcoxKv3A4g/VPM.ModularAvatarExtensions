@@ -27,7 +27,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     into obj
                     where obj
                     select obj.transform).ToList();
-            else
+            else if (component.ignoreTransforms is { Count: > 0 })
                 component.ignoreTransforms = new();
 
             if (colliderReferences is { Count: > 0 })
@@ -36,7 +36,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     into obj
                     where obj
                     select obj.GetComponent<VRCPhysBoneColliderBase>()).ToList();
-            else
+            else if (component.colliders is { Count: > 0 })
                 component.colliders = new();
         }
     }
