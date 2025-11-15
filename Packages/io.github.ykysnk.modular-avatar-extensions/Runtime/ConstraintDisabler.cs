@@ -16,9 +16,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected override void OnChange()
         {
             if (constraint == null)
-                constraint = GetComponent<VRCConstraintBase>();
-            if (constraint == null)
-                constraint = GetComponents<Component>().FirstOrDefault(c => c && c is IConstraint);
+                constraint = GetComponents<Component>().FirstOrDefault(c => c && c is VRCConstraintBase or IConstraint);
 
             if (!constraint || RuntimeUtil.IsPlaying || stopDisable) return;
 
