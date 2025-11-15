@@ -22,9 +22,9 @@ public class ConstraintDisablerEditor : MaexEditor
     protected override void OnInspectorGUIDraw()
     {
         var component = (ConstraintDisabler)target;
-        var vrcConstraintBaseCount = component.GetComponents<VRCConstraintBase>().Length;
+        var count = component.GetComponents<VRCConstraintBase>().Length;
 
-        if (vrcConstraintBaseCount > 1)
+        if (count > 1)
             EditorGUILayout.PropertyField(_constraint, Utils.Label("Constraint"));
         EditorGUILayout.PropertyField(_stopDisable, Utils.Label("Stop Disable"));
 

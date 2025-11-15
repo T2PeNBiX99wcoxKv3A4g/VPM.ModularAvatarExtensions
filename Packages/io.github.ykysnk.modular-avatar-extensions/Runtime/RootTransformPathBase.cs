@@ -1,4 +1,3 @@
-using io.github.ykysnk.autohook;
 using io.github.ykysnk.utils;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
@@ -8,7 +7,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 {
     public abstract class RootTransformPathBase<T> : AvatarMaexComponent, IRootTransformPathBase where T : Component
     {
-        [Autohook] public T? component;
+        public T? component;
         public AvatarObjectReference? reference;
         [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
 

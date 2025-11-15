@@ -6,7 +6,6 @@
   "gitDependencies": {},
   "vpmDependencies": {
     "com.vrchat.avatars": ">=3.9.0",
-    "io.github.ykysnk.auto-hook": ">=0.0.3",
     "io.github.ykysnk.utils": ">=0.1.1",
     "nadena.dev.modular-avatar": ">=1.14.3"
   },
