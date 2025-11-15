@@ -5,14 +5,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CustomEditor(typeof(MoveToRoot))]
 public class MoveToRootEditor : MaexEditor
 {
-    public override void OnInspectorGUI()
+    protected override void OnInspectorGUIDraw()
     {
-        serializedObject.Update();
-        EditorGUI.BeginChangeCheck();
-
         EditorGUILayout.HelpBox("This object will be move to avatar root", MessageType.Info, true);
-
-        if (EditorGUI.EndChangeCheck())
-            serializedObject.ApplyModifiedProperties();
     }
 }

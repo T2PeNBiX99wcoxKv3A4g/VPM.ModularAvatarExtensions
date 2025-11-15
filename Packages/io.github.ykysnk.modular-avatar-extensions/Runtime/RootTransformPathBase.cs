@@ -26,11 +26,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public bool IsValid() => CheckIsValid();
 
-        protected override void OnChange(bool isValidate)
+        protected override void OnChange()
         {
-            if (isValidate)
-                if (!component)
-                    component = GetComponent<T>();
+            if (!component)
+                component = GetComponent<T>();
             SetPath();
         }
 

@@ -10,9 +10,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public string? newName;
         public bool changeOnInspector;
 
-        protected override void OnChange(bool isValidate)
+        protected override void OnChange()
         {
-            if (!isValidate) return;
             if (string.IsNullOrEmpty(newName))
                 newName = gameObject.name;
             if (gameObject.name == newName || !changeOnInspector || Utils.IsInPrefab()) return;

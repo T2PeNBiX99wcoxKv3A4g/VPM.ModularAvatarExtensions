@@ -16,16 +16,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual void OnValidate()
         {
             if (RuntimeUtil.IsPlaying) return;
-            OnChange(true);
+            OnChange();
         }
 
-        public virtual void OnInspectorGUI()
-        {
-            if (RuntimeUtil.IsPlaying) return;
-            OnChange(false);
-        }
-
-        protected virtual void OnChange(bool isValidate)
+        protected virtual void OnChange()
         {
         }
     }

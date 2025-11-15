@@ -1,3 +1,4 @@
+using System;
 using io.github.ykysnk.utils.Editor;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -5,17 +6,18 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
+[PublicAPI]
 public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Component
 {
-    [PublicAPI] protected const string ReferenceProp = "reference";
-    [PublicAPI] protected const string ComponentProp = "component";
-    [PublicAPI] protected SerializedProperty? Component;
-    [PublicAPI] protected SerializedProperty? Reference;
+    protected const string ReferenceProp = "reference";
+    protected const string ComponentProp = "component";
+    protected SerializedProperty? Component;
+    protected SerializedProperty? Reference;
 
     protected abstract string ComponentLabel { get; }
     protected abstract string RootTransformType { get; }
 
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
         Reference = serializedObject.FindProperty(ReferenceProp);
         Component = serializedObject.FindProperty(ComponentProp);
@@ -28,11 +30,21 @@ public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Comp
 
         var component = (RootTransformPathBase<T>)target;
 
-        component.OnInspectorGUI();
-
         EditorGUILayout.PropertyField(Component, Utils.Label(ComponentLabel));
         EditorGUILayout.PropertyField(Reference, Utils.Label("Root Transform"));
-        OnInspectorGUIDraw();
+
+        try
+        {
+            OnInspectorGUIDraw();
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+            EditorGUILayout.HelpBox(
+                $"Editor Error: {e.Message}\n{e.StackTrace}",
+                MessageType.Error, true);
+        }
+
         EditorGUILayout.HelpBox(
             string.IsNullOrEmpty(component.reference?.referencePath)
                 ? $"Input any object want to become {RootTransformType} root transform"
@@ -42,9 +54,5 @@ public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Comp
 
         if (EditorGUI.EndChangeCheck())
             serializedObject.ApplyModifiedProperties();
-    }
-
-    protected virtual void OnInspectorGUIDraw()
-    {
     }
 }

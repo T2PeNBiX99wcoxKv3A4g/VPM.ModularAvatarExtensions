@@ -9,16 +9,13 @@ public class MoveToRootOfReferenceEditor : MaexEditor
     private const string ReferenceProp = "reference";
     private SerializedProperty? _reference;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         _reference = serializedObject.FindProperty(ReferenceProp);
     }
 
-    public override void OnInspectorGUI()
+    protected override void OnInspectorGUIDraw()
     {
-        serializedObject.Update();
-        EditorGUI.BeginChangeCheck();
-
         var component = (MoveToRootOfReference)target;
 
         EditorGUILayout.PropertyField(_reference, Utils.Label("Move Transform"));
@@ -27,8 +24,5 @@ public class MoveToRootOfReferenceEditor : MaexEditor
                 ? "Input any object want to move to avatar root"
                 : $"Object of '{component?.reference?.referencePath}' will be move to avatar root", MessageType.Info,
             true);
-
-        if (EditorGUI.EndChangeCheck())
-            serializedObject.ApplyModifiedProperties();
     }
 }

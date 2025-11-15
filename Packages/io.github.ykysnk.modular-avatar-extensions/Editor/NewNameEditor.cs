@@ -11,22 +11,16 @@ public class NewNameEditor : MaexEditor
     private SerializedProperty? _changeOnInspector;
     private SerializedProperty? _newName;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         _newName = serializedObject.FindProperty(NewNameProp);
         _changeOnInspector = serializedObject.FindProperty(ChangeOnInspectorProp);
     }
 
-    public override void OnInspectorGUI()
+    protected override void OnInspectorGUIDraw()
     {
-        serializedObject.Update();
-        EditorGUI.BeginChangeCheck();
-
         EditorGUILayout.PropertyField(_newName, Utils.Label("New Name"));
         EditorGUILayout.PropertyField(_changeOnInspector, Utils.Label("Change On Inspector"));
         EditorGUILayout.HelpBox($"This object will be rename to '{_newName?.stringValue}'", MessageType.Info, true);
-
-        if (EditorGUI.EndChangeCheck())
-            serializedObject.ApplyModifiedProperties();
     }
 }
