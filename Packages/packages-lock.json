@@ -220,12 +220,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "io.github.ykysnk.auto-hook": {
-      "version": "file:io.github.ykysnk.auto-hook",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "io.github.ykysnk.modular-avatar-extensions": {
       "version": "file:io.github.ykysnk.modular-avatar-extensions",
       "depth": 0,

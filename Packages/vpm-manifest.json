@@ -6,9 +6,6 @@
     "io.github.ykysnk.utils": {
       "version": "0.0.1"
     },
-    "io.github.ykysnk.auto-hook": {
-      "version": "0.0.1"
-    },
     "dev.hai-vr.animator-as-code.v1": {
       "version": "1.2.0"
     },
@@ -58,10 +55,6 @@
       "dependencies": {
         "com.vrchat.base": "3.9.0"
       }
-    },
-    "io.github.ykysnk.auto-hook": {
-      "version": "0.0.3",
-      "dependencies": {}
     },
     "dev.hai-vr.animator-as-code.v1": {
       "version": "1.2.0",
