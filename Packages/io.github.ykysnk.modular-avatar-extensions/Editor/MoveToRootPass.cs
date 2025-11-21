@@ -12,7 +12,8 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
     protected override void Execute(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var autoMoveToRoots = avatar.GetComponentsInChildren<MoveToRoot>(true).Where(c => c).ToArray();
+        var autoMoveToRoots = avatar.GetComponentsInChildren<ModularAvatarExtensionsMoveToRoot>(true).Where(c => c)
+            .ToArray();
 
         Log($"Find {autoMoveToRoots.Length} move to root inside \"{avatar.FullName()}\"");
 
@@ -30,7 +31,7 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
         }
 
         var autoMoveToRootOfTransforms =
-            avatar.GetComponentsInChildren<MoveToRootOfReference>(true).Where(c => c).ToArray();
+            avatar.GetComponentsInChildren<ModularAvatarExtensionsMoveToRootOfReference>(true).Where(c => c).ToArray();
 
         Log($"Find {autoMoveToRootOfTransforms.Length} move to root inside \"{avatar.FullName()}\"");
 

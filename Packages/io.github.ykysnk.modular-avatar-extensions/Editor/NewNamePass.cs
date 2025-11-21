@@ -12,7 +12,8 @@ internal class NewNamePass : MaexPass<NewNamePass>
     protected override void Execute(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var autoChangeNames = avatar.GetComponentsInChildren<NewName>(true).Where(c => c).ToArray();
+        var autoChangeNames =
+            avatar.GetComponentsInChildren<ModularAvatarExtensionsNewName>(true).Where(c => c).ToArray();
 
         Log($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
 

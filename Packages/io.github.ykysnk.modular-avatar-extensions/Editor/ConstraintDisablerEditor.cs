@@ -7,7 +7,7 @@ using Utils = io.github.ykysnk.utils.Editor.Utils;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CustomEditor(typeof(ConstraintDisabler))]
+[CustomEditor(typeof(ModularAvatarExtensionsConstraintDisabler))]
 [CanEditMultipleObjects]
 public class ConstraintDisablerEditor : MaexEditor
 {
@@ -18,13 +18,14 @@ public class ConstraintDisablerEditor : MaexEditor
 
     protected override void OnEnable()
     {
+        base.OnEnable();
         _constraint = serializedObject.FindProperty(ConstraintProp);
         _stopDisable = serializedObject.FindProperty(StopDisableProp);
     }
 
     protected override void OnInspectorGUIDraw()
     {
-        var component = (ConstraintDisabler)target;
+        var component = (ModularAvatarExtensionsConstraintDisabler)target;
         var isConstraint = component.constraint is VRCConstraintBase or IConstraint;
         var count = component.GetComponents<Component>().Count(c => c && c is VRCConstraintBase or IConstraint);
 

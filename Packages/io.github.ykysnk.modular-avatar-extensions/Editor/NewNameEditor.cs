@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CustomEditor(typeof(NewName))]
+[CustomEditor(typeof(ModularAvatarExtensionsNewName))]
 public class NewNameEditor : MaexEditor
 {
     private const string NewNameProp = "newName";

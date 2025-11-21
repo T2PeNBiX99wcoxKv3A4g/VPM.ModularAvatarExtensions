@@ -5,7 +5,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("Modular Avatar EX/MAEX New Name")]
-    public class NewName : AvatarMaexComponent
+    public class ModularAvatarExtensionsNewName : AvatarMaexComponent
     {
         public string? newName;
         public bool changeOnInspector;

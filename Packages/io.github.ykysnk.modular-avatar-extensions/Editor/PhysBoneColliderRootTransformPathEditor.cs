@@ -3,7 +3,7 @@ using VRC.SDK3.Dynamics.PhysBone.Components;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CustomEditor(typeof(PhysBoneColliderRootTransformPath))]
+[CustomEditor(typeof(ModularAvatarExtensionsPhysBoneColliderRootTransformPath))]
 [CanEditMultipleObjects]
 public class PhysBoneColliderRootTransformPathEditor : RootTransformPathEditorBase<VRCPhysBoneCollider>
 {

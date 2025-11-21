@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CustomEditor(typeof(MoveToRootOfReference))]
+[CustomEditor(typeof(ModularAvatarExtensionsMoveToRootOfReference))]
 public class MoveToRootOfReferenceEditor : MaexEditor
 {
     private const string ReferenceProp = "reference";
@@ -16,7 +16,7 @@ public class MoveToRootOfReferenceEditor : MaexEditor
 
     protected override void OnInspectorGUIDraw()
     {
-        var component = (MoveToRootOfReference)target;
+        var component = (ModularAvatarExtensionsMoveToRootOfReference)target;
 
         EditorGUILayout.PropertyField(_reference, Utils.Label("Move Transform"));
         EditorGUILayout.HelpBox(

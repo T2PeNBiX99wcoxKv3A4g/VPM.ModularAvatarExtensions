@@ -3,7 +3,7 @@ using VRC.SDK3.Dynamics.Contact.Components;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CustomEditor(typeof(ContactSenderRootTransformPath))]
+[CustomEditor(typeof(ModularAvatarExtensionsContactSenderRootTransformPath))]
 [CanEditMultipleObjects]
 public class ContactSenderRootTransformPathEditor : RootTransformPathEditorBase<VRCContactSender>
 {

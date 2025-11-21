@@ -15,7 +15,8 @@ internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
     protected override void Execute(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var constraintDisables = avatar.GetComponentsInChildren<ConstraintDisabler>(true).Where(c => c).ToArray();
+        var constraintDisables = avatar.GetComponentsInChildren<ModularAvatarExtensionsConstraintDisabler>(true)
+            .Where(c => c).ToArray();
 
         Log($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
 

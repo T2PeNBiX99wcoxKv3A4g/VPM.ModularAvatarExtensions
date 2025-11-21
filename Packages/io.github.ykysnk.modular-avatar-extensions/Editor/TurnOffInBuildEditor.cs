@@ -2,7 +2,7 @@ using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CustomEditor(typeof(TurnOffInBuild))]
+[CustomEditor(typeof(ModularAvatarExtensionsTurnOffInBuild))]
 public class TurnOffInBuildEditor : MaexEditor
 {
     protected override void OnInspectorGUIDraw()

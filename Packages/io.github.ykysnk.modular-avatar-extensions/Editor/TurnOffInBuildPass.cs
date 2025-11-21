@@ -28,7 +28,8 @@ internal class TurnOffInBuildPass : MaexPass<TurnOffInBuildPass>
     protected override void Execute(BuildContext ctx)
     {
         var avatar = ctx.AvatarRootObject;
-        var turnOffInBuilds = avatar.GetComponentsInChildren<TurnOffInBuild>(true).Where(c => c).ToArray();
+        var turnOffInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOffInBuild>(true).Where(c => c)
+            .ToArray();
 #if MODULAR_AVATAR_EX_DISABLE
         var animObjs = new List<GameObject>();
 #endif

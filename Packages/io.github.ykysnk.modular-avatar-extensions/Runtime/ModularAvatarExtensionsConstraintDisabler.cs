@@ -8,7 +8,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("Modular Avatar EX/MAEX Constraint Disabler")]
-    public class ConstraintDisabler : AvatarMaexComponent
+    public class ModularAvatarExtensionsConstraintDisabler : AvatarMaexComponent
     {
         public Component? constraint;
         public bool stopDisable;
