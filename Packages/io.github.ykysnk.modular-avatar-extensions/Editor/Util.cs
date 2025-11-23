@@ -75,8 +75,6 @@ internal static class Util
             {
                 var path = $"Packages/io.github.ykysnk.modular-avatar-extensions/Runtime/{ty.Name}.cs";
 
-                Utils.Log(nameof(ChangeMaexIcons), $"Test: Path {path}");
-
                 if (!File.Exists(path) || AssetImporter.GetAtPath(path) is not MonoImporter monoImporter ||
                     maexIcon == null ||
                     monoImporter.GetIcon() == maexIcon)
