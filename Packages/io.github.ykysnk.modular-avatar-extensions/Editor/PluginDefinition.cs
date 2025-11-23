@@ -21,6 +21,7 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run(NewNamePass.Instance);
         seq.Run(RootTransformPathPass.Instance);
         seq.Run(TurnOffInBuildPass.Instance);
+        seq.Run(TurnOnInBuildPass.Instance);
 
         seq = InPhase(BuildPhase.Transforming);
 
