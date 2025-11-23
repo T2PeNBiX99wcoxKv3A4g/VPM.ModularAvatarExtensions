@@ -15,7 +15,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 internal class TurnOffInBuildPass : MaexPass<TurnOffInBuildPass>
 {
     public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOffInBuild";
-    public override string DisplayName => "Modular Avatar Extensions Turn Off In Build Generator";
+    public override string DisplayName => "Modular Avatar Extensions Turn Off In Build";
 
 #if MODULAR_AVATAR_EX_DISABLE
     private const string SystemName = "Modular Avatar EX";

@@ -7,7 +7,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 internal class TurnOnInBuildPass : MaexPass<TurnOnInBuildPass>
 {
     public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOnInBuild";
-    public override string DisplayName => "Modular Avatar Extensions Turn On In Build Generator";
+    public override string DisplayName => "Modular Avatar Extensions Turn On In Build";
 
     protected override void Execute(BuildContext ctx)
     {

@@ -7,7 +7,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 internal class NewNamePass : MaexPass<NewNamePass>
 {
     public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.NewName";
-    public override string DisplayName => "Modular Avatar Extensions New Name Generator";
+    public override string DisplayName => "Modular Avatar Extensions New Name";
 
     protected override void Execute(BuildContext ctx)
     {
