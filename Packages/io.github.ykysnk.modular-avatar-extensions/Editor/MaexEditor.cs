@@ -1,9 +1,7 @@
 using io.github.ykysnk.utils.Editor;
-using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-[CanEditMultipleObjects]
 public abstract class MaexEditor : BasicEditor
 {
     public override void OnInspectorGUI()

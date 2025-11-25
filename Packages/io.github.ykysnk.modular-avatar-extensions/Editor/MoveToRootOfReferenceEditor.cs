@@ -4,6 +4,7 @@ using UnityEditor;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsMoveToRootOfReference))]
+[CanEditMultipleObjects]
 public class MoveToRootOfReferenceEditor : MaexEditor
 {
     private const string ReferenceProp = "reference";

@@ -3,6 +3,7 @@ using UnityEditor;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsEditorOnly))]
+[CanEditMultipleObjects]
 public class EditorOnlyEditor : MaexEditor
 {
     protected override void OnInspectorGUIDraw()

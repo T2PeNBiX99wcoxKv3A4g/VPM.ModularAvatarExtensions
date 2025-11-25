@@ -4,6 +4,7 @@ using VRC.SDK3.Dynamics.Contact.Components;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsContactReceiverRootTransformPath))]
+[CanEditMultipleObjects]
 public class ContactReceiverRootTransformPathEditor : RootTransformPathEditorBase<VRCContactReceiver>
 {
     protected override string ComponentLabel => "Contact Receiver";

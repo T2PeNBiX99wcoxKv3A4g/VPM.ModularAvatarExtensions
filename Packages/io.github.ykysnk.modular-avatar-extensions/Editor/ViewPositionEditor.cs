@@ -3,6 +3,7 @@ using UnityEditor;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsViewPosition))]
+[CanEditMultipleObjects]
 public class ViewPositionEditor : MaexEditor
 {
     protected override void OnInspectorGUIDraw()
