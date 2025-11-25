@@ -27,8 +27,8 @@ internal class EditorOnlyPass : MaexPass<EditorOnlyPass>
 
             foreach (var component in components)
             {
-                if (component is not ModularAvatarBoneProxy and VRCConstraintBase) continue;
-                if (component is not IConstraint) continue;
+                if (component is not (ModularAvatarBoneProxy or VRCConstraintBase or IConstraint))
+                    continue;
                 Object.DestroyImmediate(component);
             }
 
