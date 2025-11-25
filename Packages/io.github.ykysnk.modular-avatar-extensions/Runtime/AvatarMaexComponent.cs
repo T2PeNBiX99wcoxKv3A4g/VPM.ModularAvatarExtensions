@@ -22,5 +22,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual void OnChange()
         {
         }
+
+        public virtual void OnInspectorGUI()
+        {
+        }
     }
 }
