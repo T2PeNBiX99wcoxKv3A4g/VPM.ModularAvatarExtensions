@@ -5,6 +5,7 @@ using VRC.SDKBase;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
+    [DisallowMultipleComponent]
     [AddComponentMenu("Modular Avatar EX/MAEX View Position")]
     public class ModularAvatarExtensionsViewPosition : AvatarMaexComponent
     {

@@ -36,10 +36,7 @@ internal static class Util
     // Refs: nadena.dev.modular_avatar.core.editor.Util:DisableMAGizmoIcons
     private static void DisableMaexGizmoIcons()
     {
-        var dateTime = DateTime.Now.ToString("yyyy-MM-dd");
-
-        // Disable icons then waiting util next day
-        if (SessionState.GetString("MAEXIconsDisabled", "") == dateTime)
+        if (SessionState.GetBool("MAEXIconsDisabled", false))
             return;
 
         var annotations = (Array)Traverse.CreateWithType("UnityEditor.AnnotationUtility").Method("GetAnnotations")
@@ -59,7 +56,7 @@ internal static class Util
                 GizmoUtility.SetIconEnabled(ty, false);
 
         Utils.Log(nameof(DisableMaexGizmoIcons), "Disable MAEX gizmo icons");
-        SessionState.SetString("MAEXIconsDisabled", dateTime);
+        SessionState.SetBool("MAEXIconsDisabled", true);
     }
 
     private static void ChangeMaexIcons()
