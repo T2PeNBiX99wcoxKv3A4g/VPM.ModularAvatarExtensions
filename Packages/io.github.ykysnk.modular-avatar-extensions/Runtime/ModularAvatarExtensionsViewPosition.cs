@@ -17,11 +17,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             rootObj?.TryGetComponent<VRC_AvatarDescriptor>(out avatarDescriptor);
         }
 
+#if UNITY_EDITOR
         public override void OnInspectorGUI()
         {
             if (avatarDescriptor == null) return;
             Undo.RecordObject(transform, "");
             transform.position = avatarDescriptor.ViewPosition;
         }
+#endif
     }
 }
