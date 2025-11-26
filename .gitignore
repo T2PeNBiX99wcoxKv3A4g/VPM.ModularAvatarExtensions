@@ -64,5 +64,5 @@ Assets/PackageMakerWindowData.asset*
 .vscode
 
 Assets/*
-!Assets/XR*
 UserSettings/*
+!Assets/Test*
