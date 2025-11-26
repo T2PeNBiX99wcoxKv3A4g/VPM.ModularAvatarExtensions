@@ -30,7 +30,10 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run("Purge ModularAvatar EX components", ctx =>
         {
             foreach (var component in ctx.AvatarRootTransform.GetComponentsInChildren<AvatarMaexComponent>(true))
+            {
+                if (component.DontDestroyOnBuild) continue;
                 Object.DestroyImmediate(component);
+            }
         });
     }
 }

@@ -9,6 +9,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [DefaultExecutionOrder(-9999)]
     public abstract class AvatarMaexComponent : MonoBehaviour, IEditorOnly
     {
+        public virtual bool DontDestroyOnBuild { get; set; }
+
         protected virtual void OnDestroy()
         {
         }
