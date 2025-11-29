@@ -1,11 +1,13 @@
 using System.Linq;
+using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using nadena.dev.modular_avatar.core;
 using UnityEditor;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-public static class RootTransformPathMenu
+internal static class RootTransformPathMenu
 {
     private const string MenuPath = "GameObject/Modular Avatar EX/Add Root Transform Path";
 
@@ -34,7 +36,9 @@ public static class RootTransformPathMenu
             if (typeDefinition == null || typeDefinition.Length < 1) continue;
 
             var findType = typeDefinition[0];
-            var components = obj.GetComponentsInChildren(findType, true);
+            var components = obj.GetComponentsInChildren(findType, true) ?? new Component[]
+            {
+            };
 
             foreach (var component in components)
             {
@@ -42,13 +46,23 @@ public static class RootTransformPathMenu
 
                 if (component.TryGetComponent(type, out _)) continue;
 
-                var addComponent = component.gameObject.AddComponent(type);
+                Undo.RecordObject(component, $"{component.FullName()} change");
+
+                var addComponent = Undo.AddComponent(component.gameObject, type);
 
                 if (addComponent is not IRootTransformPathBase rootTransformPathBase) continue;
 
                 var reference = new AvatarObjectReference();
+                var rootTransform = componentProxy.rootTransform;
 
-                reference.Set(componentProxy.rootTransform?.gameObject);
+                if (rootTransform == null)
+                {
+                    Utils.LogWarning(nameof(RootTransformPathMenu),
+                        $"Root Transform is null, skip this component. ({component.FullName()})");
+                    continue;
+                }
+
+                reference.Set(rootTransform.gameObject);
                 rootTransformPathBase.Reference = reference;
             }
         }

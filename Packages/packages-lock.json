@@ -220,6 +220,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "dev.sakurayuki.uniasset": {
+      "version": "file:dev.sakurayuki.uniasset",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "io.github.ykysnk.modular-avatar-extensions": {
       "version": "file:io.github.ykysnk.modular-avatar-extensions",
       "depth": 0,
