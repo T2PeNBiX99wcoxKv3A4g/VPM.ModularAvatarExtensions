@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -6,8 +7,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class TurnOffInBuildEditor : MaexEditor
 {
-    protected override void OnInspectorGUIDraw()
+    protected override void OnMaexInspectorGUI()
     {
-        EditorGUILayout.HelpBox("This object will be turn off in avatar building", MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.turn_off_in_build.info".L(Util.LocalizationID), MessageType.Info, true);
     }
 }

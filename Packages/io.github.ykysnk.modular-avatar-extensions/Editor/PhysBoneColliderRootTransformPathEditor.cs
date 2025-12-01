@@ -7,6 +7,5 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class PhysBoneColliderRootTransformPathEditor : RootTransformPathEditorBase<VRCPhysBoneCollider>
 {
-    protected override string ComponentLabel => "Phys Bone Collider";
-    protected override string RootTransformType => "phys bone collider";
+    protected override string RootTransformType => "phys_bone_collider";
 }

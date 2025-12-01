@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -14,4 +15,12 @@ public abstract class MaexEditor : BasicEditor
             component.OnInspectorGUI();
         }
     }
+
+    protected override void OnInspectorGUIDraw()
+    {
+        OnMaexInspectorGUI();
+        GlobalLocalization.SelectLanguageGUI(Util.LocalizationID);
+    }
+
+    protected abstract void OnMaexInspectorGUI();
 }

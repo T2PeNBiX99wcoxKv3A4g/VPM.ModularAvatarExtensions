@@ -1,4 +1,4 @@
-using io.github.ykysnk.utils.Editor;
+using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -18,10 +18,11 @@ public class NewNameEditor : MaexEditor
         _changeOnInspector = serializedObject.FindProperty(ChangeOnInspectorProp);
     }
 
-    protected override void OnInspectorGUIDraw()
+    protected override void OnMaexInspectorGUI()
     {
-        EditorGUILayout.PropertyField(_newName, Utils.Label("New Name"));
-        EditorGUILayout.PropertyField(_changeOnInspector, Utils.Label("Change On Inspector"));
-        EditorGUILayout.HelpBox($"This object will be rename to '{_newName?.stringValue}'", MessageType.Info, true);
+        EditorGUILayout.PropertyField(_newName, "label.new_name.new_name".G(Util.LocalizationID));
+        EditorGUILayout.PropertyField(_changeOnInspector, "label.new_name.change_on_inspector".G(Util.LocalizationID));
+        EditorGUILayout.HelpBox(string.Format("label.new_name.info".L(Util.LocalizationID), _newName?.stringValue),
+            MessageType.Info, true);
     }
 }

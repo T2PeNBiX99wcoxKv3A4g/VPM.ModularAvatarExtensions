@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -6,13 +7,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class ViewPositionEditor : MaexEditor
 {
-    protected override void OnInspectorGUIDraw()
+    protected override void OnMaexInspectorGUI()
     {
         var viewPosition = (ModularAvatarExtensionsViewPosition)target;
 
         if (viewPosition.avatarDescriptor == null)
-            EditorGUILayout.HelpBox("Please add any avatar descriptor in avatar root", MessageType.Error, true);
+            EditorGUILayout.HelpBox("label.view_position.info".L(Util.LocalizationID), MessageType.Error, true);
 
-        EditorGUILayout.HelpBox("This object will be follow the view position", MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.view_position.info2".L(Util.LocalizationID), MessageType.Info, true);
     }
 }

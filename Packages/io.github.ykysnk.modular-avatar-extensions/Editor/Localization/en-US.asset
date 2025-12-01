@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d4aceda1b14230b2aad2be71d6691b, type: 3}
+  m_Name: en-US
+  m_EditorClassIdentifier: 
+  localizationID: io.github.ykysnk.modular-avatar-extensions
+  displayName: English
+  translates:
+  - key: label.language
+    translate: Language
+    tooltip: Change your target language in the editor.
+  - key: label.constraint_disabler.constraint
+    translate: Constraint
+    tooltip: Constraint Component
+  - key: label.constraint_disabler.stop_disable
+    translate: Stop Inspector Disable
+    tooltip: Stop inspector disable update for test
+  - key: label.constraint_disabler.constraint_error
+    translate: The target component is not constraint component
+    tooltip: 
+  - key: label.constraint_disabler.info
+    translate: The constraint component will be disable, active when avatar is in
+      building
+    tooltip: 
+  - key: label.editor_only.info
+    translate: This object will be mark as editor only, all bone proxy or constraint
+      will be remove. (If want to remove this object in build, just change tag to
+      'EditorOnly')
+    tooltip: 
+  - key: label.move_to_root.info
+    translate: This object will be move to avatar root
+    tooltip: 
+  - key: label.move_to_root_of_reference.reference
+    translate: Move Transform
+    tooltip: Reference of transform want to move to root
+  - key: label.move_to_root_of_reference.info
+    translate: Input any object want to move to avatar root
+    tooltip: 
+  - key: label.move_to_root_of_reference.info2
+    translate: Object of '{0}' will be move to avatar root
+    tooltip: 
+  - key: label.new_name.new_name
+    translate: New Name
+    tooltip: The new name of this object
+  - key: label.new_name.change_on_inspector
+    translate: Change On Inspector
+    tooltip: Change name in inspector
+  - key: label.new_name.info
+    translate: This object will be rename to '{0}'
+    tooltip: 
+  - key: label.phys_bone_root_transform_path.set_ignore_transforms
+    translate: Set Ignore Transforms
+    tooltip: 
+  - key: label.phys_bone_root_transform_path.ignore_transforms
+    translate: Ignore Transforms
+    tooltip: 
+  - key: label.phys_bone_root_transform_path.set_colliders
+    translate: Set Colliders
+    tooltip: 
+  - key: label.phys_bone_root_transform_path.colliders
+    translate: Colliders
+    tooltip: 
+  - key: label.root_transform_path_base.root_transform
+    translate: Root Transform
+    tooltip: 
+  - key: label.root_transform_path_base.contact_receiver.component
+    translate: Contact Receiver
+    tooltip: 
+  - key: label.root_transform_path_base.contact_receiver.info
+    translate: Input any object want to become contact receiver root transform
+    tooltip: 
+  - key: label.root_transform_path_base.contact_receiver.info2
+    translate: Object of '{0}' will become contact receiver root transform
+    tooltip: 
+  - key: label.root_transform_path_base.contact_sender.component
+    translate: Contact Sender
+    tooltip: 
+  - key: label.root_transform_path_base.contact_sender.info
+    translate: Input any object want to become contact sender root transform
+    tooltip: 
+  - key: label.root_transform_path_base.contact_sender.info2
+    translate: Object of '{0}' will become contact sender root transform
+    tooltip: 
+  - key: label.root_transform_path_base.phys_bone_collider.component
+    translate: Phys Bone Collider
+    tooltip: 
+  - key: label.root_transform_path_base.phys_bone_collider.info
+    translate: Input any object want to become phys bone collider root transform
+    tooltip: 
+  - key: label.root_transform_path_base.phys_bone_collider.info2
+    translate: Object of '{0}' will become phys bone collider root transform
+    tooltip: 
+  - key: label.root_transform_path_base.phys_bone.component
+    translate: Phys Bone
+    tooltip: 
+  - key: label.root_transform_path_base.phys_bone.info
+    translate: Input any object want to become phys bone root transform
+    tooltip: 
+  - key: label.root_transform_path_base.phys_bone.info2
+    translate: Object of '{0}' will become phys bone root transform
+    tooltip: 
+  - key: label.turn_off_in_build.info
+    translate: This object will be turn off in avatar building
+    tooltip: 
+  - key: label.turn_on_in_build.info
+    translate: This object will be turn on in avatar building
+    tooltip: 
+  - key: label.view_position.info
+    translate: Please add any avatar descriptor in avatar root
+    tooltip: 
+  - key: label.view_position.info2
+    translate: This object will be follow the view position
+    tooltip: 

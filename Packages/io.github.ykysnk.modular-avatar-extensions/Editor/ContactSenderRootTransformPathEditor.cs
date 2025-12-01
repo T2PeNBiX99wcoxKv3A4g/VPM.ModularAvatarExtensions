@@ -7,6 +7,5 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class ContactSenderRootTransformPathEditor : RootTransformPathEditorBase<VRCContactSender>
 {
-    protected override string ComponentLabel => "Contact Sender";
-    protected override string RootTransformType => "contact sender";
+    protected override string RootTransformType => "contact_sender";
 }

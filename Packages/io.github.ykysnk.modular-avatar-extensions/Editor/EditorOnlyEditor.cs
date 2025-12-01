@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -6,10 +7,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class EditorOnlyEditor : MaexEditor
 {
-    protected override void OnInspectorGUIDraw()
+    protected override void OnMaexInspectorGUI()
     {
-        EditorGUILayout.HelpBox(
-            "This object will be mark as editor only, all bone proxy or constraint will be remove. (If want to remove this object in build, just change tag to 'EditorOnly')",
-            MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.editor_only.info".L(Util.LocalizationID), MessageType.Info, true);
     }
 }
