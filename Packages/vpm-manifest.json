@@ -29,6 +29,9 @@
     },
     "dev.sakurayuki.uniasset": {
       "version": "1.0.6"
+    },
+    "io.github.ykysnk.localization": {
+      "version": "0.0.1"
     }
   },
   "locked": {
@@ -44,7 +47,7 @@
       }
     },
     "io.github.ykysnk.utils": {
-      "version": "0.6.0",
+      "version": "0.8.0",
       "dependencies": {
         "com.vrchat.base": ">=3.9.0"
       }
@@ -97,6 +100,13 @@
     "dev.sakurayuki.uniasset": {
       "version": "1.0.6",
       "dependencies": {}
+    },
+    "io.github.ykysnk.localization": {
+      "version": "0.0.4",
+      "dependencies": {
+        "com.vrchat.base": ">=3.10.0",
+        "io.github.ykysnk.utils": ">=0.8.0"
+      }
     }
   }
 }
