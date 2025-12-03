@@ -10,14 +10,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [ExecuteInEditMode]
     public class ModularAvatarExtensionsTransformFollower : AvatarMaexComponent
     {
-        public bool isLock = true;
+        public bool isLock;
         public AvatarObjectReference? reference;
         public Vector3 positionOffset = Vector3.zero;
         public Vector3 rotationOffset = Vector3.zero;
         public Vector3 scaleOffset = Vector3.zero;
         public BooleanVector3 isLockPosition = BooleanVector3.True;
         public BooleanVector3 isLockRotation = BooleanVector3.True;
-        public BooleanVector3 isLockScale;
+        public BooleanVector3 isLockScale = BooleanVector3.True;
 
         private void Update()
         {

@@ -8,6 +8,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [ExecuteInEditMode]
     public class ModularAvatarExtensionsWorldScale : AvatarMaexComponent
     {
+        public bool editorOnly;
+
         private void Update()
         {
             if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying()) return;

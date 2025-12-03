@@ -9,7 +9,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [ExecuteInEditMode]
     public class ModularAvatarExtensionsTransformLock : AvatarMaexComponent
     {
-        public bool isLock = true;
+        public bool isLock;
         public Vector3 lockPosition = Vector3.zero;
         public Vector3 lockRotation = Vector3.zero;
         public Vector3 lockScale = Vector3.one;

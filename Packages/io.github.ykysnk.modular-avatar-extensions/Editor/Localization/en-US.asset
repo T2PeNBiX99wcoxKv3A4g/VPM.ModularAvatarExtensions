@@ -191,3 +191,6 @@ MonoBehaviour:
   - key: label.transform_follower.is_lock_scale
     translate: Lock Scale
     tooltip: 
+  - key: label.world_scale.editor_only
+    translate: Editor Only
+    tooltip: 

@@ -24,6 +24,7 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run(TurnOnInBuildPass.Instance);
         seq.Run(EditorOnlyPass.Instance);
         seq.Run(ViewPositionPass.Instance);
+        seq.Run(WorldScalePass.Instance);
 
         seq = InPhase(BuildPhase.Transforming);
 

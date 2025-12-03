@@ -187,3 +187,6 @@ MonoBehaviour:
   - key: label.transform_follower.is_lock_scale
     translate: "\u30B9\u30B1\u30FC\u30EB\u304C\u30ED\u30C3\u30AF\u3059\u308B"
     tooltip: 
+  - key: label.world_scale.editor_only
+    translate: "\u30A8\u30C7\u30A3\u30BF\u30FC\u306E\u307F"
+    tooltip: 
