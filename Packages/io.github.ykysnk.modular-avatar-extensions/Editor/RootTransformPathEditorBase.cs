@@ -37,20 +37,20 @@ public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Comp
 
             if (count > 1)
                 EditorGUILayout.PropertyField(Component,
-                    $"label.root_transform_path_base.{RootTransformType}.component".G(Util.LocalizationID));
+                    $"label.root_transform_path_base.{RootTransformType}.component".G(LocalizationID));
             EditorGUILayout.PropertyField(Reference,
-                "label.root_transform_path_base.root_transform".G(Util.LocalizationID));
+                "label.root_transform_path_base.root_transform".G(LocalizationID));
 
             OnMaexInspectorGUI();
 
             EditorGUILayout.HelpBox(
                 string.IsNullOrEmpty(component.reference?.referencePath)
-                    ? $"label.root_transform_path_base.{RootTransformType}.info".L(Util.LocalizationID)
-                    : string.Format($"label.root_transform_path_base.{RootTransformType}.info2".L(Util.LocalizationID),
+                    ? $"label.root_transform_path_base.{RootTransformType}.info".L(LocalizationID)
+                    : string.Format($"label.root_transform_path_base.{RootTransformType}.info2".L(LocalizationID),
                         component.reference?.referencePath),
                 MessageType.Info,
                 true);
-            GlobalLocalization.SelectLanguageGUI(Util.LocalizationID);
+            GlobalLocalization.SelectLanguageGUI(LocalizationID);
         }
         catch (Exception e)
         {

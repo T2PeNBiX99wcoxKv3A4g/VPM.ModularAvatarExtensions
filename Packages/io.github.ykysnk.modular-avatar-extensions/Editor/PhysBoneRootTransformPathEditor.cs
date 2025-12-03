@@ -32,12 +32,12 @@ public class PhysBoneRootTransformPathEditor : RootTransformPathEditorBase<VRCPh
     protected override void OnMaexInspectorGUI()
     {
         EditorGUILayout.PropertyField(_setIgnoreTransformsReferences,
-            "label.phys_bone_root_transform_path.set_ignore_transforms".G(Util.LocalizationID));
+            "label.phys_bone_root_transform_path.set_ignore_transforms".G(LocalizationID));
         EditorGUILayout.PropertyField(_ignoreTransformsReferences,
-            "label.phys_bone_root_transform_path.ignore_transforms".G(Util.LocalizationID));
+            "label.phys_bone_root_transform_path.ignore_transforms".G(LocalizationID));
         EditorGUILayout.PropertyField(_setCollidersReferences,
-            "label.phys_bone_root_transform_path.set_colliders".G(Util.LocalizationID));
+            "label.phys_bone_root_transform_path.set_colliders".G(LocalizationID));
         EditorGUILayout.PropertyField(_colliderReferencesReferences,
-            "label.phys_bone_root_transform_path.colliders".G(Util.LocalizationID));
+            "label.phys_bone_root_transform_path.colliders".G(LocalizationID));
     }
 }

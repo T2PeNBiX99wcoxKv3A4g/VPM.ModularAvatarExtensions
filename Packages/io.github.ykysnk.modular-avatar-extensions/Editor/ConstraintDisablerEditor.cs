@@ -30,14 +30,14 @@ public class ConstraintDisablerEditor : MaexEditor
         var count = component.GetComponents<Component>().Count(c => c && c is VRCConstraintBase or IConstraint);
 
         if (count > 1)
-            EditorGUILayout.PropertyField(_constraint, "label.constraint_disabler.constraint".G(Util.LocalizationID));
-        EditorGUILayout.PropertyField(_stopDisable, "label.constraint_disabler.stop_disable".G(Util.LocalizationID));
+            EditorGUILayout.PropertyField(_constraint, "label.constraint_disabler.constraint".G(LocalizationID));
+        EditorGUILayout.PropertyField(_stopDisable, "label.constraint_disabler.stop_disable".G(LocalizationID));
 
         if (!isConstraint)
-            EditorGUILayout.HelpBox("label.constraint_disabler.constraint_error".L(Util.LocalizationID),
+            EditorGUILayout.HelpBox("label.constraint_disabler.constraint_error".L(LocalizationID),
                 MessageType.Error, true);
 
-        EditorGUILayout.HelpBox("label.constraint_disabler.info".L(Util.LocalizationID), MessageType.Info,
+        EditorGUILayout.HelpBox("label.constraint_disabler.info".L(LocalizationID), MessageType.Info,
             true);
     }
 }

@@ -19,11 +19,11 @@ public class MoveToRootOfReferenceEditor : MaexEditor
     {
         var component = (ModularAvatarExtensionsMoveToRootOfReference)target;
 
-        EditorGUILayout.PropertyField(_reference, "label.move_to_root_of_reference.reference".G(Util.LocalizationID));
+        EditorGUILayout.PropertyField(_reference, "label.move_to_root_of_reference.reference".G(LocalizationID));
         EditorGUILayout.HelpBox(
             string.IsNullOrEmpty(component?.reference?.referencePath)
-                ? "label.move_to_root_of_reference.info".L(Util.LocalizationID)
-                : string.Format("label.move_to_root_of_reference.info2".L(Util.LocalizationID),
+                ? "label.move_to_root_of_reference.info".L(LocalizationID)
+                : string.Format("label.move_to_root_of_reference.info2".L(LocalizationID),
                     component?.reference?.referencePath), MessageType.Info,
             true);
     }

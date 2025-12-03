@@ -9,6 +9,7 @@ public class NewNameEditor : MaexEditor
 {
     private const string NewNameProp = "newName";
     private const string ChangeOnInspectorProp = "changeOnInspector";
+
     private SerializedProperty? _changeOnInspector;
     private SerializedProperty? _newName;
 
@@ -20,9 +21,9 @@ public class NewNameEditor : MaexEditor
 
     protected override void OnMaexInspectorGUI()
     {
-        EditorGUILayout.PropertyField(_newName, "label.new_name.new_name".G(Util.LocalizationID));
-        EditorGUILayout.PropertyField(_changeOnInspector, "label.new_name.change_on_inspector".G(Util.LocalizationID));
-        EditorGUILayout.HelpBox(string.Format("label.new_name.info".L(Util.LocalizationID), _newName?.stringValue),
+        EditorGUILayout.PropertyField(_newName, "label.new_name.new_name".G(LocalizationID));
+        EditorGUILayout.PropertyField(_changeOnInspector, "label.new_name.change_on_inspector".G(LocalizationID));
+        EditorGUILayout.HelpBox(string.Format("label.new_name.info".L(LocalizationID), _newName?.stringValue),
             MessageType.Info, true);
     }
 }

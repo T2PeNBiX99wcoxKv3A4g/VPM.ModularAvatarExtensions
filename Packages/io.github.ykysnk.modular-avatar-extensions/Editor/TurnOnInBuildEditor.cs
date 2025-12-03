@@ -9,6 +9,6 @@ public class TurnOnInBuildEditor : MaexEditor
 {
     protected override void OnMaexInspectorGUI()
     {
-        EditorGUILayout.HelpBox("label.turn_on_in_build.info".L(Util.LocalizationID), MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.turn_on_in_build.info".L(LocalizationID), MessageType.Info, true);
     }
 }

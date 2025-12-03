@@ -9,6 +9,6 @@ public class EditorOnlyEditor : MaexEditor
 {
     protected override void OnMaexInspectorGUI()
     {
-        EditorGUILayout.HelpBox("label.editor_only.info".L(Util.LocalizationID), MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.editor_only.info".L(LocalizationID), MessageType.Info, true);
     }
 }

@@ -14,8 +14,6 @@ internal static class Util
     private const string IconPath =
         "Packages/io.github.ykysnk.modular-avatar-extensions/Runtime/Icons/Icon_MAEX_Script.png";
 
-    internal const string LocalizationID = "io.github.ykysnk.modular-avatar-extensions";
-
     static Util() => EditorApplication.update += TryRun;
 
     private static void TryRun()

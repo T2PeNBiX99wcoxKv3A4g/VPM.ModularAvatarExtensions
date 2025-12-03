@@ -22,8 +22,8 @@ MonoBehaviour:
     translate: Constraint
     tooltip: Constraint Component
   - key: label.constraint_disabler.stop_disable
-    translate: Stop Inspector Disable
-    tooltip: Stop inspector disable update for test
+    translate: Disable inactive inside inspector
+    tooltip: 
   - key: label.constraint_disabler.constraint_error
     translate: The target component is not constraint component
     tooltip: 
@@ -119,4 +119,75 @@ MonoBehaviour:
     tooltip: 
   - key: label.view_position.info2
     translate: This object will be follow the view position
+    tooltip: 
+  - key: label.view_position.is_lock
+    translate: Lock
+    tooltip: 
+  - key: label.transform_lock.lock_position
+    translate: Position
+    tooltip: 
+  - key: label.transform_lock.lock_rotation
+    translate: Rotation
+    tooltip: 
+  - key: label.transform_lock.lock_scale
+    translate: Scale
+    tooltip: 
+  - key: label.transform_lock.is_lock_position
+    translate: Lock Position
+    tooltip: 
+  - key: label.transform_lock.is_lock_rotation
+    translate: Lock Rotation
+    tooltip: 
+  - key: label.transform_lock.is_lock_scale
+    translate: Lock Scale
+    tooltip: 
+  - key: label.transform_lock.warning
+    translate: '''Transform Lock'' only work inside editor, if you want to bind position
+      to avatar bone, please use ''Bone Proxy''.'
+    tooltip: 
+  - key: label.transform_follower.reference
+    translate: Target
+    tooltip: 
+  - key: label.transform_follower.position_offset
+    translate: Position Offset
+    tooltip: 
+  - key: label.transform_follower.rotation_offset
+    translate: Rotation Offset
+    tooltip: 
+  - key: label.transform_follower.is_lock_position
+    translate: Lock Position
+    tooltip: 
+  - key: label.transform_follower.is_lock_rotation
+    translate: Lock Rotation
+    tooltip: 
+  - key: label.transform_follower.warning
+    translate: '''Transform Lock'' only work inside editor, if you want to bind position
+      to avatar bone, please use ''Bone Proxy''.'
+    tooltip: 
+  - key: label.transform_follower.activate_button
+    translate: Activate
+    tooltip: 
+  - key: label.transform_follower.zero_button
+    translate: Zero
+    tooltip: 
+  - key: label.transform_lock.activate_button
+    translate: Activate
+    tooltip: 
+  - key: label.transform_lock.zero_button
+    translate: Zero
+    tooltip: 
+  - key: label.transform_follower.is_lock
+    translate: Lock
+    tooltip: 
+  - key: label.transform_lock.is_lock
+    translate: Lock
+    tooltip: 
+  - key: label.world_scale.info
+    translate: This object scale will be match to world scale
+    tooltip: 
+  - key: label.transform_follower.scale_offset
+    translate: Scale Offset
+    tooltip: 
+  - key: label.transform_follower.is_lock_scale
+    translate: Lock Scale
     tooltip: 

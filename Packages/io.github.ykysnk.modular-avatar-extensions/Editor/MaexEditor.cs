@@ -5,6 +5,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 public abstract class MaexEditor : BasicEditor
 {
+    internal const string LocalizationID = "io.github.ykysnk.modular-avatar-extensions";
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -19,7 +21,7 @@ public abstract class MaexEditor : BasicEditor
     protected override void OnInspectorGUIDraw()
     {
         OnMaexInspectorGUI();
-        GlobalLocalization.SelectLanguageGUI(Util.LocalizationID);
+        GlobalLocalization.SelectLanguageGUI(LocalizationID);
     }
 
     protected abstract void OnMaexInspectorGUI();
