@@ -2,7 +2,9 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
+#if MAEX_VRCSDK3_BASE
 using VRC.Dynamics;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
@@ -25,8 +27,16 @@ internal class ConstraintDisablerEditor : MaexEditor
     protected override void OnInnerInspectorGUI()
     {
         var component = (ModularAvatarExtensionsConstraintDisabler)target;
-        var isConstraint = component.constraint is VRCConstraintBase or IConstraint;
-        var count = component.GetComponents<Component>().Count(c => c && c is VRCConstraintBase or IConstraint);
+        var isConstraint = component.constraint is
+#if MAEX_VRCSDK3_BASE
+            VRCConstraintBase or
+#endif
+            IConstraint;
+        var count = component.GetComponents<Component>().Count(c => c && c is
+#if MAEX_VRCSDK3_BASE
+            VRCConstraintBase or
+#endif
+            IConstraint);
 
         if (count > 1)
             EditorGUILayout.PropertyField(_constraint, "label.constraint_disabler.constraint".G());

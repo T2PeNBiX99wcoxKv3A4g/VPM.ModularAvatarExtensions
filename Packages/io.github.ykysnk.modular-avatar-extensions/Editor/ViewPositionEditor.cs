@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -25,3 +26,4 @@ internal class ViewPositionEditor : MaexEditor
         EditorGUILayout.HelpBox("label.view_position.info2".S(), MessageType.Info, true);
     }
 }
+#endif

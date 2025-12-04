@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using UnityEngine;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 
@@ -8,3 +9,4 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     {
     }
 }
+#endif

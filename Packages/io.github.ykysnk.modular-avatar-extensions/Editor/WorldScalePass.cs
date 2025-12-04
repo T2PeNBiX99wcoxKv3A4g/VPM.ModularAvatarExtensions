@@ -1,10 +1,14 @@
+#if MAEX_VRCSDK3_BASE
+using VRC.Dynamics;
+using VRC.SDK3.Dynamics.Constraint.Components;
+#else
+using UnityEngine.Animations;
+#endif
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 using UnityEditor;
 using UnityEngine;
-using VRC.Dynamics;
-using VRC.SDK3.Dynamics.Constraint.Components;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
@@ -35,10 +39,23 @@ internal class WorldScalePass : MaexPass<WorldScalePass>
         foreach (var worldScale in worldScales)
         {
             var obj = worldScale.gameObject;
+
+#if MAEX_VRCSDK3_BASE
             var constraint = obj.AddComponent<VRCScaleConstraint>();
             var newSource = new VRCConstraintSource(worldPrefab.transform, 1f, Vector3.zero, Vector3.zero);
             constraint.Sources.Add(newSource);
             constraint.ZeroConstraint();
+#else
+            var constraint = obj.AddComponent<ScaleConstraint>();
+            var newSource = new ConstraintSource
+            {
+                sourceTransform = worldPrefab.transform,
+                weight = 1f
+            };
+            constraint.AddSource(newSource);
+            constraint.locked = true;
+            constraint.constraintActive = true;
+#endif
             LogC($"Add world scale constraint to {obj.FullName()}");
         }
     }

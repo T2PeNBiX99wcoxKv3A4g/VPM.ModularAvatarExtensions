@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using UnityEditor;
 using VRC.SDK3.Dynamics.Contact.Components;
 
@@ -9,3 +10,4 @@ internal class ContactReceiverRootTransformPathEditor : RootTransformPathEditorB
 {
     protected override string RootTransformType => "contact_receiver";
 }
+#endif

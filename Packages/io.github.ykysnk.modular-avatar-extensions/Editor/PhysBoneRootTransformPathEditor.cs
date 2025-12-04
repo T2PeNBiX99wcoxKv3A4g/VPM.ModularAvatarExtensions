@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using UnityEditor;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 
@@ -38,3 +39,4 @@ internal class PhysBoneRootTransformPathEditor : RootTransformPathEditorBase<VRC
         EditorGUILayout.PropertyField(_colliderReferencesReferences, "label.phys_bone_root_transform_path.colliders".G());
     }
 }
+#endif

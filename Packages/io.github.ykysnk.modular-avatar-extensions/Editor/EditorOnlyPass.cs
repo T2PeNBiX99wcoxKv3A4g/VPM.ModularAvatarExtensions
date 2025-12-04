@@ -4,7 +4,9 @@ using nadena.dev.modular_avatar.core;
 using nadena.dev.ndmf;
 using UnityEngine;
 using UnityEngine.Animations;
+#if MAEX_VRCSDK3_BASE
 using VRC.Dynamics;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
@@ -27,7 +29,11 @@ internal class EditorOnlyPass : MaexPass<EditorOnlyPass>
 
             foreach (var component in components)
             {
-                if (component is not (ModularAvatarBoneProxy or VRCConstraintBase or IConstraint))
+                if (component is not (ModularAvatarBoneProxy or
+#if MAEX_VRCSDK3_BASE
+                    VRCConstraintBase or
+#endif
+                    IConstraint))
                     continue;
                 Object.DestroyImmediate(component);
             }

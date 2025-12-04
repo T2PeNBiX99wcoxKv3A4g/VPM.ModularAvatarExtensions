@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using UnityEditor;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 
@@ -9,3 +10,4 @@ internal class PhysBoneColliderRootTransformPathEditor : RootTransformPathEditor
 {
     protected override string RootTransformType => "phys_bone_collider";
 }
+#endif

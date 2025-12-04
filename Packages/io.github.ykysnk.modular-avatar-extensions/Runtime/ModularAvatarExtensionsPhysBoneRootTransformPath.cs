@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.utils;
@@ -49,3 +50,4 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
     }
 }
+#endif

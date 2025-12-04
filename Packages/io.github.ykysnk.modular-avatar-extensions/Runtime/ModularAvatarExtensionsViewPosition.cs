@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.NonUdon;
 using nadena.dev.ndmf.runtime;
@@ -36,3 +37,4 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
     }
 }
+#endif

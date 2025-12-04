@@ -1,3 +1,4 @@
+#if MAEX_VRCSDK3_BASE
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -34,3 +35,4 @@ internal class ViewPositionPass : MaexPass<ViewPositionPass>
         }
     }
 }
+#endif

@@ -20,13 +20,12 @@
     },
     "io.github.ykysnk.localization": {
       "version": "0.0.1"
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "2.3.2"
     }
   },
   "locked": {
-    "com.vrchat.base": {
-      "version": "3.10.0",
-      "dependencies": {}
-    },
     "nadena.dev.modular-avatar": {
       "version": "1.15.0",
       "dependencies": {
@@ -58,11 +57,14 @@
       "dependencies": {}
     },
     "io.github.ykysnk.localization": {
-      "version": "0.2.6",
+      "version": "0.3.1",
       "dependencies": {
-        "com.vrchat.base": ">=3.10.0",
-        "io.github.ykysnk.utils": ">=0.8.0"
+        "io.github.ykysnk.utils": ">=0.14.0"
       }
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "2.3.2",
+      "dependencies": {}
     }
   }
 }

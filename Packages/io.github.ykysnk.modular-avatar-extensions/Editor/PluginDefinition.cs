@@ -23,7 +23,9 @@ internal class PluginDefinition : Plugin<PluginDefinition>
         seq.Run(TurnOffInBuildPass.Instance);
         seq.Run(TurnOnInBuildPass.Instance);
         seq.Run(EditorOnlyPass.Instance);
+#if MAEX_VRCSDK3_BASE
         seq.Run(ViewPositionPass.Instance);
+#endif
         seq.Run(WorldScalePass.Instance);
 
         seq = InPhase(BuildPhase.Transforming);

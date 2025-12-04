@@ -2,7 +2,9 @@ using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 using UnityEngine.Animations;
+#if MAEX_VRCSDK3_BASE
 using VRC.Dynamics;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
@@ -31,9 +33,11 @@ internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
 
             switch (constraint)
             {
+#if MAEX_VRCSDK3_BASE
                 case VRCConstraintBase { IsActive: false } vrcConstraintBase:
                     vrcConstraintBase.IsActive = true;
                     break;
+#endif
                 case IConstraint _:
                     var constraintProxy = new ConstraintProxy(constraint);
                     if (!constraintProxy.constraintActive)
