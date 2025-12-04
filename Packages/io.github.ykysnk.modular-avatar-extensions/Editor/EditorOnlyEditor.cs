@@ -1,4 +1,3 @@
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -7,8 +6,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class EditorOnlyEditor : MaexEditor
 {
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
-        EditorGUILayout.HelpBox("label.editor_only.info".L(LocalizationID), MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.editor_only.info".S(), MessageType.Info, true);
     }
 }

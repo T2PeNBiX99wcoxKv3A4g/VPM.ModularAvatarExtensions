@@ -194,3 +194,93 @@ MonoBehaviour:
   - key: label.world_scale.editor_only
     translate: Editor Only
     tooltip: 
+  - key: error.constraint_disabler_pass.constraint_not_found
+    translate: Constraint Not Found
+    tooltip: 
+  - key: error.constraint_disabler_pass.constraint_not_found:description
+    translate: Can't find constraint of '{0}'
+    tooltip: 
+  - key: error.constraint_disabler_pass.constraint_not_found:hint
+    translate: Check the constraint path in '{0}'
+    tooltip: 
+  - key: error.constraint_disabler_pass.unknown_constraint_type
+    translate: Unknown Constraint Type
+    tooltip: 
+  - key: error.constraint_disabler_pass.unknown_constraint_type:description
+    translate: 'The target component is not constraint component: {0}'
+    tooltip: 
+  - key: error.constraint_disabler_pass.unknown_constraint_type:hint
+    translate: Check the constraint path in '{0}'
+    tooltip: 
+  - key: error.move_to_root_of_reference_pass.invalid_reference_path
+    translate: Invalid Reference Path
+    tooltip: 
+  - key: error.move_to_root_of_reference_pass.invalid_reference_path:description
+    translate: Reference path of '{0}' is invalid.
+    tooltip: 
+  - key: error.move_to_root_of_reference_pass.invalid_reference_path:hint
+    translate: Check the root transform path in '{0}'
+    tooltip: 
+  - key: error.reference_path_not_found
+    translate: Reference Path Not Found
+    tooltip: 
+  - key: error.reference_path_not_found:description
+    translate: Can't find anything using path '{0}', in '{1}'
+    tooltip: 
+  - key: error.reference_path_not_found:hint
+    translate: Check the root transform path in '{1}'
+    tooltip: 
+  - key: error.new_name_pass.new_name_is_empty
+    translate: New name is empty
+    tooltip: 
+  - key: error.new_name_pass.new_name_is_empty:description
+    translate: New name can't be null or empty '{0}'
+    tooltip: 
+  - key: error.new_name_pass.new_name_is_empty:hint
+    translate: Check the new name in '{0}'
+    tooltip: 
+  - key: error.view_position_pass.avatar_descriptor_not_found
+    translate: Avatar Descriptor Not Found
+    tooltip: 
+  - key: error.view_position_pass.avatar_descriptor_not_found:description
+    translate: Avatar descriptor is not found
+    tooltip: 
+  - key: error.view_position_pass.avatar_descriptor_not_found:hint
+    translate: Please add any avatar descriptor in avatar root
+    tooltip: 
+  - key: error.world_scale_pass.world_prefab_not_found
+    translate: World Prefab Not Found
+    tooltip: 
+  - key: error.world_scale_pass.world_prefab_not_found:description
+    translate: '''World.prefab'' is not found!'
+    tooltip: 
+  - key: error.world_scale_pass.world_prefab_not_found:hint
+    translate: This should not happen. Please reinstall the package.
+    tooltip: 
+  - key: error.root_transform_path_pass.root_transform_not_found
+    translate: Root Transform Not Found
+    tooltip: 
+  - key: error.root_transform_path_pass.root_transform_not_found:description
+    translate: Can't find {0} in '{1}'
+    tooltip: 
+  - key: error.root_transform_path_pass.root_transform_not_found:hint
+    translate: Check the {0} path of {1}
+    tooltip: 
+  - key: error.root_transform_path_pass.invalid_reference_path
+    translate: Invalid Reference Path
+    tooltip: 
+  - key: error.root_transform_path_pass.invalid_reference_path:description
+    translate: Reference path of '{0}' is invalid, will be skip in the build.
+    tooltip: 
+  - key: error.root_transform_path_pass.invalid_reference_path:hint
+    translate: Check the root transform path in '{0}'
+    tooltip: 
+  - key: info.test_pass.test
+    translate: Test Log
+    tooltip: 
+  - key: info.test_pass.test:description
+    translate: This is test log, {0}
+    tooltip: 
+  - key: info.test_pass.test:hint
+    translate: This just a test log, doing nothing {0}
+    tooltip: 

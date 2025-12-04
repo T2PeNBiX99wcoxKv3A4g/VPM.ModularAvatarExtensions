@@ -20,13 +20,13 @@ internal class WorldScalePass : MaexPass<WorldScalePass>
             .Where(c => c && !c.editorOnly)
             .ToArray();
 
-        Log($"Find {worldScales.Length} world scales inside \"{avatar.FullName()}\"");
+        LogC($"Find {worldScales.Length} world scales inside \"{avatar.FullName()}\"");
 
         var worldPrefabPath = AssetDatabase.GUIDToAssetPath("0fb864bbf2ec27c4586c64a0c7e40cc8");
 
         if (string.IsNullOrEmpty(worldPrefabPath))
         {
-            LogError("'World.prefab' is not found!", "This should not happen. Please reinstall the package.");
+            LogError("error.world_scale_pass.world_prefab_not_found");
             return;
         }
 
@@ -39,7 +39,7 @@ internal class WorldScalePass : MaexPass<WorldScalePass>
             var newSource = new VRCConstraintSource(worldPrefab.transform, 1f, Vector3.zero, Vector3.zero);
             constraint.Sources.Add(newSource);
             constraint.ZeroConstraint();
-            Log($"Add world scale constraint to {obj.FullName()}");
+            LogC($"Add world scale constraint to {obj.FullName()}");
         }
     }
 }

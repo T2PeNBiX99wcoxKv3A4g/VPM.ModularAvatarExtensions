@@ -15,19 +15,19 @@ internal class TurnOnInBuildPass : MaexPass<TurnOnInBuildPass>
         var turnOnInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOnInBuild>(true).Where(c => c)
             .ToArray();
 
-        Log($"Find {turnOnInBuilds.Length} turn on in build inside \"{avatar.FullName()}\"");
+        LogC($"Find {turnOnInBuilds.Length} turn on in build inside \"{avatar.FullName()}\"");
 
         foreach (var turnOnInBuild in turnOnInBuilds)
         {
             var obj = turnOnInBuild.gameObject;
             if (obj.activeSelf)
             {
-                Log($"Game Object \"{obj.FullName()}\" already is active");
+                LogC($"Game Object \"{obj.FullName()}\" already is active");
                 continue;
             }
 
             obj.SetActive(true);
-            Log($"Game Object \"{obj.FullName()}\" is now active");
+            LogC($"Game Object \"{obj.FullName()}\" is now active");
         }
     }
 }

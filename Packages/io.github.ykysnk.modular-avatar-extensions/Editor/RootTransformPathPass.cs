@@ -24,7 +24,7 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
         {
             var components = avatar.GetComponentsInChildren(type, true).Where(c => c).ToArray();
 
-            Log($"Find {components.Length} {type.Name} inside \"{avatar.FullName()}\"");
+            LogC($"Find {components.Length} {type.Name} inside \"{avatar.FullName()}\"");
 
             var typeDefinition = type.BaseType?.GetGenericArguments();
 
@@ -49,8 +49,8 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
 
                 if (setComponent == null)
                 {
-                    LogNonFatal($"Can't find {findType.Name} of \"{component.FullName()}\"",
-                        $"Check the {findType.Name} path of {component.FullName()}");
+                    LogNonFatal("error.root_transform_path_pass.root_transform_not_found", findType.Name,
+                        component.FullName());
                     continue;
                 }
 
@@ -60,17 +60,14 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
                 if (string.IsNullOrEmpty(referencePath))
                 {
                     if (!rootTransformPathBase.IsValid())
-                        LogNonFatal(
-                            $"Reference path of \"{component.FullName()}\" is invalid, will be skip in the build.",
-                            $"Check the root transform path of {component.FullName()}");
+                        LogNonFatal("error.root_transform_path_pass.invalid_reference_path", component.FullName());
                     continue;
                 }
 
                 var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
                 if (rootTransform == null)
                 {
-                    LogError($"Can't find anything using path \"{referencePath}\"",
-                        $"Check the root transform path of {component.FullName()}");
+                    LogError("error.reference_path_not_found", referencePath, component.FullName());
                     continue;
                 }
 

@@ -15,7 +15,7 @@ internal class NewNamePass : MaexPass<NewNamePass>
         var autoChangeNames =
             avatar.GetComponentsInChildren<ModularAvatarExtensionsNewName>(true).Where(c => c).ToArray();
 
-        Log($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
+        LogC($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
 
         foreach (var comp in autoChangeNames)
         {
@@ -24,12 +24,11 @@ internal class NewNamePass : MaexPass<NewNamePass>
 
             if (string.IsNullOrEmpty(newName))
             {
-                LogError($"New name can't be null or empty \"{obj.FullName()}\"",
-                    $"Check the new name of \"{obj.FullName()}\"");
+                LogError("error.new_name_pass.new_name_is_empty", obj.FullName());
                 continue;
             }
 
-            Log($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
+            LogC($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
             obj.name = newName;
         }
     }

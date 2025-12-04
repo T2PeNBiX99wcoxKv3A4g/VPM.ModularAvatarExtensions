@@ -1,4 +1,3 @@
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -16,13 +15,13 @@ public class ViewPositionEditor : MaexEditor
         _isLock = serializedObject.FindProperty(IsLockProp);
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
         var viewPosition = (ModularAvatarExtensionsViewPosition)target;
         if (viewPosition.avatarDescriptor == null)
-            EditorGUILayout.HelpBox("label.view_position.info".L(LocalizationID), MessageType.Error, true);
+            EditorGUILayout.HelpBox("label.view_position.info".S(), MessageType.Error, true);
 
-        EditorGUILayout.PropertyField(_isLock, "label.view_position.is_lock".G(LocalizationID));
-        EditorGUILayout.HelpBox("label.view_position.info2".L(LocalizationID), MessageType.Info, true);
+        EditorGUILayout.PropertyField(_isLock, "label.view_position.is_lock".G());
+        EditorGUILayout.HelpBox("label.view_position.info2".S(), MessageType.Info, true);
     }
 }

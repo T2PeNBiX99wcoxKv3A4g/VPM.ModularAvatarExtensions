@@ -18,15 +18,14 @@ internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
         var constraintDisables = avatar.GetComponentsInChildren<ModularAvatarExtensionsConstraintDisabler>(true)
             .Where(c => c).ToArray();
 
-        Log($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
+        LogC($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
 
         foreach (var constraintDisabler in constraintDisables)
         {
             var constraint = constraintDisabler.constraint;
             if (constraint == null)
             {
-                LogError($"Can't find constraint of \"{constraintDisabler.FullName()}\"",
-                    $"Check the constraint path of {constraintDisabler.FullName()}");
+                LogError("error.constraint_disabler_pass.constraint_not_found", constraintDisabler.FullName());
                 continue;
             }
 
@@ -41,8 +40,7 @@ internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
                         constraintProxy.constraintActive = true;
                     break;
                 default:
-                    LogError($"The target component is not constraint component: {constraintDisabler.FullName()}",
-                        $"Check the constraint path of {constraintDisabler.FullName()}");
+                    LogError("error.constraint_disabler_pass.unknown_constraint_type", constraintDisabler.FullName());
                     break;
             }
         }

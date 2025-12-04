@@ -16,12 +16,12 @@ internal class ViewPositionPass : MaexPass<ViewPositionPass>
         var viewPositions = avatar.GetComponentsInChildren<ModularAvatarExtensionsViewPosition>(true).Where(c => c)
             .ToArray();
 
-        Log($"Find {viewPositions.Length} view positions inside \"{avatar.FullName()}\"");
+        LogC($"Find {viewPositions.Length} view positions inside \"{avatar.FullName()}\"");
 
         if (viewPositions.Length < 1) return;
         if (!ctx.AvatarRootObject.TryGetComponent<VRC_AvatarDescriptor>(out var avatarDescriptor))
         {
-            LogError("Can't find avatar descriptor", "Please add any avatar descriptor in avatar root");
+            LogError("error.view_position_pass.avatar_descriptor_not_found");
             return;
         }
 
@@ -30,7 +30,7 @@ internal class ViewPositionPass : MaexPass<ViewPositionPass>
         foreach (var viewPosition in viewPositions)
         {
             viewPosition.transform.position = getViewPosition;
-            Log($"Set position of {viewPosition.FullName()} to {getViewPosition}");
+            LogC($"Set position of {viewPosition.FullName()} to {getViewPosition}");
         }
     }
 }

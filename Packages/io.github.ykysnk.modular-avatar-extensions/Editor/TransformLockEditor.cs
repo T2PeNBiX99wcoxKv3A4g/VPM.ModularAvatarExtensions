@@ -1,5 +1,4 @@
 using System.Linq;
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,14 +35,14 @@ public class TransformLockEditor : MaexEditor
         _isLockScale = serializedObject.FindProperty(IsLockScaleProp);
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
         var transformLocks = targets.Select(t => (ModularAvatarExtensionsTransformLock)t).ToArray();
 
         EditorGUILayout.BeginHorizontal();
 
-        var activateButton = GUILayout.Button("label.transform_lock.activate_button".G(LocalizationID));
-        var zeroButton = GUILayout.Button("label.transform_lock.zero_button".G(LocalizationID));
+        var activateButton = GUILayout.Button("label.transform_lock.activate_button".G());
+        var zeroButton = GUILayout.Button("label.transform_lock.zero_button".G());
 
         EditorGUILayout.EndHorizontal();
 
@@ -53,13 +52,13 @@ public class TransformLockEditor : MaexEditor
             else if (zeroButton)
                 transformLock.ZeroConstraint();
 
-        EditorGUILayout.PropertyField(_isLock, "label.transform_lock.is_lock".G(LocalizationID));
-        EditorGUILayout.PropertyField(_lockPosition, "label.transform_lock.lock_position".G(LocalizationID));
-        EditorGUILayout.PropertyField(_lockRotation, "label.transform_lock.lock_rotation".G(LocalizationID));
-        EditorGUILayout.PropertyField(_lockScale, "label.transform_lock.lock_scale".G(LocalizationID));
-        EditorGUILayout.PropertyField(_isLockPosition, "label.transform_lock.is_lock_position".G(LocalizationID));
-        EditorGUILayout.PropertyField(_isLockRotation, "label.transform_lock.is_lock_rotation".G(LocalizationID));
-        EditorGUILayout.PropertyField(_isLockScale, "label.transform_lock.is_lock_scale".G(LocalizationID));
-        EditorGUILayout.HelpBox("label.transform_lock.warning".L(LocalizationID), MessageType.Warning, true);
+        EditorGUILayout.PropertyField(_isLock, "label.transform_lock.is_lock".G());
+        EditorGUILayout.PropertyField(_lockPosition, "label.transform_lock.lock_position".G());
+        EditorGUILayout.PropertyField(_lockRotation, "label.transform_lock.lock_rotation".G());
+        EditorGUILayout.PropertyField(_lockScale, "label.transform_lock.lock_scale".G());
+        EditorGUILayout.PropertyField(_isLockPosition, "label.transform_lock.is_lock_position".G());
+        EditorGUILayout.PropertyField(_isLockRotation, "label.transform_lock.is_lock_rotation".G());
+        EditorGUILayout.PropertyField(_isLockScale, "label.transform_lock.is_lock_scale".G());
+        EditorGUILayout.HelpBox("label.transform_lock.warning".S(), MessageType.Warning, true);
     }
 }

@@ -1,4 +1,3 @@
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -7,8 +6,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 [CanEditMultipleObjects]
 public class MoveToRootEditor : MaexEditor
 {
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
-        EditorGUILayout.HelpBox("label.move_to_root.info".L(LocalizationID), MessageType.Info, true);
+        EditorGUILayout.HelpBox("label.move_to_root.info".S(), MessageType.Info, true);
     }
 }

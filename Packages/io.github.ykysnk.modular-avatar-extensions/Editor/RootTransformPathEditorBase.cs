@@ -1,5 +1,4 @@
 using System;
-using io.github.ykysnk.Localization.Editor;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -37,20 +36,20 @@ public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Comp
 
             if (count > 1)
                 EditorGUILayout.PropertyField(Component,
-                    $"label.root_transform_path_base.{RootTransformType}.component".G(LocalizationID));
+                    $"label.root_transform_path_base.{RootTransformType}.component".G());
             EditorGUILayout.PropertyField(Reference,
-                "label.root_transform_path_base.root_transform".G(LocalizationID));
+                "label.root_transform_path_base.root_transform".G());
 
-            OnMaexInspectorGUI();
+            OnInnerInspectorGUI();
 
             EditorGUILayout.HelpBox(
                 string.IsNullOrEmpty(component.reference?.referencePath)
-                    ? $"label.root_transform_path_base.{RootTransformType}.info".L(LocalizationID)
-                    : string.Format($"label.root_transform_path_base.{RootTransformType}.info2".L(LocalizationID),
+                    ? $"label.root_transform_path_base.{RootTransformType}.info".S()
+                    : string.Format($"label.root_transform_path_base.{RootTransformType}.info2".S(),
                         component.reference?.referencePath),
                 MessageType.Info,
                 true);
-            GlobalLocalization.SelectLanguageGUI(LocalizationID);
+            InternalLocalizationExtensions.Helper.SelectLanguageGUI();
         }
         catch (Exception e)
         {
@@ -66,7 +65,7 @@ public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Comp
         serializedObject.ApplyModifiedProperties();
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
     }
 }

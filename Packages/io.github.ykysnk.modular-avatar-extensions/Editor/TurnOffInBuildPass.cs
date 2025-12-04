@@ -15,19 +15,19 @@ internal class TurnOffInBuildPass : MaexPass<TurnOffInBuildPass>
         var turnOffInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOffInBuild>(true).Where(c => c)
             .ToArray();
 
-        Log($"Find {turnOffInBuilds.Length} turn off in build inside \"{avatar.FullName()}\"");
+        LogC($"Find {turnOffInBuilds.Length} turn off in build inside \"{avatar.FullName()}\"");
 
         foreach (var turnOffInBuild in turnOffInBuilds)
         {
             var obj = turnOffInBuild.gameObject;
             if (!obj.activeSelf)
             {
-                Log($"Game Object \"{obj.FullName()}\" already is inactive");
+                LogC($"Game Object \"{obj.FullName()}\" already is inactive");
                 continue;
             }
 
             obj.SetActive(false);
-            Log($"Game Object \"{obj.FullName()}\" is now inactive");
+            LogC($"Game Object \"{obj.FullName()}\" is now inactive");
         }
     }
 }

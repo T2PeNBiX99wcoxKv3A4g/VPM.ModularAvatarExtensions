@@ -1,4 +1,3 @@
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -19,11 +18,10 @@ public class NewNameEditor : MaexEditor
         _changeOnInspector = serializedObject.FindProperty(ChangeOnInspectorProp);
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
-        EditorGUILayout.PropertyField(_newName, "label.new_name.new_name".G(LocalizationID));
-        EditorGUILayout.PropertyField(_changeOnInspector, "label.new_name.change_on_inspector".G(LocalizationID));
-        EditorGUILayout.HelpBox(string.Format("label.new_name.info".L(LocalizationID), _newName?.stringValue),
-            MessageType.Info, true);
+        EditorGUILayout.PropertyField(_newName, "label.new_name.new_name".G());
+        EditorGUILayout.PropertyField(_changeOnInspector, "label.new_name.change_on_inspector".G());
+        EditorGUILayout.HelpBox("label.new_name.info".Sf(_newName?.stringValue), MessageType.Info, true);
     }
 }

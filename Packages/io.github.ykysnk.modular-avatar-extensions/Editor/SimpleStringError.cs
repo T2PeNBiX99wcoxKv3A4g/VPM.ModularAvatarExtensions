@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.localization;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
+[PublicAPI]
 public class SimpleStringError : SimpleError
 {
     private readonly string _detail;

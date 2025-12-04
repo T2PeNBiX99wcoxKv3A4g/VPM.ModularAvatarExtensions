@@ -15,25 +15,25 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
         var autoMoveToRoots = avatar.GetComponentsInChildren<ModularAvatarExtensionsMoveToRoot>(true).Where(c => c)
             .ToArray();
 
-        Log($"Find {autoMoveToRoots.Length} move to root inside \"{avatar.FullName()}\"");
+        LogC($"Find {autoMoveToRoots.Length} move to root inside \"{avatar.FullName()}\"");
 
         foreach (var moveToRoot in autoMoveToRoots)
         {
             var obj = moveToRoot.gameObject;
             if (obj.transform.parent == ctx.AvatarRootTransform)
             {
-                Log($"Already in root \"{obj.FullName()}\"");
+                LogC($"Already in root \"{obj.FullName()}\"");
                 continue;
             }
 
             obj.transform.SetParent(ctx.AvatarRootTransform);
-            Log($"New Path: \"{obj.FullName()}\"");
+            LogC($"New Path: \"{obj.FullName()}\"");
         }
 
         var autoMoveToRootOfTransforms =
             avatar.GetComponentsInChildren<ModularAvatarExtensionsMoveToRootOfReference>(true).Where(c => c).ToArray();
 
-        Log($"Find {autoMoveToRootOfTransforms.Length} move to root inside \"{avatar.FullName()}\"");
+        LogC($"Find {autoMoveToRootOfTransforms.Length} move to root inside \"{avatar.FullName()}\"");
 
         foreach (var moveToRootOfTransform in autoMoveToRootOfTransforms)
         {
@@ -41,8 +41,8 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
 
             if (string.IsNullOrEmpty(referencePath))
             {
-                LogError($"Reference path of \"{moveToRootOfTransform?.FullName()}\" is invalid.",
-                    $"Check the root transform path of {moveToRootOfTransform?.FullName()}");
+                LogError("error.move_to_root_of_reference_pass.invalid_reference_path",
+                    moveToRootOfTransform?.FullName());
                 continue;
             }
 
@@ -50,13 +50,12 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
 
             if (found == null)
             {
-                LogError($"Can't find anything using path \"{referencePath}\"",
-                    $"Check the root transform path of {moveToRootOfTransform?.FullName()}");
+                LogError("error.reference_path_not_found", referencePath, moveToRootOfTransform?.FullName());
                 continue;
             }
 
             found.transform.SetParent(ctx.AvatarRootTransform);
-            Log($"New Path: \"{found.FullName()}\"");
+            LogC($"New Path: \"{found.FullName()}\"");
         }
     }
 }

@@ -1,28 +1,14 @@
-using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 public abstract class MaexEditor : BasicEditor
 {
-    internal const string LocalizationID = "io.github.ykysnk.modular-avatar-extensions";
-
-    public override void OnInspectorGUI()
+    protected override void OnErrorHandleInspectorGUI()
     {
-        base.OnInspectorGUI();
-
-        foreach (var target2 in targets)
-        {
-            var component = (AvatarMaexComponent)target2;
-            component.OnInspectorGUI();
-        }
+        OnInnerInspectorGUI();
+        InternalLocalizationExtensions.Helper.SelectLanguageGUI();
     }
 
-    protected override void OnInspectorGUIDraw()
-    {
-        OnMaexInspectorGUI();
-        GlobalLocalization.SelectLanguageGUI(LocalizationID);
-    }
-
-    protected abstract void OnMaexInspectorGUI();
+    protected abstract void OnInnerInspectorGUI();
 }

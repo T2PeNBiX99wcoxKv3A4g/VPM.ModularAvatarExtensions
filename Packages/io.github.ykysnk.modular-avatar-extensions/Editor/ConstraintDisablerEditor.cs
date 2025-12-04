@@ -1,5 +1,4 @@
 using System.Linq;
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -23,21 +22,21 @@ public class ConstraintDisablerEditor : MaexEditor
         _stopDisable = serializedObject.FindProperty(StopDisableProp);
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
         var component = (ModularAvatarExtensionsConstraintDisabler)target;
         var isConstraint = component.constraint is VRCConstraintBase or IConstraint;
         var count = component.GetComponents<Component>().Count(c => c && c is VRCConstraintBase or IConstraint);
 
         if (count > 1)
-            EditorGUILayout.PropertyField(_constraint, "label.constraint_disabler.constraint".G(LocalizationID));
-        EditorGUILayout.PropertyField(_stopDisable, "label.constraint_disabler.stop_disable".G(LocalizationID));
+            EditorGUILayout.PropertyField(_constraint, "label.constraint_disabler.constraint".G());
+        EditorGUILayout.PropertyField(_stopDisable, "label.constraint_disabler.stop_disable".G());
 
         if (!isConstraint)
-            EditorGUILayout.HelpBox("label.constraint_disabler.constraint_error".L(LocalizationID),
+            EditorGUILayout.HelpBox("label.constraint_disabler.constraint_error".S(),
                 MessageType.Error, true);
 
-        EditorGUILayout.HelpBox("label.constraint_disabler.info".L(LocalizationID), MessageType.Info,
+        EditorGUILayout.HelpBox("label.constraint_disabler.info".S(), MessageType.Info,
             true);
     }
 }

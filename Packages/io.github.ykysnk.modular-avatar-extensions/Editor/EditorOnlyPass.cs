@@ -19,7 +19,7 @@ internal class EditorOnlyPass : MaexPass<EditorOnlyPass>
         var editorOnlyList =
             avatar.GetComponentsInChildren<ModularAvatarExtensionsEditorOnly>(true).Where(c => c).ToArray();
 
-        Log($"Find {editorOnlyList.Length} editor only inside \"{avatar.FullName()}\"");
+        LogC($"Find {editorOnlyList.Length} editor only inside \"{avatar.FullName()}\"");
 
         foreach (var editorOnly in editorOnlyList)
         {
@@ -32,7 +32,7 @@ internal class EditorOnlyPass : MaexPass<EditorOnlyPass>
                 Object.DestroyImmediate(component);
             }
 
-            Log($"Remove 'BoneProxy' and 'Constraint' components in \"{editorOnly.FullName()}\"");
+            LogC($"Remove 'BoneProxy' and 'Constraint' components in \"{editorOnly.FullName()}\"");
         }
     }
 }

@@ -1,4 +1,3 @@
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
@@ -16,9 +15,9 @@ public class WorldScaleEditor : MaexEditor
         _editorOnly = serializedObject.FindProperty(EditorOnlyProp);
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
-        EditorGUILayout.PropertyField(_editorOnly, "label.world_scale.editor_only".G(LocalizationID));
-        EditorGUILayout.HelpBox("label.world_scale.info".L(LocalizationID), MessageType.Info);
+        EditorGUILayout.PropertyField(_editorOnly, "label.world_scale.editor_only".G());
+        EditorGUILayout.HelpBox("label.world_scale.info".S(), MessageType.Info);
     }
 }

@@ -190,3 +190,97 @@ MonoBehaviour:
   - key: label.world_scale.editor_only
     translate: "\u30A8\u30C7\u30A3\u30BF\u30FC\u306E\u307F"
     tooltip: 
+  - key: error.constraint_disabler_pass.constraint_not_found
+    translate: "\u30B3\u30F3\u30B9\u30C8\u30EC\u30A4\u30F3\u30C8\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.constraint_disabler_pass.constraint_not_found:description
+    translate: "\u300E{0}\u300F \u306E\u30B3\u30F3\u30B9\u30C8\u30EC\u30A4\u30F3\u30C8\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.constraint_disabler_pass.constraint_not_found:hint
+    translate: "\u300E{0}\u300F \u306E\u30B3\u30F3\u30B9\u30C8\u30EC\u30A4\u30F3\u30C8\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.constraint_disabler_pass.unknown_constraint_type
+    translate: "\u4E0D\u660E\u306A\u30B3\u30F3\u30B9\u30C8\u30EC\u30A4\u30F3\u30C8\u30BF\u30A4\u30D7"
+    tooltip: 
+  - key: error.constraint_disabler_pass.unknown_constraint_type:description
+    translate: "\u5BFE\u8C61\u30B3\u30F3\u30DD\u30FC\u30CD\u30F3\u30C8\u306F\u5236\u7D04\u30B3\u30F3\u30DD\u30FC\u30CD\u30F3\u30C8\u3067\u306F\u3042\u308A\u307E\u305B\u3093:
+      {0}"
+    tooltip: 
+  - key: error.constraint_disabler_pass.unknown_constraint_type:hint
+    translate: "\u300E{0}\u300F \u306E\u30B3\u30F3\u30B9\u30C8\u30EC\u30A4\u30F3\u30C8\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.move_to_root_of_reference_pass.invalid_reference_path
+    translate: "\u7121\u52B9\u306A\u53C2\u7167\u30D1\u30B9"
+    tooltip: 
+  - key: error.move_to_root_of_reference_pass.invalid_reference_path:description
+    translate: "\u300E{0}\u300F \u306E\u53C2\u7167\u30D1\u30B9\u304C\u7121\u52B9\u3067\u3059\u3002"
+    tooltip: 
+  - key: error.move_to_root_of_reference_pass.invalid_reference_path:hint
+    translate: "\u300E{0}\u300F\u5185\u306E\u30EB\u30FC\u30C8\u30C8\u30E9\u30F3\u30B9\u30D5\u30A9\u30FC\u30E0\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.reference_path_not_found
+    translate: "\u53C2\u7167\u30D1\u30B9\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.reference_path_not_found:description
+    translate: "\u300E{0}\u300F \u30D1\u30B9\u3067\u4F55\u3082\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3002\u7121\u52B9\u306A\u53C2\u7167\u306F
+      \u300E{1}\u300F \u3067\u3059\u3002"
+    tooltip: 
+  - key: error.reference_path_not_found:hint
+    translate: "\u300E{1}\u300F\u5185\u306E\u30EB\u30FC\u30C8\u30C8\u30E9\u30F3\u30B9\u30D5\u30A9\u30FC\u30E0\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.new_name_pass.new_name_is_empty
+    translate: "\u65B0\u3057\u3044\u540D\u524D\u306F\u7A7A\u3067\u3059"
+    tooltip: 
+  - key: error.new_name_pass.new_name_is_empty:description
+    translate: "\u65B0\u3057\u3044\u540D\u524D\u306F\u7A7A\u307E\u305F\u306F\u7A7A\u767D\u306B\u3067\u304D\u307E\u305B\u3093
+      \u300E{0}\u300F"
+    tooltip: 
+  - key: error.new_name_pass.new_name_is_empty:hint
+    translate: "\u300E{0}\u300F\u306E\u65B0\u3057\u3044\u540D\u524D\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.view_position_pass.avatar_descriptor_not_found
+    translate: "\u30A2\u30D0\u30BF\u30FC\u8A18\u8FF0\u5B50\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.view_position_pass.avatar_descriptor_not_found:description
+    translate: "\u30A2\u30D0\u30BF\u30FC\u8A18\u8FF0\u5B50\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.view_position_pass.avatar_descriptor_not_found:hint
+    translate: "\u30A2\u30D0\u30BF\u30FC\u306E\u30EB\u30FC\u30C8\u306B\u30A2\u30D0\u30BF\u30FC\u8A18\u8FF0\u5B50\u3092\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.world_scale_pass.world_prefab_not_found
+    translate: "\u30EF\u30FC\u30EB\u30C9\u30D7\u30EC\u30D5\u30A1\u30D6\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.world_scale_pass.world_prefab_not_found:description
+    translate: "\u300EWorld.prefab\u300F\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\uFF01"
+    tooltip: 
+  - key: error.world_scale_pass.world_prefab_not_found:hint
+    translate: "\u3053\u308C\u306F\u8D77\u3053\u3063\u3066\u306F\u306A\u3089\u306A\u3044\u3053\u3068\u3067\u3059\n\u30D1\u30C3\u30B1\u30FC\u30B8\u3092\u518D\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: error.root_transform_path_pass.root_transform_not_found
+    translate: "\u30EB\u30FC\u30C8\u30C8\u30E9\u30F3\u30B9\u30D5\u30A9\u30FC\u30E0\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.root_transform_path_pass.root_transform_not_found:description
+    translate: "\u300E{1}\u300F\u5185\u3067 {0} \u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093"
+    tooltip: 
+  - key: error.root_transform_path_pass.root_transform_not_found:hint
+    translate: "{0}\u306E\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u300E{1}\u300F"
+    tooltip: 
+  - key: error.root_transform_path_pass.invalid_reference_path
+    translate: "\u7121\u52B9\u306A\u53C2\u7167\u30D1\u30B9"
+    tooltip: 
+  - key: error.root_transform_path_pass.invalid_reference_path:description
+    translate: "\u300E{0}\u300F \u306E\u53C2\u7167\u30D1\u30B9\u304C\u7121\u52B9\u3067\u3059\u3002\u30D3\u30EB\u30C9\u3067\u30B9\u30AD\u30C3\u30D7\u3055\u308C\u307E\u3059\u3002"
+    tooltip: 
+  - key: error.root_transform_path_pass.invalid_reference_path:hint
+    translate: "\u300E{0}\u300F\u5185\u306E\u30EB\u30FC\u30C8\u30C8\u30E9\u30F3\u30B9\u30D5\u30A9\u30FC\u30E0\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044"
+    tooltip: 
+  - key: info.test_pass.test
+    translate: "\u30C6\u30B9\u30C8\u30ED\u30B0"
+    tooltip: 
+  - key: info.test_pass.test:description
+    translate: "\u3053\u308C\u306F\u30C6\u30B9\u30C8\u30ED\u30B0 {0}"
+    tooltip: 
+  - key: info.test_pass.test:hint
+    translate: "\u3053\u308C\u306F\u30C6\u30B9\u30C8\u3059\u308B\u3060\u3051\u306E\u30ED\u30B0\u3001\u4F55\u3082\u3057\u306A\u3044\u3067\u3059
+      {0}"
+    tooltip: 

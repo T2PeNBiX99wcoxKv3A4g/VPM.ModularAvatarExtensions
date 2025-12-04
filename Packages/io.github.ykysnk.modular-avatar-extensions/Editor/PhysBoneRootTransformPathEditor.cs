@@ -1,4 +1,3 @@
-using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 
@@ -29,15 +28,13 @@ public class PhysBoneRootTransformPathEditor : RootTransformPathEditorBase<VRCPh
         _setCollidersReferences = serializedObject.FindProperty(SetCollidersReferencesProp);
     }
 
-    protected override void OnMaexInspectorGUI()
+    protected override void OnInnerInspectorGUI()
     {
         EditorGUILayout.PropertyField(_setIgnoreTransformsReferences,
-            "label.phys_bone_root_transform_path.set_ignore_transforms".G(LocalizationID));
+            "label.phys_bone_root_transform_path.set_ignore_transforms".G());
         EditorGUILayout.PropertyField(_ignoreTransformsReferences,
-            "label.phys_bone_root_transform_path.ignore_transforms".G(LocalizationID));
-        EditorGUILayout.PropertyField(_setCollidersReferences,
-            "label.phys_bone_root_transform_path.set_colliders".G(LocalizationID));
-        EditorGUILayout.PropertyField(_colliderReferencesReferences,
-            "label.phys_bone_root_transform_path.colliders".G(LocalizationID));
+            "label.phys_bone_root_transform_path.ignore_transforms".G());
+        EditorGUILayout.PropertyField(_setCollidersReferences, "label.phys_bone_root_transform_path.set_colliders".G());
+        EditorGUILayout.PropertyField(_colliderReferencesReferences, "label.phys_bone_root_transform_path.colliders".G());
     }
 }
