@@ -164,12 +164,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.vrchat.avatars": {
-      "version": "file:com.vrchat.avatars",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.vrchat.base": {
       "version": "file:com.vrchat.base",
       "depth": 0,
@@ -201,30 +195,6 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
-    },
-    "d4rkpl4y3r.d4rkavataroptimizer": {
-      "version": "file:d4rkpl4y3r.d4rkavataroptimizer",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "dev.hai-vr.animator-as-code.v1": {
-      "version": "file:dev.hai-vr.animator-as-code.v1",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "dev.hai-vr.animator-as-code.v1.modular-avatar": {
-      "version": "file:dev.hai-vr.animator-as-code.v1.modular-avatar",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "dev.hai-vr.animator-as-code.v1.vrchat": {
-      "version": "file:dev.hai-vr.animator-as-code.v1.vrchat",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "dev.sakurayuki.uniasset": {
       "version": "file:dev.sakurayuki.uniasset",
@@ -258,12 +228,6 @@
     },
     "jp.lilxyzw.editortoolbox": {
       "version": "file:jp.lilxyzw.editortoolbox",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "jp.lilxyzw.liltoon": {
-      "version": "file:jp.lilxyzw.liltoon",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
