@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: en-US
   m_EditorClassIdentifier: 
   localizationID: io.github.ykysnk.modular-avatar-extensions
-  displayName: English
+  displayName: English (United States)
   translates:
   - key: label.language
     translate: Language
