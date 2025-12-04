@@ -4,7 +4,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsNewName))]
 [CanEditMultipleObjects]
-public class NewNameEditor : MaexEditor
+internal class NewNameEditor : MaexEditor
 {
     private const string NewNameProp = "newName";
     private const string ChangeOnInspectorProp = "changeOnInspector";

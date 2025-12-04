@@ -4,7 +4,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsWorldScale))]
 [CanEditMultipleObjects]
-public class WorldScaleEditor : MaexEditor
+internal class WorldScaleEditor : MaexEditor
 {
     private const string EditorOnlyProp = "editorOnly";
 

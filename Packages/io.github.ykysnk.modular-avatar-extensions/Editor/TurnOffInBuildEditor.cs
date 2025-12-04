@@ -4,7 +4,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsTurnOffInBuild))]
 [CanEditMultipleObjects]
-public class TurnOffInBuildEditor : MaexEditor
+internal class TurnOffInBuildEditor : MaexEditor
 {
     protected override void OnInnerInspectorGUI()
     {

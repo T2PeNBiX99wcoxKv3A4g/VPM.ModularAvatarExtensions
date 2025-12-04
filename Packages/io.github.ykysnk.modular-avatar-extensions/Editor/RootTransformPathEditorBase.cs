@@ -6,7 +6,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [PublicAPI]
-public abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Component
+internal abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Component
 {
     protected const string ReferenceProp = "reference";
     protected const string ComponentProp = "component";

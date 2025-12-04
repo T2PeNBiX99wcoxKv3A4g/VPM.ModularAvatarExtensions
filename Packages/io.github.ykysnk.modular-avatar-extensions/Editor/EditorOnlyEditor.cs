@@ -4,7 +4,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsEditorOnly))]
 [CanEditMultipleObjects]
-public class EditorOnlyEditor : MaexEditor
+internal class EditorOnlyEditor : MaexEditor
 {
     protected override void OnInnerInspectorGUI()
     {

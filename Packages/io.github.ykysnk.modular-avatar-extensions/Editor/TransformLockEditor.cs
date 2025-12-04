@@ -6,7 +6,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsTransformLock))]
 [CanEditMultipleObjects]
-public class TransformLockEditor : MaexEditor
+internal class TransformLockEditor : MaexEditor
 {
     private const string IsLockProp = "isLock";
     private const string LockPositionProp = "lockPosition";

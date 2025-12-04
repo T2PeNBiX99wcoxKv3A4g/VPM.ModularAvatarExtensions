@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
-public abstract class MaexEditor : BasicEditor
+internal abstract class MaexEditor : BasicEditor
 {
     protected override void OnErrorHandleInspectorGUI()
     {

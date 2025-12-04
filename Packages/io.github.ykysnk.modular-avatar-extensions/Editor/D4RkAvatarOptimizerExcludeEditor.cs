@@ -5,7 +5,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsD4RkAvatarOptimizerExclude))]
 [CanEditMultipleObjects]
-public class D4RkAvatarOptimizerExcludeEditor : MaexEditor
+internal class D4RkAvatarOptimizerExcludeEditor : MaexEditor
 {
     protected override void OnInnerInspectorGUI()
     {

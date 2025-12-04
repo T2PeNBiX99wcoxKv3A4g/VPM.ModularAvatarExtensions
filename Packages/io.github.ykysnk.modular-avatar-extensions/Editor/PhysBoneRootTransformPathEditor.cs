@@ -5,7 +5,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsPhysBoneRootTransformPath))]
 [CanEditMultipleObjects]
-public class PhysBoneRootTransformPathEditor : RootTransformPathEditorBase<VRCPhysBone>
+internal class PhysBoneRootTransformPathEditor : RootTransformPathEditorBase<VRCPhysBone>
 {
     private const string IgnoreTransformsReferencesProp = "ignoreTransformsReferences";
     private const string ColliderReferencesProp = "colliderReferences";

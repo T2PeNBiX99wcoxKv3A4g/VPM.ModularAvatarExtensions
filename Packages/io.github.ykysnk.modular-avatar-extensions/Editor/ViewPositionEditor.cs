@@ -4,7 +4,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsViewPosition))]
 [CanEditMultipleObjects]
-public class ViewPositionEditor : MaexEditor
+internal class ViewPositionEditor : MaexEditor
 {
     private const string IsLockProp = "isLock";
 

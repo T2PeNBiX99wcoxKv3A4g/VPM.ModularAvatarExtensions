@@ -8,7 +8,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsConstraintDisabler))]
 [CanEditMultipleObjects]
-public class ConstraintDisablerEditor : MaexEditor
+internal class ConstraintDisablerEditor : MaexEditor
 {
     private const string ConstraintProp = "constraint";
     private const string StopDisableProp = "stopDisable";

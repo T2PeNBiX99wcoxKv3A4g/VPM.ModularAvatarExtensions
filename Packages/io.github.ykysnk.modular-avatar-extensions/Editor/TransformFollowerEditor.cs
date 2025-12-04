@@ -6,7 +6,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
 [CustomEditor(typeof(ModularAvatarExtensionsTransformFollower))]
 [CanEditMultipleObjects]
-public class TransformFollowerEditor : MaexEditor
+internal class TransformFollowerEditor : MaexEditor
 {
     private const string IsLockProp = "isLock";
     private const string ReferenceProp = "reference";
