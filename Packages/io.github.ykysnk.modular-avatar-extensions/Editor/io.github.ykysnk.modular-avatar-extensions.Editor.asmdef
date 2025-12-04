@@ -13,7 +13,8 @@
         "io.github.ykysnk.utils",
         "io.github.ykysnk.localization.Editor",
         "io.github.ykysnk.modular-avatar-extensions",
-        "io.github.ykysnk.utils.non-udon"
+        "io.github.ykysnk.utils.non-udon",
+        "d4rkpl4y3r.d4rkavataroptimizer.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -29,6 +30,11 @@
             "name": "com.vrchat.avatars",
             "expression": "",
             "define": "MAEX_VRCSDK3_AVATARS"
+        },
+        {
+            "name": "d4rkpl4y3r.d4rkavataroptimizer",
+            "expression": "",
+            "define": "D4RK_AVATAR_OPTIMIZER"
         }
     ],
     "noEngineReferences": false
