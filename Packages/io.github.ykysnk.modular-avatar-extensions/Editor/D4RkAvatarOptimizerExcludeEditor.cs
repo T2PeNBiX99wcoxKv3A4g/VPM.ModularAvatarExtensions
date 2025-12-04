@@ -1,4 +1,4 @@
-#if D4RK_AVATAR_OPTIMIZER
+#if MAEX_D4RK_AVATAR_OPTIMIZER
 using UnityEditor;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;

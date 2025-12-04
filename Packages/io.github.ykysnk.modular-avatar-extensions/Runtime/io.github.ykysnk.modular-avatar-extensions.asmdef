@@ -1,32 +1,32 @@
 {
-  "name": "io.github.ykysnk.modular-avatar-extensions",
-  "rootNamespace": "io.github.ykysnk.ModularAvatarExtensions",
-  "references": [
-    "VRC.SDK3A",
-    "VRC.SDKBase",
-    "nadena.dev.modular-avatar.core",
-    "io.github.ykysnk.utils",
-    "nadena.dev.ndmf.runtime",
-    "io.github.ykysnk.utils.non-udon"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [
-    {
-      "name": "com.vrchat.avatars",
-      "expression": "",
-      "define": "MAEX_VRCSDK3_AVATARS"
-    },
-    {
-      "name": "d4rkpl4y3r.d4rkavataroptimizer",
-      "expression": "",
-      "define": "D4RK_AVATAR_OPTIMIZER"
-    }
-  ],
-  "noEngineReferences": false
+    "name": "io.github.ykysnk.modular-avatar-extensions",
+    "rootNamespace": "io.github.ykysnk.ModularAvatarExtensions",
+    "references": [
+        "VRC.SDK3A",
+        "VRC.SDKBase",
+        "nadena.dev.modular-avatar.core",
+        "io.github.ykysnk.utils",
+        "nadena.dev.ndmf.runtime",
+        "io.github.ykysnk.utils.non-udon"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.vrchat.avatars",
+            "expression": "",
+            "define": "MAEX_VRCSDK3_AVATARS"
+        },
+        {
+            "name": "d4rkpl4y3r.d4rkavataroptimizer",
+            "expression": "",
+            "define": "MAEX_D4RK_AVATAR_OPTIMIZER"
+        }
+    ],
+    "noEngineReferences": false
 }

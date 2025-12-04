@@ -1,4 +1,4 @@
-#if D4RK_AVATAR_OPTIMIZER
+#if MAEX_D4RK_AVATAR_OPTIMIZER
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
