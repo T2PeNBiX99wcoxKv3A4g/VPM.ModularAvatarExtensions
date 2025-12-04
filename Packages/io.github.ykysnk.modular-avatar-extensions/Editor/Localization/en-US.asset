@@ -284,3 +284,6 @@ MonoBehaviour:
   - key: info.test_pass.test:hint
     translate: This just a test log, doing nothing {0}
     tooltip: 
+  - key: label.d4rk_avatar_optimizer_exclude.info
+    translate: This object will be exclude in d4rk Avatar Optimizer
+    tooltip: 
