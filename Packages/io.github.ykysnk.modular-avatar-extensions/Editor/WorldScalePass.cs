@@ -1,14 +1,16 @@
-#if MAEX_VRCSDK3_BASE
-using VRC.Dynamics;
-using VRC.SDK3.Dynamics.Constraint.Components;
-#else
-using UnityEngine.Animations;
-#endif
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 using UnityEditor;
 using UnityEngine;
+#if MAEX_VRCSDK3_BASE
+using VRC.Dynamics;
+using VRC.SDK3.Dynamics.Constraint.Components;
+
+#else
+using UnityEngine.Animations;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
 
@@ -37,26 +39,34 @@ internal class WorldScalePass : MaexPass<WorldScalePass>
         var worldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(worldPrefabPath);
 
         foreach (var worldScale in worldScales)
-        {
-            var obj = worldScale.gameObject;
+            using (ErrorReport.WithContextObject(worldScale))
+                try
+                {
+                    var obj = worldScale.gameObject;
 
 #if MAEX_VRCSDK3_BASE
-            var constraint = obj.AddComponent<VRCScaleConstraint>();
-            var newSource = new VRCConstraintSource(worldPrefab.transform, 1f, Vector3.zero, Vector3.zero);
-            constraint.Sources.Add(newSource);
-            constraint.ZeroConstraint();
+                    var constraint = obj.AddComponent<VRCScaleConstraint>();
+                    var newSource = new VRCConstraintSource(worldPrefab.transform, 1f);
+                    constraint.Sources.Add(newSource);
+                    constraint.Locked = true;
+                    constraint.IsActive = true;
 #else
-            var constraint = obj.AddComponent<ScaleConstraint>();
-            var newSource = new ConstraintSource
-            {
-                sourceTransform = worldPrefab.transform,
-                weight = 1f
-            };
-            constraint.AddSource(newSource);
-            constraint.locked = true;
-            constraint.constraintActive = true;
+                    var constraint = obj.AddComponent<ScaleConstraint>();
+                    var newSource = new ConstraintSource
+                    {
+                        sourceTransform = worldPrefab.transform,
+                        weight = 1f
+                    };
+                    constraint.AddSource(newSource);
+                    constraint.locked = true;
+                    constraint.constraintActive = true;
 #endif
-            LogC($"Add world scale constraint to {obj.FullName()}");
-        }
+                    LogC($"Add world scale constraint to {obj.FullName()}");
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
     }
 }

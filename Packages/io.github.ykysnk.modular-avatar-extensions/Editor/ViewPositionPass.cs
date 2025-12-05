@@ -1,4 +1,5 @@
 #if MAEX_VRCSDK3_BASE
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -29,10 +30,17 @@ internal class ViewPositionPass : MaexPass<ViewPositionPass>
         var getViewPosition = avatarDescriptor.ViewPosition;
 
         foreach (var viewPosition in viewPositions)
-        {
-            viewPosition.transform.position = getViewPosition;
-            LogC($"Set position of {viewPosition.FullName()} to {getViewPosition}");
-        }
+            using (ErrorReport.WithContextObject(viewPosition))
+                try
+                {
+                    viewPosition.transform.position = getViewPosition;
+                    LogC($"Set position of {viewPosition.FullName()} to {getViewPosition}");
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
     }
 }
 #endif

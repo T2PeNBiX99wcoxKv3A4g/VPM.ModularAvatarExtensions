@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -33,49 +34,56 @@ internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
             var findType = typeDefinition[0];
 
             foreach (var component in components)
-            {
-                if (component is not IRootTransformPathBase rootTransformPathBase) continue;
-                var setComponent = rootTransformPathBase.Component;
-                if (setComponent == null)
-                    setComponent = component.GetComponent(findType);
+                using (ErrorReport.WithContextObject(component))
+                    try
+                    {
+                        if (component is not IRootTransformPathBase rootTransformPathBase) continue;
+                        var setComponent = rootTransformPathBase.Component;
+                        if (setComponent == null)
+                            setComponent = component.GetComponent(findType);
 
-                if (setComponent == null)
-                {
-                    // Avatar Pose System moves all phys bone to APS_PB when building, so try to find it.
-                    var apsTransform = component.transform.Find("APS_PB");
-                    if (apsTransform)
-                        setComponent = apsTransform.GetComponent(findType);
-                }
+                        if (setComponent == null)
+                        {
+                            // Avatar Pose System moves all phys bone to APS_PB when building, so try to find it.
+                            var apsTransform = component.transform.Find("APS_PB");
+                            if (apsTransform)
+                                setComponent = apsTransform.GetComponent(findType);
+                        }
 
-                if (setComponent == null)
-                {
-                    LogNonFatal("error.root_transform_path_pass.root_transform_not_found", findType.Name,
-                        component.FullName());
-                    continue;
-                }
+                        if (setComponent == null)
+                        {
+                            LogNonFatal("error.root_transform_path_pass.root_transform_not_found", findType.Name,
+                                component.FullName());
+                            continue;
+                        }
 
-                var setComponentProxy = new RootTransformProxy(setComponent);
-                var referencePath = rootTransformPathBase.Reference?.referencePath;
+                        var setComponentProxy = new RootTransformProxy(setComponent);
+                        var referencePath = rootTransformPathBase.Reference?.referencePath;
 
-                if (string.IsNullOrEmpty(referencePath))
-                {
-                    if (!rootTransformPathBase.IsValid())
-                        LogNonFatal("error.root_transform_path_pass.invalid_reference_path", component.FullName());
-                    continue;
-                }
+                        if (string.IsNullOrEmpty(referencePath))
+                        {
+                            if (!rootTransformPathBase.IsValid())
+                                LogNonFatal("error.root_transform_path_pass.invalid_reference_path",
+                                    component.FullName());
+                            continue;
+                        }
 
-                var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
-                if (rootTransform == null)
-                {
-                    LogError("error.reference_path_not_found", referencePath, component.FullName());
-                    continue;
-                }
+                        var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
+                        if (rootTransform == null)
+                        {
+                            LogError("error.reference_path_not_found", referencePath, component.FullName());
+                            continue;
+                        }
 
-                if (setComponentProxy.rootTransform == rootTransform)
-                    continue;
+                        if (setComponentProxy.rootTransform == rootTransform) continue;
 
-                setComponentProxy.rootTransform = rootTransform;
-            }
+                        setComponentProxy.rootTransform = rootTransform;
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
         }
     }
 }

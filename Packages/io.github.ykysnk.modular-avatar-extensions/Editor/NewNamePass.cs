@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -18,18 +19,25 @@ internal class NewNamePass : MaexPass<NewNamePass>
         LogC($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
 
         foreach (var comp in autoChangeNames)
-        {
-            var obj = comp.gameObject;
-            var newName = comp.newName;
+            using (ErrorReport.WithContextObject(comp))
+                try
+                {
+                    var obj = comp.gameObject;
+                    var newName = comp.newName;
 
-            if (string.IsNullOrEmpty(newName))
-            {
-                LogError("error.new_name_pass.new_name_is_empty", obj.FullName());
-                continue;
-            }
+                    if (string.IsNullOrEmpty(newName))
+                    {
+                        LogError("error.new_name_pass.new_name_is_empty", obj.FullName());
+                        continue;
+                    }
 
-            LogC($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
-            obj.name = newName;
-        }
+                    LogC($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
+                    obj.name = newName;
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -18,16 +19,23 @@ internal class TurnOnInBuildPass : MaexPass<TurnOnInBuildPass>
         LogC($"Find {turnOnInBuilds.Length} turn on in build inside \"{avatar.FullName()}\"");
 
         foreach (var turnOnInBuild in turnOnInBuilds)
-        {
-            var obj = turnOnInBuild.gameObject;
-            if (obj.activeSelf)
-            {
-                LogC($"Game Object \"{obj.FullName()}\" already is active");
-                continue;
-            }
+            using (ErrorReport.WithContextObject(turnOnInBuild))
+                try
+                {
+                    var obj = turnOnInBuild.gameObject;
+                    if (obj.activeSelf)
+                    {
+                        LogC($"Game Object \"{obj.FullName()}\" already is active");
+                        continue;
+                    }
 
-            obj.SetActive(true);
-            LogC($"Game Object \"{obj.FullName()}\" is now active");
-        }
+                    obj.SetActive(true);
+                    LogC($"Game Object \"{obj.FullName()}\" is now active");
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
     }
 }

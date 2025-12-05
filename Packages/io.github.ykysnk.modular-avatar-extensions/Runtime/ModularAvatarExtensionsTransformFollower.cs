@@ -19,6 +19,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public BooleanVector3 isLockRotation = BooleanVector3.True;
         public BooleanVector3 isLockScale = BooleanVector3.True;
 
+        // TODO: Fix position and rotation logic
         private void Update()
         {
             if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying() || !isLock ||

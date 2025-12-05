@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -23,30 +24,38 @@ internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
         LogC($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
 
         foreach (var constraintDisabler in constraintDisables)
-        {
-            var constraint = constraintDisabler.constraint;
-            if (constraint == null)
-            {
-                LogError("error.constraint_disabler_pass.constraint_not_found", constraintDisabler.FullName());
-                continue;
-            }
+            using (ErrorReport.WithContextObject(constraintDisabler))
+                try
+                {
+                    var constraint = constraintDisabler.constraint;
+                    if (constraint == null)
+                    {
+                        LogError("error.constraint_disabler_pass.constraint_not_found", constraintDisabler.FullName());
+                        continue;
+                    }
 
-            switch (constraint)
-            {
+                    switch (constraint)
+                    {
 #if MAEX_VRCSDK3_BASE
-                case VRCConstraintBase { IsActive: false } vrcConstraintBase:
-                    vrcConstraintBase.IsActive = true;
-                    break;
+                        case VRCConstraintBase { IsActive: false } vrcConstraintBase:
+                            vrcConstraintBase.IsActive = true;
+                            break;
 #endif
-                case IConstraint _:
-                    var constraintProxy = new ConstraintProxy(constraint);
-                    if (!constraintProxy.constraintActive)
-                        constraintProxy.constraintActive = true;
-                    break;
-                default:
-                    LogError("error.constraint_disabler_pass.unknown_constraint_type", constraintDisabler.FullName());
-                    break;
-            }
-        }
+                        case IConstraint _:
+                            var constraintProxy = new ConstraintProxy(constraint);
+                            if (!constraintProxy.constraintActive)
+                                constraintProxy.constraintActive = true;
+                            break;
+                        default:
+                            LogError("error.constraint_disabler_pass.unknown_constraint_type",
+                                constraintDisabler.FullName());
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
     }
 }

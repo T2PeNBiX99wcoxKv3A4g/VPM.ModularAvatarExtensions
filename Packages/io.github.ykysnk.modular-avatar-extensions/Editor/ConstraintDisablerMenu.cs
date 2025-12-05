@@ -27,9 +27,9 @@ internal static class ConstraintDisablerMenu
         var components = obj.GetComponentsInChildren<Component>(true)
             .Where(c => c is
 #if MAEX_VRCSDK3_BASE
-                VRCConstraintBase or
+                            VRCConstraintBase or
 #endif
-                    IConstraint
+                            IConstraint
 #if MAEX_VRCSDK3_BASE
                         && c != null
 #endif

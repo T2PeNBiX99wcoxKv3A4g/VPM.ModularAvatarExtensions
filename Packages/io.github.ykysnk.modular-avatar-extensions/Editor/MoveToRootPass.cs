@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
@@ -18,17 +19,24 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
         LogC($"Find {autoMoveToRoots.Length} move to root inside \"{avatar.FullName()}\"");
 
         foreach (var moveToRoot in autoMoveToRoots)
-        {
-            var obj = moveToRoot.gameObject;
-            if (obj.transform.parent == ctx.AvatarRootTransform)
-            {
-                LogC($"Already in root \"{obj.FullName()}\"");
-                continue;
-            }
+            using (ErrorReport.WithContextObject(moveToRoot))
+                try
+                {
+                    var obj = moveToRoot.gameObject;
+                    if (obj.transform.parent == ctx.AvatarRootTransform)
+                    {
+                        LogC($"Already in root \"{obj.FullName()}\"");
+                        continue;
+                    }
 
-            obj.transform.SetParent(ctx.AvatarRootTransform);
-            LogC($"New Path: \"{obj.FullName()}\"");
-        }
+                    obj.transform.SetParent(ctx.AvatarRootTransform);
+                    LogC($"New Path: \"{obj.FullName()}\"");
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
 
         var autoMoveToRootOfTransforms =
             avatar.GetComponentsInChildren<ModularAvatarExtensionsMoveToRootOfReference>(true).Where(c => c).ToArray();
@@ -36,26 +44,33 @@ internal class MoveToRootPass : MaexPass<MoveToRootPass>
         LogC($"Find {autoMoveToRootOfTransforms.Length} move to root inside \"{avatar.FullName()}\"");
 
         foreach (var moveToRootOfTransform in autoMoveToRootOfTransforms)
-        {
-            var referencePath = moveToRootOfTransform?.reference?.referencePath;
+            using (ErrorReport.WithContextObject(moveToRootOfTransform))
+                try
+                {
+                    var referencePath = moveToRootOfTransform?.reference?.referencePath;
 
-            if (string.IsNullOrEmpty(referencePath))
-            {
-                LogError("error.move_to_root_of_reference_pass.invalid_reference_path",
-                    moveToRootOfTransform?.FullName());
-                continue;
-            }
+                    if (string.IsNullOrEmpty(referencePath))
+                    {
+                        LogError("error.move_to_root_of_reference_pass.invalid_reference_path",
+                            moveToRootOfTransform?.FullName());
+                        continue;
+                    }
 
-            var found = ctx.AvatarRootTransform.Find(referencePath);
+                    var found = ctx.AvatarRootTransform.Find(referencePath);
 
-            if (found == null)
-            {
-                LogError("error.reference_path_not_found", referencePath, moveToRootOfTransform?.FullName());
-                continue;
-            }
+                    if (found == null)
+                    {
+                        LogError("error.reference_path_not_found", referencePath, moveToRootOfTransform?.FullName());
+                        continue;
+                    }
 
-            found.transform.SetParent(ctx.AvatarRootTransform);
-            LogC($"New Path: \"{found.FullName()}\"");
-        }
+                    found.transform.SetParent(ctx.AvatarRootTransform);
+                    LogC($"New Path: \"{found.FullName()}\"");
+                }
+                catch (Exception e)
+                {
+                    ErrorReport.ReportException(e);
+                    return;
+                }
     }
 }
