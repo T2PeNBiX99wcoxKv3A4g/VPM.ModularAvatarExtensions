@@ -30,7 +30,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (obj == null) return;
 
             var objPosition = obj.transform.TransformPointUnscaled(positionOffset).Round(decimals);
-            var oldPosition = transform.position;
+            var oldPosition = transform.position.Round(decimals);
             var newPosition = oldPosition;
 
             if (isLockPosition.x) newPosition.x = objPosition.x;
@@ -40,7 +40,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (newPosition != oldPosition) transform.position = newPosition;
 
             var objRotation = (obj.transform.rotation * Quaternion.Euler(rotationOffset)).eulerAngles.Round(decimals);
-            var oldRotation = transform.eulerAngles;
+            var oldRotation = transform.eulerAngles.Round(decimals);
             var newRotation = oldRotation;
 
             if (isLockRotation.x) newRotation.x = objRotation.x;
@@ -50,7 +50,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (newRotation != oldRotation) transform.eulerAngles = newRotation;
 
             var objScale = Vector3.Scale(obj.transform.localScale, scaleOffset).Round(decimals);
-            var oldScale = transform.localScale;
+            var oldScale = transform.localScale.Round(decimals);
             var newScale = oldScale;
 
             if (isLockScale.x) newScale.x = objScale.x;
