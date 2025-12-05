@@ -1,4 +1,5 @@
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -13,11 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         private void Update()
         {
             if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying()) return;
-
-            var setScale = Vector3.one;
-            if (transform.parent != null) setScale = transform.parent.InverseTransformVector(Vector3.one);
-
-            transform.localScale = setScale;
+            transform.localScale = transform.GetLocalScaleFollowWorldScale();
         }
     }
 }
