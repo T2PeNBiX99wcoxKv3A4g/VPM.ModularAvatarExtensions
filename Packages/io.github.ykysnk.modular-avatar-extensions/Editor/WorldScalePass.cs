@@ -28,7 +28,7 @@ internal class WorldScalePass : MaexPass<WorldScalePass>
 
         LogC($"Find {worldScales.Length} world scales inside \"{avatar.FullName()}\"");
 
-        var worldPrefabPath = AssetDatabase.GUIDToAssetPath("0fb864bbf2ec27c4586c64a0c7e40cc8");
+        var worldPrefabPath = AssetDatabase.GUIDToAssetPath(GuidList.WorldPrefabPrefab);
 
         if (string.IsNullOrEmpty(worldPrefabPath))
         {
