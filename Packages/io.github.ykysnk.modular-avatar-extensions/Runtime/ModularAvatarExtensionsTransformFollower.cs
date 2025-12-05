@@ -59,6 +59,18 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (newScale != oldScale) transform.localScale = newScale;
         }
 
+        protected override void OnChange()
+        {
+            var boneProxy = GetComponent<ModularAvatarBoneProxy>();
+            if (boneProxy == null || boneProxy.target == null) return;
+            if (reference != null)
+                reference.Set(boneProxy.target.gameObject);
+            else
+                reference = new(boneProxy.target.gameObject);
+
+            boneProxy.attachmentMode = BoneProxyAttachmentMode.AsChildKeepWorldPose;
+        }
+
         public void ActivateConstraint()
         {
             var obj = reference?.Get(this);
