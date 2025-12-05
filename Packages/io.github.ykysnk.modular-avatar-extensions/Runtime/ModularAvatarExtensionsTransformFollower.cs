@@ -19,6 +19,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public BooleanVector3 isLockPosition = BooleanVector3.True;
         public BooleanVector3 isLockRotation = BooleanVector3.True;
         public BooleanVector3 isLockScale = BooleanVector3.True;
+        [SerializeField] private int decimals = 4;
 
         private void Update()
         {
@@ -28,7 +29,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var obj = reference?.Get(this);
             if (obj == null) return;
 
-            var objPosition = obj.transform.TransformPointUnscaled(positionOffset);
+            var objPosition = obj.transform.TransformPointUnscaled(positionOffset).Round(decimals);
             var oldPosition = transform.position;
             var newPosition = oldPosition;
 
@@ -38,7 +39,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (newPosition != oldPosition) transform.position = newPosition;
 
-            var objRotation = (obj.transform.rotation * Quaternion.Euler(rotationOffset)).eulerAngles;
+            var objRotation = (obj.transform.rotation * Quaternion.Euler(rotationOffset)).eulerAngles.Round(decimals);
             var oldRotation = transform.eulerAngles;
             var newRotation = oldRotation;
 
@@ -48,7 +49,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (newRotation != oldRotation) transform.eulerAngles = newRotation;
 
-            var objScale = Vector3.Scale(obj.transform.localScale, scaleOffset);
+            var objScale = Vector3.Scale(obj.transform.localScale, scaleOffset).Round(decimals);
             var oldScale = transform.localScale;
             var newScale = oldScale;
 
@@ -75,10 +76,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             var obj = reference?.Get(this);
             if (obj == null) return;
-            positionOffset = obj.transform.InverseTransformPointUnscaled(transform.position);
+            positionOffset = obj.transform.InverseTransformPointUnscaled(transform.position).Round(decimals);
             // TODO: Rotation offset is work but weird
-            rotationOffset = (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles;
-            scaleOffset = transform.lossyScale.Divide(obj.transform.lossyScale);
+            rotationOffset =
+                (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles.Round(decimals);
+            scaleOffset = transform.lossyScale.Divide(obj.transform.lossyScale).Round(decimals);
             isLock = true;
         }
 

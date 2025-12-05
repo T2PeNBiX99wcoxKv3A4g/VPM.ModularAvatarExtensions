@@ -1,4 +1,5 @@
 using System.Linq;
+using nadena.dev.modular_avatar.core;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ internal class TransformFollowerEditor : MaexEditor
     private const string IsLockPositionProp = "isLockPosition";
     private const string IsLockRotationProp = "isLockRotation";
     private const string IsLockScaleProp = "isLockScale";
+    private const string DecimalsProp = "decimals";
+    private SerializedProperty? _decimals;
 
     private SerializedProperty? _isLock;
     private SerializedProperty? _isLockPosition;
@@ -36,11 +39,13 @@ internal class TransformFollowerEditor : MaexEditor
         _isLockPosition = serializedObject.FindProperty(IsLockPositionProp);
         _isLockRotation = serializedObject.FindProperty(IsLockRotationProp);
         _isLockScale = serializedObject.FindProperty(IsLockScaleProp);
+        _decimals = serializedObject.FindProperty(DecimalsProp);
     }
 
     protected override void OnInnerInspectorGUI()
     {
         var transformFollowers = targets.Select(t => (ModularAvatarExtensionsTransformFollower)t).ToArray();
+        var transformFollower = (ModularAvatarExtensionsTransformFollower)target;
 
         EditorGUILayout.BeginHorizontal();
 
@@ -49,20 +54,27 @@ internal class TransformFollowerEditor : MaexEditor
 
         EditorGUILayout.EndHorizontal();
 
-        foreach (var transformFollower in transformFollowers)
+        foreach (var transformFollower2 in transformFollowers)
             if (activateButton)
-                transformFollower.ActivateConstraint();
+                transformFollower2.ActivateConstraint();
             else if (zeroButton)
-                transformFollower.ZeroConstraint();
+                transformFollower2.ZeroConstraint();
 
         EditorGUILayout.PropertyField(_isLock, "label.transform_follower.is_lock".G());
-        EditorGUILayout.PropertyField(_reference, "label.transform_follower.reference".G());
+
+        if (transformFollower.GetComponent<ModularAvatarBoneProxy>() != null &&
+            transformFollower.reference is { referencePath: not null })
+            EditorGUILayout.HelpBox("label.transform_follower.bone_proxy_found".S(), MessageType.Info, true);
+        else
+            EditorGUILayout.PropertyField(_reference, "label.transform_follower.reference".G());
+
         EditorGUILayout.PropertyField(_positionOffset, "label.transform_follower.position_offset".G());
         EditorGUILayout.PropertyField(_rotationOffset, "label.transform_follower.rotation_offset".G());
         EditorGUILayout.PropertyField(_scaleOffset, "label.transform_follower.scale_offset".G());
         EditorGUILayout.PropertyField(_isLockPosition, "label.transform_follower.is_lock_position".G());
         EditorGUILayout.PropertyField(_isLockRotation, "label.transform_follower.is_lock_rotation".G());
         EditorGUILayout.PropertyField(_isLockScale, "label.transform_follower.is_lock_scale".G());
+        EditorGUILayout.PropertyField(_decimals, "label.transform_follower.decimals".G());
         EditorGUILayout.HelpBox("label.transform_follower.warning".S(), MessageType.Warning, true);
     }
 }
