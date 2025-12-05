@@ -291,6 +291,12 @@ MonoBehaviour:
     translate: Bone proxy component is found, the target will follow bone proxy's
       target
     tooltip: 
-  - key: label.transform_follower.decimals
-    translate: Allow Decimals
+  - key: label.transform_follower.position_decimals
+    translate: Position Decimals
+    tooltip: 
+  - key: label.transform_follower.rotation_decimals
+    translate: Rotation Decimals
+    tooltip: 
+  - key: label.transform_follower.scale_decimals
+    translate: Scale Decimals
     tooltip: 

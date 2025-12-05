@@ -17,16 +17,20 @@ internal class TransformFollowerEditor : MaexEditor
     private const string IsLockPositionProp = "isLockPosition";
     private const string IsLockRotationProp = "isLockRotation";
     private const string IsLockScaleProp = "isLockScale";
-    private const string DecimalsProp = "decimals";
-    private SerializedProperty? _decimals;
+    private const string PositionDecimalsProp = "positionDecimals";
+    private const string RotationDecimalsProp = "rotationDecimals";
+    private const string ScaleDecimalsProp = "scaleDecimals";
 
     private SerializedProperty? _isLock;
     private SerializedProperty? _isLockPosition;
     private SerializedProperty? _isLockRotation;
     private SerializedProperty? _isLockScale;
+    private SerializedProperty? _positionDecimals;
     private SerializedProperty? _positionOffset;
     private SerializedProperty? _reference;
+    private SerializedProperty? _rotationDecimals;
     private SerializedProperty? _rotationOffset;
+    private SerializedProperty? _scaleDecimals;
     private SerializedProperty? _scaleOffset;
 
     protected override void OnEnable()
@@ -39,7 +43,9 @@ internal class TransformFollowerEditor : MaexEditor
         _isLockPosition = serializedObject.FindProperty(IsLockPositionProp);
         _isLockRotation = serializedObject.FindProperty(IsLockRotationProp);
         _isLockScale = serializedObject.FindProperty(IsLockScaleProp);
-        _decimals = serializedObject.FindProperty(DecimalsProp);
+        _positionDecimals = serializedObject.FindProperty(PositionDecimalsProp);
+        _rotationDecimals = serializedObject.FindProperty(RotationDecimalsProp);
+        _scaleDecimals = serializedObject.FindProperty(ScaleDecimalsProp);
     }
 
     protected override void OnInnerInspectorGUI()
@@ -74,7 +80,9 @@ internal class TransformFollowerEditor : MaexEditor
         EditorGUILayout.PropertyField(_isLockPosition, "label.transform_follower.is_lock_position".G());
         EditorGUILayout.PropertyField(_isLockRotation, "label.transform_follower.is_lock_rotation".G());
         EditorGUILayout.PropertyField(_isLockScale, "label.transform_follower.is_lock_scale".G());
-        EditorGUILayout.PropertyField(_decimals, "label.transform_follower.decimals".G());
+        EditorGUILayout.PropertyField(_positionDecimals, "label.transform_follower.position_decimals".G());
+        EditorGUILayout.PropertyField(_rotationDecimals, "label.transform_follower.rotation_decimals".G());
+        EditorGUILayout.PropertyField(_scaleDecimals, "label.transform_follower.scale_decimals".G());
         EditorGUILayout.HelpBox("label.transform_follower.warning".S(), MessageType.Warning, true);
     }
 }
