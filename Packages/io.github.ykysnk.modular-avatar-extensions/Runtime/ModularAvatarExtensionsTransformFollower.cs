@@ -1,4 +1,5 @@
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
@@ -19,7 +20,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public BooleanVector3 isLockRotation = BooleanVector3.True;
         public BooleanVector3 isLockScale = BooleanVector3.True;
 
-        // TODO: Fix position and rotation logic
         private void Update()
         {
             if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying() || !isLock ||
@@ -28,7 +28,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var obj = reference?.Get(this);
             if (obj == null) return;
 
-            var objPosition = obj.transform.position + positionOffset;
+            var objPosition = obj.transform.TransformPointUnscaled(positionOffset);
             var oldPosition = transform.position;
             var newPosition = oldPosition;
 
@@ -38,7 +38,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (newPosition != oldPosition) transform.position = newPosition;
 
-            var objRotation = obj.transform.eulerAngles + rotationOffset;
+            var objRotation = (obj.transform.rotation * Quaternion.Euler(rotationOffset)).eulerAngles;
             var oldRotation = transform.eulerAngles;
             var newRotation = oldRotation;
 
@@ -48,8 +48,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (newRotation != oldRotation) transform.eulerAngles = newRotation;
 
-            var objLocalScale = GetTargetLocalScale(obj);
-            var objScale = objLocalScale + scaleOffset;
+            var objScale = Vector3.Scale(obj.transform.localScale, scaleOffset);
             var oldScale = transform.localScale;
             var newScale = oldScale;
 
@@ -60,22 +59,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (newScale != oldScale) transform.localScale = newScale;
         }
 
-        private Vector3 GetTargetLocalScale(GameObject obj)
-        {
-            var worldScale = Vector3.one;
-            if (transform.parent != null) worldScale = transform.parent.TransformVector(Vector3.one);
-            var objWorldScale = obj.transform.lossyScale;
-            return new(objWorldScale.x / worldScale.x, objWorldScale.y / worldScale.y, objWorldScale.z / worldScale.z);
-        }
-
         public void ActivateConstraint()
         {
             var obj = reference?.Get(this);
             if (obj == null) return;
-            positionOffset = transform.position - obj.transform.position;
-            rotationOffset = transform.eulerAngles - obj.transform.eulerAngles;
-            var objLocalScale = GetTargetLocalScale(obj);
-            scaleOffset = transform.localScale - objLocalScale;
+            positionOffset = obj.transform.InverseTransformPointUnscaled(transform.position);
+            // TODO: Rotation offset is work but weird
+            rotationOffset = (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles;
+            scaleOffset = transform.lossyScale.Divide(obj.transform.lossyScale);
             isLock = true;
         }
 
