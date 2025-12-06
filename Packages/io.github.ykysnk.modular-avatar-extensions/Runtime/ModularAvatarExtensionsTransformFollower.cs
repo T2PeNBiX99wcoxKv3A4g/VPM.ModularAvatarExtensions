@@ -15,13 +15,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public AvatarObjectReference? reference;
         public Vector3 positionOffset = Vector3.zero;
         public Vector3 rotationOffset = Vector3.zero;
-        public Vector3 scaleOffset = Vector3.zero;
+        public Vector3 scaleOffset = Vector3.one;
         public BooleanVector3 isLockPosition = BooleanVector3.True;
         public BooleanVector3 isLockRotation = BooleanVector3.True;
         public BooleanVector3 isLockScale = BooleanVector3.True;
-        [SerializeField] private int positionDecimals = 4;
-        [SerializeField] private int rotationDecimals = 4;
-        [SerializeField] private int scaleDecimals = 4;
+        [SerializeField] [Range(0, 6)] private int positionDecimals = 4;
+        [SerializeField] [Range(0, 6)] private int rotationDecimals = 4;
+        [SerializeField] [Range(0, 6)] private int scaleDecimals = 4;
 
         private void Update()
         {
@@ -62,7 +62,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (!newScale.Equals(oldScale)) transform.localScale = newScale;
         }
 
-        protected override void OnChange()
+        protected override void OnChange() => FindBoneProxy();
+
+        private void FindBoneProxy()
         {
             var boneProxy = GetComponent<ModularAvatarBoneProxy>();
             if (boneProxy == null || boneProxy.target == null) return;
@@ -76,6 +78,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public void ActivateConstraint()
         {
+            FindBoneProxy();
             var obj = reference?.Get(this);
             if (obj == null) return;
             positionOffset = obj.transform.InverseTransformPointUnscaled(transform.position).Round(positionDecimals);
@@ -88,9 +91,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public void ZeroConstraint()
         {
+            FindBoneProxy();
             positionOffset = Vector3.zero;
             rotationOffset = Vector3.zero;
-            scaleOffset = Vector3.zero;
+            scaleOffset = Vector3.one;
             isLock = true;
         }
     }
