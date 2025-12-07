@@ -33,13 +33,13 @@
   },
   "locked": {
     "nadena.dev.modular-avatar": {
-      "version": "1.15.0",
+      "version": "1.15.1",
       "dependencies": {
         "nadena.dev.ndmf": ">=1.10.0 <2.0.0-a"
       }
     },
     "io.github.ykysnk.utils": {
-      "version": "0.18.0",
+      "version": "0.19.3",
       "dependencies": {}
     },
     "nadena.dev.ndmf": {
@@ -59,7 +59,7 @@
       "dependencies": {}
     },
     "dev.sakurayuki.uniasset": {
-      "version": "1.1.0",
+      "version": "1.1.1",
       "dependencies": {}
     },
     "io.github.ykysnk.localization": {
