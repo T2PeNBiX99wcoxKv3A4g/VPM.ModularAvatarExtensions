@@ -82,9 +82,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var obj = reference?.Get(this);
             if (obj == null) return;
             positionOffset = obj.transform.InverseTransformPointUnscaled(transform.position).Round(positionDecimals);
-            // TODO: Rotation offset is work but weird
-            rotationOffset =
-                (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles.Round(rotationDecimals);
+            var tempRotationOffset = (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles;
+            rotationOffset = new Vector3(
+                    Mathf.DeltaAngle(0, tempRotationOffset.x),
+                    Mathf.DeltaAngle(0, tempRotationOffset.y),
+                    Mathf.DeltaAngle(0, tempRotationOffset.z))
+                .Round(rotationDecimals);
             scaleOffset = transform.lossyScale.Divide(obj.transform.lossyScale).Round(scaleDecimals);
             isLock = true;
         }

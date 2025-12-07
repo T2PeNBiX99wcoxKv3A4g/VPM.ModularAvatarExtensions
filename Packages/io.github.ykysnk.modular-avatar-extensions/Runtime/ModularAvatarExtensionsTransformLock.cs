@@ -19,7 +19,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void Update()
         {
-            if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying() || !isLock) return;
+            if (Utils.IsInPrefab() || !isLock) return;
 
             var oldPosition = transform.localPosition;
             var newPosition = oldPosition;

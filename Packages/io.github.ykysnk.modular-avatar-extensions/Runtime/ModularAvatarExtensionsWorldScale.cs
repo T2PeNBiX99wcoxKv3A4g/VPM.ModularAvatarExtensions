@@ -14,7 +14,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         private void Update()
         {
             if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying()) return;
-            transform.localScale = transform.GetLocalScaleFollowWorldScale();
+            if (transform.lossyScale.Round(2).Equals(Vector3.one)) return;
+            transform.SetLossyScale(Vector3.one);
         }
     }
 }
