@@ -82,11 +82,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var obj = reference?.Get(this);
             if (obj == null) return;
             positionOffset = obj.transform.InverseTransformPointUnscaled(transform.position).Round(positionDecimals);
-            var tempRotationOffset = (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles;
-            rotationOffset = new Vector3(
-                    Mathf.DeltaAngle(0, tempRotationOffset.x),
-                    Mathf.DeltaAngle(0, tempRotationOffset.y),
-                    Mathf.DeltaAngle(0, tempRotationOffset.z))
+            rotationOffset = (Quaternion.Inverse(obj.transform.rotation) * transform.rotation).eulerAngles.DeltaAngle()
                 .Round(rotationDecimals);
             scaleOffset = transform.lossyScale.Divide(obj.transform.lossyScale).Round(scaleDecimals);
             isLock = true;
