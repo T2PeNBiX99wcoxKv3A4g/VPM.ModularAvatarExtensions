@@ -7,8 +7,6 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    [DisallowMultipleComponent]
-    [RequireComponent(typeof(ModularAvatarMenuItem))]
     [AddComponentMenu("Modular Avatar EX/MAEX Icon Generator")]
     public class ModularAvatarExtensionsIconGenerator : ModularAvatarExtensionsIconGeneratorBase
     {

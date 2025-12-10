@@ -15,18 +15,18 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [PublicAPI]
     [ExecuteInEditMode]
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(ModularAvatarMenuItem))]
     public abstract class ModularAvatarExtensionsIconGeneratorBase : AvatarMaexComponent
     {
         protected const string FolderPath = "Assets/ModularAvatarExtensionsIconGenerator";
         protected const int TargetLayer = 21;
         protected const int CaptureWidthAndHeight = 2048;
         protected const int ScaleWidthAndHeight = 256;
+
         [SerializeField] protected ModularAvatarMenuItem? modularAvatarMenuItem;
         [SerializeField] protected Texture2D? iconTexture;
-
         [SerializeField] protected TextureImporter? iconImporter;
-
-        // TODO: Should be global preset
         [SerializeField] protected Preset? preset;
         [SerializeField] protected List<GameObject> objects = new();
         [SerializeField] protected string objectsHash = "";
@@ -34,6 +34,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected bool shouldGenerateIcon;
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
+
+        public Texture2D? IconTexture => iconTexture;
+
+        public Preset? Preset
+        {
+            get => preset;
+            set => preset = value;
+        }
 
         protected virtual void LateUpdate()
         {
@@ -46,6 +54,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 shouldGenerateIcon = ShouldGenerateIcon();
         }
 
+        protected override void OnDestroy() => RemoveUnusedIcon();
+
         protected override void OnChange()
         {
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
@@ -56,8 +66,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
             shouldGenerateIcon = ShouldGenerateIcon();
 
-            if (preset != null && preset.GetTargetFullTypeName() != typeof(TextureImporter).FullName)
-                preset = null;
+            var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
+            preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
         }
 
         protected static string GetMaterialsSha256(MeshData meshData)
@@ -108,17 +118,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             return iconName != newIconName;
         }
 
-        // TODO: Button
+        public void ForceGenerateIcon() => OnChange();
+
         protected void GenerateIcon()
         {
             if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath);
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
+            var oldIconName = iconName;
             var newIconName = GetIconName(meshDatas);
-            var oldIconPath = !string.IsNullOrEmpty(iconName) ? Path.Combine(FolderPath, iconName) : "";
             var newIconPath = Path.Combine(FolderPath, newIconName);
-            if (!string.IsNullOrEmpty(oldIconPath) && oldIconPath != newIconPath &&
-                UnityFile.Exists($"{oldIconPath}.png"))
-                UnityFile.Delete($"{oldIconPath}.png");
+            if (oldIconName != newIconName) RemoveUnusedIcon();
             var bytes = SaveMeshAsPng(meshDatas, scaleWidth, scaleHeight);
             if (bytes != null) UnityFile.WriteAllBytes($"{newIconPath}.png", bytes);
             iconName = newIconName;
@@ -199,6 +208,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             DestroyImmediate(camObj);
             DestroyImmediate(tempObj);
             return bytes;
+        }
+
+        protected void RemoveUnusedIcon()
+        {
+            if (string.IsNullOrEmpty(iconName)) return;
+            var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
+            if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
+            var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
+            if (!UnityFile.Exists(iconPath)) return;
+            UnityFile.Delete(iconPath);
+            AssetDatabase.Refresh();
         }
 
         protected abstract List<GameObject> GetAllObjects();

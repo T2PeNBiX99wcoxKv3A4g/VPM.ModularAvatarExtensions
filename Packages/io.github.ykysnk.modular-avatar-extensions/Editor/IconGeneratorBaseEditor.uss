@@ -1,0 +1,54 @@
+.row-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    top: 10px;
+}
+
+.square-objectfield .unity-object-field__input {
+    width: 100px;
+    height: 100px;
+    max-height: 100px;
+    max-width: 100px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.square-objectfield .unity-object-field-display {
+    width: 100px;
+    height: 100px;
+    max-height: 100px;
+    max-width: 100px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.square-objectfield .unity-object-field-display__icon {
+    width: 100px;
+    height: 100px;
+    max-height: 100px;
+    max-width: 100px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.square-objectfield .unity-object-field-display__label {
+    display: none;
+}
+
+.square-objectfield .unity-object-field__object {
+    width: 100px;
+    height: 100px;
+    max-height: 100px;
+    max-width: 100px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.square-objectfield .unity-object-field__selector {
+    display: none;
+}

@@ -1,5 +1,7 @@
 using io.github.ykysnk.utils.Editor;
+using JetBrains.Annotations;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -12,6 +14,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             InternalLocalizationExtensions.Helper.SelectLanguageGUI();
         }
 
+        protected override VisualElement? CreateErrorHandleInspectorGUI()
+        {
+            if (CreateInnerInspectorGUI() == null) return null;
+            // TODO
+            return CreateInnerInspectorGUI();
+        }
+
+        [PublicAPI]
         protected abstract void OnInnerInspectorGUI();
+
+        [PublicAPI]
+        protected virtual VisualElement? CreateInnerInspectorGUI() => null;
     }
 }
