@@ -1,12 +1,12 @@
 {
   "name": "io.github.ykysnk.modular-avatar-extensions",
   "displayName": "Modular Avatar Extensions",
-  "version": "0.10.7",
+  "version": "0.11.0",
   "description": "Extensions for ModularAvatar",
   "gitDependencies": {},
   "vpmDependencies": {
-    "io.github.ykysnk.utils": ">=0.14.0",
-    "io.github.ykysnk.localization": ">=0.3.0",
+    "io.github.ykysnk.utils": ">=0.22.0",
+    "io.github.ykysnk.localization": ">=0.4.2",
     "nadena.dev.modular-avatar": ">=1.14.3"
   },
   "author": {
