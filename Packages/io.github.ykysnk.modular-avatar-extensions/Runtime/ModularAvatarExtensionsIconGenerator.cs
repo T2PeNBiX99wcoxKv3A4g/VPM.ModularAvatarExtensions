@@ -35,12 +35,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (modularAvatarMenuItem.PortableControl.Type != PortableControlType.SubMenu)
                 return modularAvatarObjectToggle == null
                     ? new()
-                    : modularAvatarObjectToggle.Objects.Select(to => to.Object.Get(this)).ToList();
+                    : modularAvatarObjectToggle.Objects.Select(to => to.Object.Get(this)).Where(go => go != null)
+                        .ToList();
 
             var allSubModularAvatarObjectToggles =
                 modularAvatarMenuItem.GetComponentsInChildren<ModularAvatarObjectToggle>(true);
-            return allSubModularAvatarObjectToggles.SelectMany(toggle => toggle.Objects.Select(to => to.Object.Get(this)))
-                .ToList();
+            return allSubModularAvatarObjectToggles
+                .SelectMany(toggle => toggle.Objects.Select(to => to.Object.Get(this)).Where(go => go != null)).ToList();
         }
     }
 }
