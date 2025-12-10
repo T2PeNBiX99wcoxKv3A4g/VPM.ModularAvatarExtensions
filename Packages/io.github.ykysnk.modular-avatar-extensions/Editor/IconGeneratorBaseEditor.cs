@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using nadena.dev.modular_avatar.core;
 using UnityEditor;
 using UnityEditor.Presets;
 using UnityEditor.UIElements;
@@ -22,6 +23,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             InternalLocalizationExtensions.Helper.UILocalize(visualTree);
             visualTree.styleSheets.Add(uss);
             visualTree.Bind(serializedObject);
+
+            var errorBox = visualTree.Q<HelpBox>("errorMenuItem");
+            errorBox.style.display = DisplayStyle.None;
+            EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
+            {
+                var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
+                if (iconGeneratorBase == null) return;
+                errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out _)
+                    ? DisplayStyle.None
+                    : DisplayStyle.Flex;
+            };
 
             var button = visualTree.Q<Button>("generateIcon");
             button.clicked += () =>

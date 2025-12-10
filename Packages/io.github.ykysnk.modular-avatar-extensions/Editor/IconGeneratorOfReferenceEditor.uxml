@@ -1,6 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:HelpBox name="errorMenuItem" message-type="Error" text="label.icon_generator.menu_item_not_found"/>
-    <ui:HelpBox name="errorObjectToggle" message-type="Error" text="label.icon_generator.object_toggle_not_found"/>
+    <ui:ListView binding-path="avatarObjectReferences" virtualization-method="DynamicHeight"
+                 name="avatarObjectReferences" show-border="true" reorderable="true" show-foldout-header="true"
+                 show-add-remove-footer="true" show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
+                 header-title="label.icon_generator.avatar_object_references"/>
     <ui:VisualElement style="flex-direction: row;">
         <ui:VisualElement style="min-width: 80%; align-self: stretch; padding-right: 6px;">
             <uie:ObjectField binding-path="iconTexture" name="iconTexture"

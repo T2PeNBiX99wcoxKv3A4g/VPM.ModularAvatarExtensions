@@ -10,7 +10,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         protected override void OnCreateInnerInspectorGUI(TemplateContainer container)
         {
-            var errorBox = container.Q<HelpBox>("error");
+            var errorBox = container.Q<HelpBox>("errorObjectToggle");
             errorBox.style.display = DisplayStyle.None;
             EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
             {

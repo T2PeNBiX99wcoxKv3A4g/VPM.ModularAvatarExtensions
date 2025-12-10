@@ -16,7 +16,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [PublicAPI]
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(ModularAvatarMenuItem))]
     public abstract class ModularAvatarExtensionsIconGeneratorBase : AvatarMaexComponent
     {
         protected const string FolderPath = "Assets/ModularAvatarExtensionsIconGenerator";
