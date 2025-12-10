@@ -29,6 +29,9 @@
     },
     "com.vrchat.avatars": {
       "version": "3.10.0"
+    },
+    "d4rkpl4y3r.d4rkavataroptimizer": {
+      "version": "3.12.5"
     }
   },
   "locked": {
@@ -81,6 +84,10 @@
       "dependencies": {
         "com.vrchat.base": "3.10.1"
       }
+    },
+    "d4rkpl4y3r.d4rkavataroptimizer": {
+      "version": "3.12.5",
+      "dependencies": {}
     }
   }
 }
