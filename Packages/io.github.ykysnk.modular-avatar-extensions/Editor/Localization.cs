@@ -6,39 +6,41 @@ using io.github.ykysnk.Localization.Editor;
 using nadena.dev.ndmf.localization;
 using UnityEditor;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[InitializeOnLoad]
-internal static class Localization
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    private static readonly ImmutableList<string>
-        SupportedLanguages = new[]
+    [InitializeOnLoad]
+    internal static class Localization
+    {
+        private static readonly ImmutableList<string>
+            SupportedLanguages = new[]
+            {
+                "en-US", "ja-JP"
+            }.ToImmutableList();
+
+        static Localization()
         {
-            "en-US", "ja-JP"
-        }.ToImmutableList();
-
-    static Localization()
-    {
-        GlobalLocalization.OnLocalizationReload -= OnLocalizationReload;
-        GlobalLocalization.OnLocalizationReload += OnLocalizationReload;
-    }
-
-    public static Localizer? L { get; private set; }
-
-    private static void OnLocalizationReload()
-    {
-        L = new(SupportedLanguages[0], () => SupportedLanguages.Select(lang => (lang, LanguageLookup(lang))).ToList());
-    }
-
-    private static Func<string, string> LanguageLookup(string lang)
-    {
-        try
-        {
-            return InternalLocalizationExtensions.Helper.GetLanguageLocalization(lang).GetValueOrDefault;
+            GlobalLocalization.OnLocalizationReload -= OnLocalizationReload;
+            GlobalLocalization.OnLocalizationReload += OnLocalizationReload;
         }
-        catch (Exception e)
+
+        public static Localizer? L { get; private set; }
+
+        private static void OnLocalizationReload()
         {
-            return _ => $"Language Lookup Error: {e.Message}";
+            L = new(SupportedLanguages[0],
+                () => SupportedLanguages.Select(lang => (lang, LanguageLookup(lang))).ToList());
+        }
+
+        private static Func<string, string> LanguageLookup(string lang)
+        {
+            try
+            {
+                return InternalLocalizationExtensions.Helper.GetLanguageLocalization(lang).GetValueOrDefault;
+            }
+            catch (Exception e)
+            {
+                return _ => $"Language Lookup Error: {e.Message}";
+            }
         }
     }
 }

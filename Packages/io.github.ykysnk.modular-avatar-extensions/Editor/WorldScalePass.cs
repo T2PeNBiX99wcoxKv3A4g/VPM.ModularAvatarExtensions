@@ -12,44 +12,44 @@ using VRC.SDK3.Dynamics.Constraint.Components;
 using UnityEngine.Animations;
 #endif
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-internal class WorldScalePass : MaexPass<WorldScalePass>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.WorldScale";
-    public override string DisplayName => "Modular Avatar Extensions World Scale";
-
-    protected override void Execute(BuildContext ctx)
+    internal class WorldScalePass : MaexPass<WorldScalePass>
     {
-        var avatar = ctx.AvatarRootObject;
-        var worldScales = avatar.GetComponentsInChildren<ModularAvatarExtensionsWorldScale>(true)
-            .Where(c => c && !c.editorOnly)
-            .ToArray();
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.WorldScale";
+        public override string DisplayName => "Modular Avatar Extensions World Scale";
 
-        LogC($"Find {worldScales.Length} world scales inside \"{avatar.FullName()}\"");
-
-        var worldPrefabPath = AssetDatabase.GUIDToAssetPath(GuidList.WorldPrefabPrefab);
-
-        if (string.IsNullOrEmpty(worldPrefabPath))
+        protected override void Execute(BuildContext ctx)
         {
-            LogError("error.world_scale_pass.world_prefab_not_found");
-            return;
-        }
+            var avatar = ctx.AvatarRootObject;
+            var worldScales = avatar.GetComponentsInChildren<ModularAvatarExtensionsWorldScale>(true)
+                .Where(c => c && !c.editorOnly)
+                .ToArray();
 
-        var worldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(worldPrefabPath);
+            LogC($"Find {worldScales.Length} world scales inside \"{avatar.FullName()}\"");
 
-        foreach (var worldScale in worldScales)
-            using (ErrorReport.WithContextObject(worldScale))
-                try
-                {
-                    var obj = worldScale.gameObject;
+            var worldPrefabPath = AssetDatabase.GUIDToAssetPath(GuidList.WorldPrefabPrefab);
+
+            if (string.IsNullOrEmpty(worldPrefabPath))
+            {
+                LogError("error.world_scale_pass.world_prefab_not_found");
+                return;
+            }
+
+            var worldPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(worldPrefabPath);
+
+            foreach (var worldScale in worldScales)
+                using (ErrorReport.WithContextObject(worldScale))
+                    try
+                    {
+                        var obj = worldScale.gameObject;
 
 #if MAEX_VRCSDK3_BASE
-                    var constraint = obj.AddComponent<VRCScaleConstraint>();
-                    var newSource = new VRCConstraintSource(worldPrefab.transform, 1f);
-                    constraint.Sources.Add(newSource);
-                    constraint.Locked = true;
-                    constraint.IsActive = true;
+                        var constraint = obj.AddComponent<VRCScaleConstraint>();
+                        var newSource = new VRCConstraintSource(worldPrefab.transform, 1f);
+                        constraint.Sources.Add(newSource);
+                        constraint.Locked = true;
+                        constraint.IsActive = true;
 #else
                     var constraint = obj.AddComponent<ScaleConstraint>();
                     var newSource = new ConstraintSource
@@ -61,12 +61,13 @@ internal class WorldScalePass : MaexPass<WorldScalePass>
                     constraint.locked = true;
                     constraint.constraintActive = true;
 #endif
-                    LogC($"Add world scale constraint to {obj.FullName()}");
-                }
-                catch (Exception e)
-                {
-                    ErrorReport.ReportException(e);
-                    return;
-                }
+                        LogC($"Add world scale constraint to {obj.FullName()}");
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
+        }
     }
 }

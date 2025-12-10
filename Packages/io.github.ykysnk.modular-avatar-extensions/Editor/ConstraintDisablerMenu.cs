@@ -7,39 +7,40 @@ using UnityEngine.Animations;
 using VRC.Dynamics;
 #endif
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-internal static class ConstraintDisablerMenu
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    private const string MenuPath = "GameObject/Modular Avatar EX/Add Constraint Disabler";
-
-    [MenuItem(MenuPath, false, 10)]
-    private static void Menu(MenuCommand menuCommand)
+    internal static class ConstraintDisablerMenu
     {
-        var obj = menuCommand.context as GameObject;
+        private const string MenuPath = "GameObject/Modular Avatar EX/Add Constraint Disabler";
 
-        if (obj == null)
+        [MenuItem(MenuPath, false, 10)]
+        private static void Menu(MenuCommand menuCommand)
         {
-            EditorUtility.DisplayDialog("Error", "Game Object is null", "OK");
-            return;
-        }
+            var obj = menuCommand.context as GameObject;
 
-        var components = obj.GetComponentsInChildren<Component>(true)
-            .Where(c => c is
-#if MAEX_VRCSDK3_BASE
-                            VRCConstraintBase or
-#endif
-                            IConstraint
-#if MAEX_VRCSDK3_BASE
-                        && c != null
-#endif
-            ).ToArray();
+            if (obj == null)
+            {
+                EditorUtility.DisplayDialog("Error", "Game Object is null", "OK");
+                return;
+            }
 
-        foreach (var component in components)
-        {
-            if (component.TryGetComponent<ModularAvatarExtensionsConstraintDisabler>(out _)) continue;
-            Undo.RecordObject(component, $"{component.FullName()} change");
-            Undo.AddComponent<ModularAvatarExtensionsConstraintDisabler>(component.gameObject);
+            var components = obj.GetComponentsInChildren<Component>(true)
+                .Where(c => c is
+#if MAEX_VRCSDK3_BASE
+                                VRCConstraintBase or
+#endif
+                                IConstraint
+#if MAEX_VRCSDK3_BASE
+                            && c != null
+#endif
+                ).ToArray();
+
+            foreach (var component in components)
+            {
+                if (component.TryGetComponent<ModularAvatarExtensionsConstraintDisabler>(out _)) continue;
+                Undo.RecordObject(component, $"{component.FullName()} change");
+                Undo.AddComponent<ModularAvatarExtensionsConstraintDisabler>(component.gameObject);
+            }
         }
     }
 }

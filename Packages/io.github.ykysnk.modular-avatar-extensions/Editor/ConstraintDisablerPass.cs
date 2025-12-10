@@ -7,55 +7,57 @@ using UnityEngine.Animations;
 using VRC.Dynamics;
 #endif
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
-internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.ConstraintDisabler";
-    public override string DisplayName => "Modular Avatar Extensions Constraint Disabler";
-
-    protected override void Execute(BuildContext ctx)
+    [RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
+    internal class ConstraintDisablerPass : MaexPass<ConstraintDisablerPass>
     {
-        var avatar = ctx.AvatarRootObject;
-        var constraintDisables = avatar.GetComponentsInChildren<ModularAvatarExtensionsConstraintDisabler>(true)
-            .Where(c => c).ToArray();
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.ConstraintDisabler";
+        public override string DisplayName => "Modular Avatar Extensions Constraint Disabler";
 
-        LogC($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
+        protected override void Execute(BuildContext ctx)
+        {
+            var avatar = ctx.AvatarRootObject;
+            var constraintDisables = avatar.GetComponentsInChildren<ModularAvatarExtensionsConstraintDisabler>(true)
+                .Where(c => c).ToArray();
 
-        foreach (var constraintDisabler in constraintDisables)
-            using (ErrorReport.WithContextObject(constraintDisabler))
-                try
-                {
-                    var constraint = constraintDisabler.constraint;
-                    if (constraint == null)
+            LogC($"Find {constraintDisables.Length} constraint disabler inside \"{avatar.FullName()}\"");
+
+            foreach (var constraintDisabler in constraintDisables)
+                using (ErrorReport.WithContextObject(constraintDisabler))
+                    try
                     {
-                        LogError("error.constraint_disabler_pass.constraint_not_found", constraintDisabler.FullName());
-                        continue;
-                    }
-
-                    switch (constraint)
-                    {
-#if MAEX_VRCSDK3_BASE
-                        case VRCConstraintBase { IsActive: false } vrcConstraintBase:
-                            vrcConstraintBase.IsActive = true;
-                            break;
-#endif
-                        case IConstraint _:
-                            var constraintProxy = new ConstraintProxy(constraint);
-                            if (!constraintProxy.constraintActive)
-                                constraintProxy.constraintActive = true;
-                            break;
-                        default:
-                            LogError("error.constraint_disabler_pass.unknown_constraint_type",
+                        var constraint = constraintDisabler.constraint;
+                        if (constraint == null)
+                        {
+                            LogError("error.constraint_disabler_pass.constraint_not_found",
                                 constraintDisabler.FullName());
-                            break;
+                            continue;
+                        }
+
+                        switch (constraint)
+                        {
+#if MAEX_VRCSDK3_BASE
+                            case VRCConstraintBase { IsActive: false } vrcConstraintBase:
+                                vrcConstraintBase.IsActive = true;
+                                break;
+#endif
+                            case IConstraint _:
+                                var constraintProxy = new ConstraintProxy(constraint);
+                                if (!constraintProxy.constraintActive)
+                                    constraintProxy.constraintActive = true;
+                                break;
+                            default:
+                                LogError("error.constraint_disabler_pass.unknown_constraint_type",
+                                    constraintDisabler.FullName());
+                                break;
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    ErrorReport.ReportException(e);
-                    return;
-                }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
+        }
     }
 }

@@ -3,39 +3,41 @@ using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-internal class TurnOffInBuildPass : MaexPass<TurnOffInBuildPass>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOffInBuild";
-    public override string DisplayName => "Modular Avatar Extensions Turn Off In Build";
-
-    protected override void Execute(BuildContext ctx)
+    internal class TurnOffInBuildPass : MaexPass<TurnOffInBuildPass>
     {
-        var avatar = ctx.AvatarRootObject;
-        var turnOffInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOffInBuild>(true).Where(c => c)
-            .ToArray();
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOffInBuild";
+        public override string DisplayName => "Modular Avatar Extensions Turn Off In Build";
 
-        LogC($"Find {turnOffInBuilds.Length} turn off in build inside \"{avatar.FullName()}\"");
+        protected override void Execute(BuildContext ctx)
+        {
+            var avatar = ctx.AvatarRootObject;
+            var turnOffInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOffInBuild>(true)
+                .Where(c => c)
+                .ToArray();
 
-        foreach (var turnOffInBuild in turnOffInBuilds)
-            using (ErrorReport.WithContextObject(turnOffInBuild))
-                try
-                {
-                    var obj = turnOffInBuild.gameObject;
-                    if (!obj.activeSelf)
+            LogC($"Find {turnOffInBuilds.Length} turn off in build inside \"{avatar.FullName()}\"");
+
+            foreach (var turnOffInBuild in turnOffInBuilds)
+                using (ErrorReport.WithContextObject(turnOffInBuild))
+                    try
                     {
-                        LogC($"Game Object \"{obj.FullName()}\" already is inactive");
-                        continue;
-                    }
+                        var obj = turnOffInBuild.gameObject;
+                        if (!obj.activeSelf)
+                        {
+                            LogC($"Game Object \"{obj.FullName()}\" already is inactive");
+                            continue;
+                        }
 
-                    obj.SetActive(false);
-                    LogC($"Game Object \"{obj.FullName()}\" is now inactive");
-                }
-                catch (Exception e)
-                {
-                    ErrorReport.ReportException(e);
-                    return;
-                }
+                        obj.SetActive(false);
+                        LogC($"Game Object \"{obj.FullName()}\" is now inactive");
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
+        }
     }
 }

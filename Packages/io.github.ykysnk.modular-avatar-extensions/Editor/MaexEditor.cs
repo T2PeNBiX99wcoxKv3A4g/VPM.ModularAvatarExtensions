@@ -1,16 +1,17 @@
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-internal abstract class MaexEditor : BasicEditor
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    protected override void OnErrorHandleInspectorGUI()
+    internal abstract class MaexEditor : BasicEditor
     {
-        OnInnerInspectorGUI();
-        EditorGUILayout.Separator();
-        InternalLocalizationExtensions.Helper.SelectLanguageGUI();
-    }
+        protected override void OnErrorHandleInspectorGUI()
+        {
+            OnInnerInspectorGUI();
+            EditorGUILayout.Separator();
+            InternalLocalizationExtensions.Helper.SelectLanguageGUI();
+        }
 
-    protected abstract void OnInnerInspectorGUI();
+        protected abstract void OnInnerInspectorGUI();
+    }
 }

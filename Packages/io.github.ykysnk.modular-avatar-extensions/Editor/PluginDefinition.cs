@@ -4,39 +4,40 @@ using UnityEngine;
 
 [assembly: ExportsPlugin(typeof(PluginDefinition))]
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[RunsOnAllPlatforms]
-internal class PluginDefinition : Plugin<PluginDefinition>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions";
-    public override string DisplayName => "Modular Avatar Extensions";
-    public override Color? ThemeColor => new Color(0x00 / 255f, 0xa0 / 255f, 0xe9 / 255f, 1);
-
-    protected override void Configure()
+    [RunsOnAllPlatforms]
+    internal class PluginDefinition : Plugin<PluginDefinition>
     {
-        var seq = InPhase(BuildPhase.Generating);
-        seq.Run(ConstraintDisablerPass.Instance);
-        seq.Run(MoveToRootPass.Instance);
-        seq.Run(NewNamePass.Instance);
-        seq.Run(RootTransformPathPass.Instance);
-        seq.Run(TurnOffInBuildPass.Instance);
-        seq.Run(TurnOnInBuildPass.Instance);
-        seq.Run(EditorOnlyPass.Instance);
-#if MAEX_VRCSDK3_BASE
-        seq.Run(ViewPositionPass.Instance);
-#endif
-        seq.Run(WorldScalePass.Instance);
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions";
+        public override string DisplayName => "Modular Avatar Extensions";
+        public override Color? ThemeColor => new Color(0x00 / 255f, 0xa0 / 255f, 0xe9 / 255f, 1);
 
-        seq = InPhase(BuildPhase.Transforming);
-
-        seq.Run("Purge ModularAvatar EX components", ctx =>
+        protected override void Configure()
         {
-            foreach (var component in ctx.AvatarRootTransform.GetComponentsInChildren<AvatarMaexComponent>(true))
+            var seq = InPhase(BuildPhase.Generating);
+            seq.Run(ConstraintDisablerPass.Instance);
+            seq.Run(MoveToRootPass.Instance);
+            seq.Run(NewNamePass.Instance);
+            seq.Run(RootTransformPathPass.Instance);
+            seq.Run(TurnOffInBuildPass.Instance);
+            seq.Run(TurnOnInBuildPass.Instance);
+            seq.Run(EditorOnlyPass.Instance);
+#if MAEX_VRCSDK3_BASE
+            seq.Run(ViewPositionPass.Instance);
+#endif
+            seq.Run(WorldScalePass.Instance);
+
+            seq = InPhase(BuildPhase.Transforming);
+
+            seq.Run("Purge ModularAvatar EX components", ctx =>
             {
-                if (component.DontDestroyOnBuild) continue;
-                Object.DestroyImmediate(component);
-            }
-        });
+                foreach (var component in ctx.AvatarRootTransform.GetComponentsInChildren<AvatarMaexComponent>(true))
+                {
+                    if (component.DontDestroyOnBuild) continue;
+                    Object.DestroyImmediate(component);
+                }
+            });
+        }
     }
 }

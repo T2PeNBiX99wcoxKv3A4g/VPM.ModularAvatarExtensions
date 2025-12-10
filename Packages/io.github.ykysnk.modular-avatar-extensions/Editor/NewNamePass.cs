@@ -3,41 +3,42 @@ using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-internal class NewNamePass : MaexPass<NewNamePass>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.NewName";
-    public override string DisplayName => "Modular Avatar Extensions New Name";
-
-    protected override void Execute(BuildContext ctx)
+    internal class NewNamePass : MaexPass<NewNamePass>
     {
-        var avatar = ctx.AvatarRootObject;
-        var autoChangeNames =
-            avatar.GetComponentsInChildren<ModularAvatarExtensionsNewName>(true).Where(c => c).ToArray();
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.NewName";
+        public override string DisplayName => "Modular Avatar Extensions New Name";
 
-        LogC($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
+        protected override void Execute(BuildContext ctx)
+        {
+            var avatar = ctx.AvatarRootObject;
+            var autoChangeNames =
+                avatar.GetComponentsInChildren<ModularAvatarExtensionsNewName>(true).Where(c => c).ToArray();
 
-        foreach (var comp in autoChangeNames)
-            using (ErrorReport.WithContextObject(comp))
-                try
-                {
-                    var obj = comp.gameObject;
-                    var newName = comp.newName;
+            LogC($"Find {autoChangeNames.Length} new name inside \"{avatar.FullName()}\"");
 
-                    if (string.IsNullOrEmpty(newName))
+            foreach (var comp in autoChangeNames)
+                using (ErrorReport.WithContextObject(comp))
+                    try
                     {
-                        LogError("error.new_name_pass.new_name_is_empty", obj.FullName());
-                        continue;
-                    }
+                        var obj = comp.gameObject;
+                        var newName = comp.newName;
 
-                    LogC($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
-                    obj.name = newName;
-                }
-                catch (Exception e)
-                {
-                    ErrorReport.ReportException(e);
-                    return;
-                }
+                        if (string.IsNullOrEmpty(newName))
+                        {
+                            LogError("error.new_name_pass.new_name_is_empty", obj.FullName());
+                            continue;
+                        }
+
+                        LogC($"Old name: \"{obj.name}\" New name: \"{newName}\" Path: \"{obj.FullName()}\"");
+                        obj.name = newName;
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
+        }
     }
 }

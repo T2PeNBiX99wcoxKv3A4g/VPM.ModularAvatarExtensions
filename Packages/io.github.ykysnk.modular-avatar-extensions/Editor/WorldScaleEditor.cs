@@ -1,23 +1,24 @@
 using UnityEditor;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[CustomEditor(typeof(ModularAvatarExtensionsWorldScale))]
-[CanEditMultipleObjects]
-internal class WorldScaleEditor : MaexEditor
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    private const string EditorOnlyProp = "editorOnly";
-
-    private SerializedProperty? _editorOnly;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ModularAvatarExtensionsWorldScale))]
+    [CanEditMultipleObjects]
+    internal class WorldScaleEditor : MaexEditor
     {
-        _editorOnly = serializedObject.FindProperty(EditorOnlyProp);
-    }
+        private const string EditorOnlyProp = "editorOnly";
 
-    protected override void OnInnerInspectorGUI()
-    {
-        EditorGUILayout.PropertyField(_editorOnly, "label.world_scale.editor_only".G());
-        EditorGUILayout.HelpBox("label.world_scale.info".S(), MessageType.Info);
+        private SerializedProperty? _editorOnly;
+
+        protected override void OnEnable()
+        {
+            _editorOnly = serializedObject.FindProperty(EditorOnlyProp);
+        }
+
+        protected override void OnInnerInspectorGUI()
+        {
+            EditorGUILayout.PropertyField(_editorOnly, "label.world_scale.editor_only".G());
+            EditorGUILayout.HelpBox("label.world_scale.info".S(), MessageType.Info);
+        }
     }
 }

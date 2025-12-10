@@ -3,87 +3,88 @@ using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
-internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.RootTransformPath";
-    public override string DisplayName => "Modular Avatar Extensions Root Transform Path";
-
-    protected override void Execute(BuildContext ctx)
+    [RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
+    internal class RootTransformPathPass : MaexPass<RootTransformPathPass>
     {
-        var avatar = ctx.AvatarRootObject;
-        var baseType = typeof(RootTransformPathBase<>);
-        var assembly = baseType.Assembly;
-        var types = assembly.GetTypes()
-            .Where(t => t.IsClass && t is { IsAbstract: false, IsInterface: false })
-            .Where(t => t.BaseType is { IsGenericType: true } && t.BaseType.GetGenericTypeDefinition() == baseType)
-            .ToList();
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.RootTransformPath";
+        public override string DisplayName => "Modular Avatar Extensions Root Transform Path";
 
-        foreach (var type in types)
+        protected override void Execute(BuildContext ctx)
         {
-            var components = avatar.GetComponentsInChildren(type, true).Where(c => c).ToArray();
+            var avatar = ctx.AvatarRootObject;
+            var baseType = typeof(RootTransformPathBase<>);
+            var assembly = baseType.Assembly;
+            var types = assembly.GetTypes()
+                .Where(t => t.IsClass && t is { IsAbstract: false, IsInterface: false })
+                .Where(t => t.BaseType is { IsGenericType: true } && t.BaseType.GetGenericTypeDefinition() == baseType)
+                .ToList();
 
-            LogC($"Find {components.Length} {type.Name} inside \"{avatar.FullName()}\"");
+            foreach (var type in types)
+            {
+                var components = avatar.GetComponentsInChildren(type, true).Where(c => c).ToArray();
 
-            var typeDefinition = type.BaseType?.GetGenericArguments();
+                LogC($"Find {components.Length} {type.Name} inside \"{avatar.FullName()}\"");
 
-            if (typeDefinition == null || typeDefinition.Length < 1) continue;
+                var typeDefinition = type.BaseType?.GetGenericArguments();
 
-            var findType = typeDefinition[0];
+                if (typeDefinition == null || typeDefinition.Length < 1) continue;
 
-            foreach (var component in components)
-                using (ErrorReport.WithContextObject(component))
-                    try
-                    {
-                        if (component is not IRootTransformPathBase rootTransformPathBase) continue;
-                        var setComponent = rootTransformPathBase.Component;
-                        if (setComponent == null)
-                            setComponent = component.GetComponent(findType);
+                var findType = typeDefinition[0];
 
-                        if (setComponent == null)
+                foreach (var component in components)
+                    using (ErrorReport.WithContextObject(component))
+                        try
                         {
-                            // Avatar Pose System moves all phys bone to APS_PB when building, so try to find it.
-                            var apsTransform = component.transform.Find("APS_PB");
-                            if (apsTransform)
-                                setComponent = apsTransform.GetComponent(findType);
-                        }
+                            if (component is not IRootTransformPathBase rootTransformPathBase) continue;
+                            var setComponent = rootTransformPathBase.Component;
+                            if (setComponent == null)
+                                setComponent = component.GetComponent(findType);
 
-                        if (setComponent == null)
-                        {
-                            LogNonFatal("error.root_transform_path_pass.root_transform_not_found", findType.Name,
-                                component.FullName());
-                            continue;
-                        }
+                            if (setComponent == null)
+                            {
+                                // Avatar Pose System moves all phys bone to APS_PB when building, so try to find it.
+                                var apsTransform = component.transform.Find("APS_PB");
+                                if (apsTransform)
+                                    setComponent = apsTransform.GetComponent(findType);
+                            }
 
-                        var setComponentProxy = new RootTransformProxy(setComponent);
-                        var referencePath = rootTransformPathBase.Reference?.referencePath;
-
-                        if (string.IsNullOrEmpty(referencePath))
-                        {
-                            if (!rootTransformPathBase.IsValid())
-                                LogNonFatal("error.root_transform_path_pass.invalid_reference_path",
+                            if (setComponent == null)
+                            {
+                                LogNonFatal("error.root_transform_path_pass.root_transform_not_found", findType.Name,
                                     component.FullName());
-                            continue;
-                        }
+                                continue;
+                            }
 
-                        var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
-                        if (rootTransform == null)
+                            var setComponentProxy = new RootTransformProxy(setComponent);
+                            var referencePath = rootTransformPathBase.Reference?.referencePath;
+
+                            if (string.IsNullOrEmpty(referencePath))
+                            {
+                                if (!rootTransformPathBase.IsValid())
+                                    LogNonFatal("error.root_transform_path_pass.invalid_reference_path",
+                                        component.FullName());
+                                continue;
+                            }
+
+                            var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
+                            if (rootTransform == null)
+                            {
+                                LogError("error.reference_path_not_found", referencePath, component.FullName());
+                                continue;
+                            }
+
+                            if (setComponentProxy.rootTransform == rootTransform) continue;
+
+                            setComponentProxy.rootTransform = rootTransform;
+                        }
+                        catch (Exception e)
                         {
-                            LogError("error.reference_path_not_found", referencePath, component.FullName());
-                            continue;
+                            ErrorReport.ReportException(e);
+                            return;
                         }
-
-                        if (setComponentProxy.rootTransform == rootTransform) continue;
-
-                        setComponentProxy.rootTransform = rootTransform;
-                    }
-                    catch (Exception e)
-                    {
-                        ErrorReport.ReportException(e);
-                        return;
-                    }
+            }
         }
     }
 }

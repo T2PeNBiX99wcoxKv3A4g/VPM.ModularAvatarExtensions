@@ -1,13 +1,14 @@
 using UnityEditor;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[CustomEditor(typeof(ModularAvatarExtensionsTurnOnInBuild))]
-[CanEditMultipleObjects]
-internal class TurnOnInBuildEditor : MaexEditor
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    protected override void OnInnerInspectorGUI()
+    [CustomEditor(typeof(ModularAvatarExtensionsTurnOnInBuild))]
+    [CanEditMultipleObjects]
+    internal class TurnOnInBuildEditor : MaexEditor
     {
-        EditorGUILayout.HelpBox("label.turn_on_in_build.info".S(), MessageType.Info, true);
+        protected override void OnInnerInspectorGUI()
+        {
+            EditorGUILayout.HelpBox("label.turn_on_in_build.info".S(), MessageType.Info, true);
+        }
     }
 }

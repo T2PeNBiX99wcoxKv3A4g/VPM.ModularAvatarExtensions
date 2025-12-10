@@ -10,44 +10,45 @@ using Object = UnityEngine.Object;
 using VRC.Dynamics;
 #endif
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-internal class EditorOnlyPass : MaexPass<EditorOnlyPass>
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.EditorOnly";
-    public override string DisplayName => "Modular Avatar Extensions Editor Only";
-
-    protected override void Execute(BuildContext ctx)
+    internal class EditorOnlyPass : MaexPass<EditorOnlyPass>
     {
-        var avatar = ctx.AvatarRootObject;
-        var editorOnlyList =
-            avatar.GetComponentsInChildren<ModularAvatarExtensionsEditorOnly>(true).Where(c => c).ToArray();
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.EditorOnly";
+        public override string DisplayName => "Modular Avatar Extensions Editor Only";
 
-        LogC($"Find {editorOnlyList.Length} editor only inside \"{avatar.FullName()}\"");
+        protected override void Execute(BuildContext ctx)
+        {
+            var avatar = ctx.AvatarRootObject;
+            var editorOnlyList =
+                avatar.GetComponentsInChildren<ModularAvatarExtensionsEditorOnly>(true).Where(c => c).ToArray();
 
-        foreach (var editorOnly in editorOnlyList)
-            using (ErrorReport.WithContextObject(editorOnly))
-                try
-                {
-                    var components = editorOnly.GetComponents<Component>();
+            LogC($"Find {editorOnlyList.Length} editor only inside \"{avatar.FullName()}\"");
 
-                    foreach (var component in components)
+            foreach (var editorOnly in editorOnlyList)
+                using (ErrorReport.WithContextObject(editorOnly))
+                    try
                     {
-                        if (component is not (ModularAvatarBoneProxy or
-#if MAEX_VRCSDK3_BASE
-                            VRCConstraintBase or
-#endif
-                            IConstraint))
-                            continue;
-                        Object.DestroyImmediate(component);
-                    }
+                        var components = editorOnly.GetComponents<Component>();
 
-                    LogC($"Remove 'BoneProxy' and 'Constraint' components in \"{editorOnly.FullName()}\"");
-                }
-                catch (Exception e)
-                {
-                    ErrorReport.ReportException(e);
-                    return;
-                }
+                        foreach (var component in components)
+                        {
+                            if (component is not (ModularAvatarBoneProxy or
+#if MAEX_VRCSDK3_BASE
+                                VRCConstraintBase or
+#endif
+                                IConstraint))
+                                continue;
+                            Object.DestroyImmediate(component);
+                        }
+
+                        LogC($"Remove 'BoneProxy' and 'Constraint' components in \"{editorOnly.FullName()}\"");
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
+        }
     }
 }

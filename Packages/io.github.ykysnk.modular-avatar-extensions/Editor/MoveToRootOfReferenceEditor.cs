@@ -1,28 +1,29 @@
 using UnityEditor;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[CustomEditor(typeof(ModularAvatarExtensionsMoveToRootOfReference))]
-[CanEditMultipleObjects]
-internal class MoveToRootOfReferenceEditor : MaexEditor
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    private const string ReferenceProp = "reference";
-    private SerializedProperty? _reference;
-
-    protected override void OnEnable()
+    [CustomEditor(typeof(ModularAvatarExtensionsMoveToRootOfReference))]
+    [CanEditMultipleObjects]
+    internal class MoveToRootOfReferenceEditor : MaexEditor
     {
-        _reference = serializedObject.FindProperty(ReferenceProp);
-    }
+        private const string ReferenceProp = "reference";
+        private SerializedProperty? _reference;
 
-    protected override void OnInnerInspectorGUI()
-    {
-        var component = (ModularAvatarExtensionsMoveToRootOfReference)target;
+        protected override void OnEnable()
+        {
+            _reference = serializedObject.FindProperty(ReferenceProp);
+        }
 
-        EditorGUILayout.PropertyField(_reference, "label.move_to_root_of_reference.reference".G());
-        EditorGUILayout.HelpBox(
-            string.IsNullOrEmpty(component?.reference?.referencePath)
-                ? "label.move_to_root_of_reference.info".S()
-                : string.Format("label.move_to_root_of_reference.info2".S(), component?.reference?.referencePath),
-            MessageType.Info, true);
+        protected override void OnInnerInspectorGUI()
+        {
+            var component = (ModularAvatarExtensionsMoveToRootOfReference)target;
+
+            EditorGUILayout.PropertyField(_reference, "label.move_to_root_of_reference.reference".G());
+            EditorGUILayout.HelpBox(
+                string.IsNullOrEmpty(component?.reference?.referencePath)
+                    ? "label.move_to_root_of_reference.info".S()
+                    : string.Format("label.move_to_root_of_reference.info2".S(), component?.reference?.referencePath),
+                MessageType.Info, true);
+        }
     }
 }

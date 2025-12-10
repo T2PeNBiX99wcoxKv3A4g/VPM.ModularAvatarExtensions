@@ -1,13 +1,14 @@
 using UnityEditor;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor;
-
-[CustomEditor(typeof(ModularAvatarExtensionsMoveToRoot))]
-[CanEditMultipleObjects]
-internal class MoveToRootEditor : MaexEditor
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    protected override void OnInnerInspectorGUI()
+    [CustomEditor(typeof(ModularAvatarExtensionsMoveToRoot))]
+    [CanEditMultipleObjects]
+    internal class MoveToRootEditor : MaexEditor
     {
-        EditorGUILayout.HelpBox("label.move_to_root.info".S(), MessageType.Info, true);
+        protected override void OnInnerInspectorGUI()
+        {
+            EditorGUILayout.HelpBox("label.move_to_root.info".S(), MessageType.Info, true);
+        }
     }
 }
