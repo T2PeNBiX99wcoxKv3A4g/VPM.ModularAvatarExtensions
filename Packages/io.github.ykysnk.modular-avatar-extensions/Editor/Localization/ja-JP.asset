@@ -317,3 +317,9 @@ MonoBehaviour:
   - key: label.icon_generator.object_toggle_not_found
     translate: "\u300CMA\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u30C8\u30B0\u30EB\u300D\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\uFF01"
     tooltip: The result height after scale
+  - key: label.icon_generator.menu_item_not_found
+    translate: "\u300CMA\u30E1\u30CB\u30E5\u30FC\u30A2\u30A4\u30C6\u30E0\u300D\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\uFF01"
+    tooltip: The result height after scale
+  - key: label.icon_generator.avatar_object_references
+    translate: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u53C2\u7167"
+    tooltip: The result height after scale

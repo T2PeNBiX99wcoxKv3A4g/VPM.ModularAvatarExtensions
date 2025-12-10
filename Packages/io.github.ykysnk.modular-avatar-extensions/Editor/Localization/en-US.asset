@@ -318,3 +318,9 @@ MonoBehaviour:
   - key: label.icon_generator.object_toggle_not_found
     translate: The 'MA Object Toggle' is not found!
     tooltip: The result height after scale
+  - key: label.icon_generator.menu_item_not_found
+    translate: The 'MA Menu Item' is not found!
+    tooltip: The result height after scale
+  - key: label.icon_generator.avatar_object_references
+    translate: Object References
+    tooltip: The result height after scale
