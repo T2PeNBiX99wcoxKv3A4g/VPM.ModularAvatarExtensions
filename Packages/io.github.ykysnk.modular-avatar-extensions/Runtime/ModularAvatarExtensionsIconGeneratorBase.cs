@@ -114,7 +114,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
-            return iconName != newIconName;
+            return iconName != newIconName || meshDatas.Length > 0 && iconTexture == null;
         }
 
         public void ForceGenerateIcon() => OnChange();
