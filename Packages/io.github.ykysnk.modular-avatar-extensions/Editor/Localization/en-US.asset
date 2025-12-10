@@ -300,3 +300,21 @@ MonoBehaviour:
   - key: label.transform_follower.scale_decimals
     translate: Scale Decimals
     tooltip: 
+  - key: label.icon_generator.icon_texture
+    translate: Icon
+    tooltip: 
+  - key: label.icon_generator.preset
+    translate: Preset
+    tooltip: 
+  - key: label.icon_generator.generate_icon
+    translate: Generate icon
+    tooltip: 
+  - key: label.icon_generator.scale_width
+    translate: Width
+    tooltip: The result width after scale
+  - key: label.icon_generator.scale_height
+    translate: Height
+    tooltip: The result height after scale
+  - key: label.icon_generator.object_toggle_not_found
+    translate: The 'MA Object Toggle' is not found!
+    tooltip: The result height after scale

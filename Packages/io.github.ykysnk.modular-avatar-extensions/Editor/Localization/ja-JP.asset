@@ -299,3 +299,21 @@ MonoBehaviour:
   - key: label.transform_follower.scale_decimals
     translate: "\u30B9\u30B1\u30FC\u30EB\u306E\u5C0F\u6570\u306E\u8A31\u5BB9\u7BC4\u56F2"
     tooltip: 
+  - key: label.icon_generator.icon_texture
+    translate: "\u30A2\u30A4\u30B3\u30F3"
+    tooltip: 
+  - key: label.icon_generator.preset
+    translate: "\u30D7\u30EA\u30BB\u30C3\u30C8"
+    tooltip: 
+  - key: label.icon_generator.generate_icon
+    translate: "\u30A2\u30A4\u30B3\u30F3\u3092\u751F\u6210"
+    tooltip: 
+  - key: label.icon_generator.scale_width
+    translate: "\u30A2\u30A4\u30B3\u30F3\u306E\u5E45"
+    tooltip: "\u30B9\u30B1\u30FC\u30EA\u30F3\u30B0\u3057\u305F\u306E\u7D50\u679C\u306E\u5E45"
+  - key: label.icon_generator.scale_height
+    translate: "\u30A2\u30A4\u30B3\u30F3\u306E\u9AD8\u3055"
+    tooltip: "\u30B9\u30B1\u30FC\u30EA\u30F3\u30B0\u3057\u305F\u306E\u7D50\u679C\u306E\u9AD8\u3055"
+  - key: label.icon_generator.object_toggle_not_found
+    translate: "\u300CMA\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u30C8\u30B0\u30EB\u300D\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\uFF01"
+    tooltip: The result height after scale
