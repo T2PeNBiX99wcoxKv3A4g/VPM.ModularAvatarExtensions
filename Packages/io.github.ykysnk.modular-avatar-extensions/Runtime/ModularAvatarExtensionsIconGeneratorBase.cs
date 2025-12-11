@@ -56,6 +56,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             }
             else
                 shouldGenerateIcon = ShouldGenerateIcon();
+
+            if (modularAvatarMenuItem != null && iconTexture != null)
+                modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
 
         protected override void OnDestroy() => RemoveUnusedIcon();
@@ -129,7 +132,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                    gameObject.scene.IsValid() && !Utils.IsInPrefab();
         }
 
-        public void ForceGenerateIcon() => OnChange();
+        public void ForceGenerateIcon()
+        {
+            OnChange();
+            shouldGenerateIcon = true;
+        }
 
         protected void GenerateIcon()
         {
@@ -220,14 +227,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             tex.ReadPixels(new(0, 0, cam.targetTexture.width, cam.targetTexture.height), 0, 0);
             tex.alphaIsTransparency = true;
             tex.Apply();
-
-            var scaleTex = tex.ScaleGPU(scaleWidth, scaleHeight);
-            var bytes = scaleTex.EncodeToPNG();
             RenderTexture.active = null;
             cam.targetTexture = null;
             DestroyImmediate(rt);
             DestroyImmediate(camObj);
             DestroyImmediate(tempObj);
+
+            var trimTex = tex.TrimTransparentGPU();
+            var scaleTex = trimTex.ScaleGPU(scaleWidth, scaleHeight);
+            var bytes = scaleTex.EncodeToPNG();
             return bytes;
         }
 
