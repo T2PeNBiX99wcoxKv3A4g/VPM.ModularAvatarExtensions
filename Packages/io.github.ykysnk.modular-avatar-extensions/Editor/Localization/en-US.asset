@@ -324,3 +324,6 @@ MonoBehaviour:
   - key: label.icon_generator.avatar_object_references
     translate: Object References
     tooltip: The result height after scale
+  - key: label.icon_generator_target.icon_generator
+    translate: Icon Generator
+    tooltip: The result height after scale
