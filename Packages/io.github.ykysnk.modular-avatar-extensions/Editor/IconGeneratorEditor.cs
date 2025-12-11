@@ -16,7 +16,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             {
                 var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
                 if (iconGeneratorBase == null) return;
-                errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarObjectToggle>(out _)
+
+                var isSubMenu = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out var menuItem) &&
+                                menuItem.PortableControl.Type == PortableControlType.SubMenu;
+
+                errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarObjectToggle>(out _) || isSubMenu
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;
             };
