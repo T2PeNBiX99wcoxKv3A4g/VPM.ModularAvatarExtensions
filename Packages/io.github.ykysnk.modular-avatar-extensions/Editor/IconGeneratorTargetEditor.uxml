@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:HelpBox name="errorMenuItem" message-type="Error" text="label.icon_generator.menu_item_not_found"/>
+    <uie:ObjectField label="label.icon_generator_target.icon_generator"
+                     type="io.github.ykysnk.ModularAvatarExtensions.ModularAvatarExtensionsIconGeneratorBase, io.github.ykysnk.modular-avatar-extensions"
+                     binding-path="iconGenerator" name="iconGenerator"/>
+</ui:UXML>
