@@ -14,10 +14,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             GameObject = gameObject;
             Mesh = GetMesh(gameObject);
             Materials = GetMaterials(gameObject);
-            Renderer = TryGetRenderer(gameObject);
+            Renderer = GetRenderer(gameObject);
         }
 
-        private static Renderer? TryGetRenderer(GameObject obj)
+        private static Renderer? GetRenderer(GameObject obj)
         {
             if (obj.TryGetComponent<Renderer>(out var renderer))
                 return renderer;
