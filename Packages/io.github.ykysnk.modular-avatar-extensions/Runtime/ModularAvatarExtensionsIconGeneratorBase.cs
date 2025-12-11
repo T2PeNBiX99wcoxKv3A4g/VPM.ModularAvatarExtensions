@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
@@ -114,7 +115,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
-            return iconName != newIconName || meshDatas.Length > 0 && iconTexture == null;
+            return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
+                   gameObject.scene.IsValid() && !Utils.IsInPrefab();
         }
 
         public void ForceGenerateIcon() => OnChange();
@@ -160,10 +162,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
             };
 
+            var newMeshDatas = new List<MeshData>();
+
             foreach (var meshData in meshDatas)
             {
                 var clone = Instantiate(meshData.GameObject, tempObj.transform, true);
                 clone.SetActive(true);
+                newMeshDatas.Add(new(clone));
             }
 
             ChangeLayer(tempObj, TargetLayer);
@@ -175,20 +180,27 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             cam.nearClipPlane = 0.00001f;
             cam.cullingMask = 1 << TargetLayer;
 
-            var boundList = meshDatas.Select(data =>
-                data.Mesh == null ? new() : data.Mesh.bounds).ToArray();
+            var boundList = newMeshDatas.Select(data =>
+            {
+                if (data.Renderer is not SkinnedMeshRenderer skinnedMeshRenderer)
+                    return data.Mesh == null ? new() : data.Mesh.bounds;
+                skinnedMeshRenderer.updateWhenOffscreen = true;
+                if (skinnedMeshRenderer.sharedMesh == null) return new();
+                return new(skinnedMeshRenderer.bounds.center, skinnedMeshRenderer.bounds.size);
+            }).ToArray();
 
             var totalBounds = boundList.Length > 0 ? boundList[0] : new();
 
             foreach (var bounds in boundList.Skip(1))
                 totalBounds.Encapsulate(bounds);
 
+            cam.transform.eulerAngles = new(0, -180, 0);
+
             var maxExtent = totalBounds.extents.magnitude;
             var minDistance = maxExtent / Mathf.Sin(Mathf.Deg2Rad * cam.fieldOfView / 2);
             var center = totalBounds.center;
 
             cam.transform.position = center + Vector3.forward * minDistance;
-            cam.transform.LookAt(center);
 
             var rt = new RenderTexture(CaptureWidthAndHeight, CaptureWidthAndHeight, 24);
             cam.targetTexture = rt;

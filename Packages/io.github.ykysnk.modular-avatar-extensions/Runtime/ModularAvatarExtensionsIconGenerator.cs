@@ -14,12 +14,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected override void LateUpdate()
         {
-            if (modularAvatarObjectToggle == null) return;
-            var objectsHash2 =
-                HashUtils.ComputeHash(
-                    string.Join("|", modularAvatarObjectToggle.Objects.Select(to => to.Object.Get(this).FullName())),
-                    HashUtils.HashType.SHA1);
-            if (objectsHash2 != objectsHash) OnChange();
+            if (modularAvatarObjectToggle != null)
+            {
+                var objectsHash2 =
+                    HashUtils.ComputeHash(
+                        string.Join("|", modularAvatarObjectToggle.Objects.Select(to => to.Object.Get(this).FullName())),
+                        HashUtils.HashType.SHA1);
+                if (objectsHash2 != objectsHash) OnChange();
+            }
+
             base.LateUpdate();
         }
 

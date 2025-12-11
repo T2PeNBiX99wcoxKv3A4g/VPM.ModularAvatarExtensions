@@ -7,12 +7,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public readonly GameObject GameObject;
         public readonly Mesh? Mesh;
         public readonly Material[] Materials;
+        public readonly Renderer? Renderer;
 
         public MeshData(GameObject gameObject)
         {
             GameObject = gameObject;
             Mesh = GetMesh(gameObject);
             Materials = GetMaterials(gameObject);
+            Renderer = gameObject.GetComponent<Renderer>();
         }
 
         private static Mesh? GetMesh(GameObject obj)
