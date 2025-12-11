@@ -24,6 +24,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected const int CaptureWidthAndHeight = 2048;
         protected const int ScaleWidthAndHeight = 256;
 
+        protected static bool IsQuitting;
+
         [SerializeField] protected ModularAvatarMenuItem? modularAvatarMenuItem;
         [SerializeField] protected Texture2D? iconTexture;
         [SerializeField] protected TextureImporter? iconImporter;
@@ -34,6 +36,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected bool shouldGenerateIcon;
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
+
+        static ModularAvatarExtensionsIconGeneratorBase() => EditorApplication.wantsToQuit += WantToQuit;
 
         public Texture2D? IconTexture => iconTexture;
 
@@ -55,6 +59,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         protected override void OnDestroy() => RemoveUnusedIcon();
+
+        private static bool WantToQuit()
+        {
+            IsQuitting = true;
+            return true;
+        }
 
         protected override void OnChange()
         {
@@ -223,7 +233,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected void RemoveUnusedIcon()
         {
-            if (string.IsNullOrEmpty(iconName)) return;
+            if (IsQuitting || string.IsNullOrEmpty(iconName)) return;
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
             var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
