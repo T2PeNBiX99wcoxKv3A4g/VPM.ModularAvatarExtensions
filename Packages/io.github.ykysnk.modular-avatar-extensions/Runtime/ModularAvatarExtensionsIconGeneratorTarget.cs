@@ -29,7 +29,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             while (enabled && gameObject.activeSelf)
             {
-                if (gameObject.scene.IsValid() && Utils.IsInPrefab())
+                if (gameObject.scene.IsValid() && !Utils.IsInPrefab())
                     Check();
                 yield return new WaitForSeconds(2f);
             }
