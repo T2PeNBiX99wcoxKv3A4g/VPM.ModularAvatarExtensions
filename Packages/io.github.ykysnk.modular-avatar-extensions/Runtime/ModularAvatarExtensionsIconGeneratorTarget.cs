@@ -1,4 +1,5 @@
 using nadena.dev.modular_avatar.core;
+using UnityEditor;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -14,8 +15,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual void LateUpdate()
         {
             if (iconGenerator == null || modularAvatarMenuItem == null) return;
-            if (iconGenerator.IconTexture != null)
-                modularAvatarMenuItem.PortableControl.Icon = iconGenerator.IconTexture;
+            if (iconGenerator.IconTexture == null) return;
+            Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
+            modularAvatarMenuItem.PortableControl.Icon = iconGenerator.IconTexture;
         }
 
         protected override void OnChange()

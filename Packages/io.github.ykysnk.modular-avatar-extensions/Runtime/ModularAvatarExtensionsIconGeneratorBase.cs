@@ -57,8 +57,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             else
                 shouldGenerateIcon = ShouldGenerateIcon();
 
-            if (modularAvatarMenuItem != null && iconTexture != null)
-                modularAvatarMenuItem.PortableControl.Icon = iconTexture;
+            if (modularAvatarMenuItem == null || iconTexture == null) return;
+            Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
+            modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
 
         protected override void OnDestroy() => RemoveUnusedIcon();
@@ -158,8 +159,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             preset?.ApplyTo(iconImporter);
             iconImporter.SaveAndReimport();
 
-            if (modularAvatarMenuItem != null)
-                modularAvatarMenuItem.PortableControl.Icon = iconTexture;
+            if (modularAvatarMenuItem == null) return;
+            Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
+            modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
 
         protected static void ChangeLayer(GameObject obj, int layer)
