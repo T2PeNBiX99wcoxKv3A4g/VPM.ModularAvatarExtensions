@@ -15,7 +15,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual void LateUpdate()
         {
             if (iconGenerator == null || modularAvatarMenuItem == null) return;
-            if (iconGenerator.IconTexture == null) return;
+            if (iconGenerator.IconTexture == null ||
+                modularAvatarMenuItem.PortableControl.Icon == iconGenerator.IconTexture) return;
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
             modularAvatarMenuItem.PortableControl.Icon = iconGenerator.IconTexture;
         }

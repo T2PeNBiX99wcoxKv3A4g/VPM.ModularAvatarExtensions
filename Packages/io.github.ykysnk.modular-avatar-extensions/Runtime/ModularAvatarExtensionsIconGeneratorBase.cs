@@ -57,7 +57,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             else
                 shouldGenerateIcon = ShouldGenerateIcon();
 
-            if (modularAvatarMenuItem == null || iconTexture == null) return;
+            if (modularAvatarMenuItem == null || iconTexture == null ||
+                iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
@@ -159,7 +160,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             preset?.ApplyTo(iconImporter);
             iconImporter.SaveAndReimport();
 
-            if (modularAvatarMenuItem == null) return;
+            if (modularAvatarMenuItem == null || iconTexture == null ||
+                iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
