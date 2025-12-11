@@ -183,7 +183,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var boundList = newMeshDatas.Select(data =>
             {
                 if (data.Renderer is not SkinnedMeshRenderer skinnedMeshRenderer)
-                    return data.Mesh == null ? new() : data.Mesh.bounds;
+                    return data.Renderer?.bounds ?? data.Mesh?.bounds ?? new();
                 skinnedMeshRenderer.updateWhenOffscreen = true;
                 if (skinnedMeshRenderer.sharedMesh == null) return new();
                 return new(skinnedMeshRenderer.bounds.center, skinnedMeshRenderer.bounds.size);
