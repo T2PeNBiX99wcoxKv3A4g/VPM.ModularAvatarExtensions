@@ -12,7 +12,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     {
         [SerializeField] private ModularAvatarObjectToggle? modularAvatarObjectToggle;
 
-        protected override void LateUpdate()
+        protected override void Check()
         {
             if (modularAvatarObjectToggle != null)
             {
@@ -23,7 +23,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 if (objectsHash2 != objectsHash) OnChange();
             }
 
-            base.LateUpdate();
+            base.Check();
         }
 
         protected override void OnChange()

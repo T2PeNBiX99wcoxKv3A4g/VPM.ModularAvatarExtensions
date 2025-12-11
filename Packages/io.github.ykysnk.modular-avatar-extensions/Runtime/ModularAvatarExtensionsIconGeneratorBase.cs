@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
@@ -47,8 +49,22 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             set => preset = value;
         }
 
-        protected virtual void LateUpdate()
+        private void OnEnable() => StartCoroutine(CheckLoop());
+
+        protected override void OnDestroy() => RemoveUnusedIcon();
+
+        private IEnumerator CheckLoop()
         {
+            while (enabled && gameObject.activeSelf)
+            {
+                Check();
+                yield return new WaitForSeconds(2f);
+            }
+        }
+
+        protected virtual void Check()
+        {
+            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
             if (shouldGenerateIcon)
             {
                 shouldGenerateIcon = false;
@@ -63,8 +79,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
 
-        protected override void OnDestroy() => RemoveUnusedIcon();
-
         private static bool WantToQuit()
         {
             IsQuitting = true;
@@ -73,6 +87,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected override void OnChange()
         {
+            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
             objects = GetAllObjects();
             objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
@@ -147,7 +162,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var oldIconName = iconName;
             var newIconName = GetIconName(meshDatas);
             var newIconPath = Path.Combine(FolderPath, newIconName);
-            if (oldIconName != newIconName) RemoveUnusedIcon();
+            if (oldIconName != newIconName) Task.Run(RemoveUnusedIcon);
             var bytes = SaveMeshAsPng(meshDatas, scaleWidth, scaleHeight);
             if (bytes != null) UnityFile.WriteAllBytes($"{newIconPath}.png", bytes);
             iconName = newIconName;
