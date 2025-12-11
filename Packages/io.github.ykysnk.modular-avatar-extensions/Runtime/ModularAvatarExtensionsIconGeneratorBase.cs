@@ -198,14 +198,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
             };
 
-            var newMeshDatas = new List<MeshData>();
-
             foreach (var meshData in meshDatas)
             {
                 var clone = Instantiate(meshData.GameObject, tempObj.transform, true);
                 clone.SetActive(true);
-                newMeshDatas.Add(new(clone));
             }
+
+            var renderer = tempObj.GetComponentsInChildren<Renderer>() ?? new Renderer[]
+            {
+            };
+            var newMeshDatas = renderer.Select(r => new MeshData(r.gameObject));
 
             ChangeLayer(tempObj, TargetLayer);
 

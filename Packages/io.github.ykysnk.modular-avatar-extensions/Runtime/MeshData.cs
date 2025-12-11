@@ -14,7 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             GameObject = gameObject;
             Mesh = GetMesh(gameObject);
             Materials = GetMaterials(gameObject);
-            Renderer = gameObject.GetComponent<Renderer>();
+            Renderer = gameObject.TryGetComponent<Renderer>(out var renderer) ? renderer : null;
         }
 
         private static Mesh? GetMesh(GameObject obj)
