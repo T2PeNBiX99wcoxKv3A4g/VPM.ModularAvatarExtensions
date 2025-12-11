@@ -57,14 +57,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             while (enabled && gameObject.activeSelf)
             {
-                Check();
+                if (gameObject.scene.IsValid() && Utils.IsInPrefab())
+                    Check();
                 yield return new WaitForSeconds(2f);
             }
         }
 
         protected virtual void Check()
         {
-            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
             if (shouldGenerateIcon)
             {
                 shouldGenerateIcon = false;

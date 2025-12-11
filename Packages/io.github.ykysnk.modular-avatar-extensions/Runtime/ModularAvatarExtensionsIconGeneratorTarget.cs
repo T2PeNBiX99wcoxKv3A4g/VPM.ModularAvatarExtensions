@@ -1,4 +1,5 @@
 using System.Collections;
+using io.github.ykysnk.utils;
 using nadena.dev.modular_avatar.core;
 using UnityEditor;
 using UnityEngine;
@@ -28,13 +29,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             while (enabled && gameObject.activeSelf)
             {
-                Check();
+                if (gameObject.scene.IsValid() && Utils.IsInPrefab())
+                    Check();
                 yield return new WaitForSeconds(2f);
             }
         }
 
         protected override void OnChange()
         {
+            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
         }
     }
