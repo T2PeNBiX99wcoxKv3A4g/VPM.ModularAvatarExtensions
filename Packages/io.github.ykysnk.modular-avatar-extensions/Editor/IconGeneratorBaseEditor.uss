@@ -52,3 +52,7 @@
 .square-objectfield .unity-object-field__selector {
     display: none;
 }
+
+.disable-selector .unity-object-field__selector {
+    display: none;
+}

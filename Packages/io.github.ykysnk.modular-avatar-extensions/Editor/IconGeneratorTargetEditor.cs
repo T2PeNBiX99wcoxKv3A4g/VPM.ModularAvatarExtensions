@@ -10,7 +10,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class IconGeneratorTargetEditor : MaexEditor
     {
-        [SerializeField] protected StyleSheet? uss;
         [SerializeField] protected VisualTreeAsset? uxml;
 
         protected override void OnInnerInspectorGUI()
@@ -21,7 +20,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         {
             var visualTree = uxml!.CloneTree();
             InternalLocalizationExtensions.Helper.UILocalize(visualTree);
-            visualTree.styleSheets.Add(uss);
             visualTree.Bind(serializedObject);
 
             var errorBox = visualTree.Q<HelpBox>("errorMenuItem");

@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.modular-avatar-extensions/Editor/IconGeneratorBaseEditor.uss?fileID=7433441132597879392&amp;guid=2537803ec88150a4fb48cccbd06ef07b&amp;type=3#IconGeneratorBaseEditor"/>
     <ui:HelpBox name="errorMenuItem" message-type="Error" text="label.icon_generator.menu_item_not_found"/>
     <ui:ListView binding-path="avatarObjectReferences" virtualization-method="DynamicHeight"
                  name="avatarObjectReferences" show-border="true" reorderable="true" show-foldout-header="true"
@@ -8,7 +9,7 @@
         <ui:VisualElement style="min-width: 80%; align-self: stretch; padding-right: 6px;">
             <uie:ObjectField binding-path="iconTexture" name="iconTexture"
                              type="UnityEngine.Texture2D, UnityEngine.CoreModule"
-                             label="label.icon_generator.icon_texture"/>
+                             label="label.icon_generator.icon_texture" class="disable-selector"/>
             <uie:ObjectField label="label.icon_generator.preset" name="preset"
                              type="UnityEditor.Presets.Preset, UnityEditor.CoreModule"/>
             <ui:IntegerField label="label.icon_generator.scale_width" binding-path="scaleWidth" name="width"/>
