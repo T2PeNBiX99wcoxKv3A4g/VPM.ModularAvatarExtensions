@@ -164,6 +164,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         // Refs: https://github.com/weasel-club/OneClickInventory/blob/main/Editor/Util/IconUtil.cs#L24
         protected static byte[]? SaveMeshAsPng(MeshData[] meshDatas, int scaleWidth, int scaleHeight)
         {
+#if UNITY_EDITOR
             var tempObj = new GameObject("TempObj")
             {
                 transform =
@@ -232,6 +233,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var scaleTex = trimTex.ScaleGPU(scaleWidth, scaleHeight);
             var bytes = scaleTex.EncodeToPNG();
             return bytes;
+#else
+            return null;
+#endif
         }
 
         protected void RemoveUnusedIcon()
