@@ -9,10 +9,12 @@ using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEditor;
-using UnityEditor.Presets;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor.Presets;
 using Directory = UnityEngine.Windows.Directory;
 using UnityFile = UnityEngine.Windows.File;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
@@ -30,8 +32,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         [SerializeField] protected ModularAvatarMenuItem? modularAvatarMenuItem;
         [SerializeField] protected Texture2D? iconTexture;
-        [SerializeField] protected TextureImporter? iconImporter;
-        [SerializeField] protected Preset? preset;
         [SerializeField] protected List<GameObject> objects = new();
         [SerializeField] protected string objectsHash = "";
         [SerializeField] protected string iconName = "";
@@ -43,11 +43,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public Texture2D? IconTexture => iconTexture;
 
+#if UNITY_EDITOR
         public Preset? Preset
         {
             get => preset;
             set => preset = value;
         }
+#endif
 
         private void OnEnable() => StartCoroutine(CheckLoop());
 
@@ -85,10 +87,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             return true;
         }
 
+
         protected override void OnChange()
         {
-            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
+#if UNITY_EDITOR
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
+            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
             objects = GetAllObjects();
             objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
                 HashUtils.HashType.SHA1);
@@ -98,6 +102,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
+#endif
         }
 
         protected static string GetMaterialsSha256(MeshData meshData)
@@ -157,6 +162,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected void GenerateIcon()
         {
+#if UNITY_EDITOR
             if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath);
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var oldIconName = iconName;
@@ -179,6 +185,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
+#endif
         }
 
         protected static void ChangeLayer(GameObject obj, int layer)
@@ -272,5 +279,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         protected abstract List<GameObject> GetAllObjects();
+#if UNITY_EDITOR
+        [SerializeField] protected TextureImporter? iconImporter;
+        [SerializeField] protected Preset? preset;
+#endif
     }
 }
