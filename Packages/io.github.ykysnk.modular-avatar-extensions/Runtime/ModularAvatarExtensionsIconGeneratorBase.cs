@@ -8,9 +8,9 @@ using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
-using UnityEditor;
 using UnityEngine;
-#if UNITY_EDITOR
+#if UNITY_EDITOR // Lets me sleep plz
+using UnityEditor;
 using UnityEditor.Presets;
 using Directory = UnityEngine.Windows.Directory;
 using UnityFile = UnityEngine.Windows.File;
@@ -39,7 +39,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
 
+#if UNITY_EDITOR
         static ModularAvatarExtensionsIconGeneratorBase() => EditorApplication.wantsToQuit += WantToQuit;
+#endif
 
         public Texture2D? IconTexture => iconTexture;
 
@@ -77,7 +79,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (modularAvatarMenuItem == null || iconTexture == null ||
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
+#if UNITY_EDITOR
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
+#endif
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
         }
 
@@ -105,53 +109,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
-        protected static string GetMaterialsSha256(MeshData meshData)
-        {
-            var guidWithTimes = meshData.Materials.Select(m =>
-            {
-                var path = AssetDatabase.GetAssetPath(m);
-                var guid = AssetDatabase.AssetPathToGUID(path);
-                var lastWriteTime = File.GetLastWriteTime(path);
-                return $"{guid}.{lastWriteTime:yyyyMMddHHmmss}";
-            });
-            return HashUtils.ComputeHash(string.Join("|", guidWithTimes), HashUtils.HashType.SHA1);
-        }
-
-        protected static string GetAssetPathFromMesh(MeshData meshData)
-        {
-            var path = AssetDatabase.GetAssetPath(meshData.Mesh);
-            var fbxPath = AssetDatabase.GetAssetPath(AssetDatabase.LoadMainAssetAtPath(path));
-            return fbxPath;
-        }
-
-        protected static string? GetFBXAssetSha256(MeshData meshData)
-        {
-            if (meshData.Mesh == null) return null;
-            var assetPath = GetAssetPathFromMesh(meshData);
-            if (string.IsNullOrEmpty(assetPath)) return null;
-            var assetGuid = AssetDatabase.AssetPathToGUID(assetPath);
-            var lastWriteTime = File.GetLastWriteTime(assetPath);
-            return $"{assetGuid}.{lastWriteTime:yyyyMMddHHmmss}";
-        }
-
-        protected static string GetIconName(MeshData[] meshData2)
-        {
-            var iconNames = meshData2.Select(meshData =>
-            {
-                if (meshData.Mesh == null) return "";
-                var fbxAssetGuid = GetFBXAssetSha256(meshData);
-                var matsSha256 = GetMaterialsSha256(meshData);
-                return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
-            });
-            return HashUtils.ComputeHash(string.Join("|", iconNames), HashUtils.HashType.SHA1);
-        }
-
         protected bool ShouldGenerateIcon()
         {
+#if UNITY_EDITOR
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
             return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
                    gameObject.scene.IsValid() && !Utils.IsInPrefab();
+#else
+            return false;
+#endif
         }
 
         public void ForceGenerateIcon()
@@ -269,6 +236,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected void RemoveUnusedIcon()
         {
+#if UNITY_EDITOR
             if (IsQuitting || string.IsNullOrEmpty(iconName)) return;
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
@@ -276,9 +244,53 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (!UnityFile.Exists(iconPath)) return;
             UnityFile.Delete(iconPath);
             AssetDatabase.Refresh();
+#endif
         }
 
         protected abstract List<GameObject> GetAllObjects();
+
+#if UNITY_EDITOR
+        protected static string GetMaterialsSha256(MeshData meshData)
+        {
+            var guidWithTimes = meshData.Materials.Select(m =>
+            {
+                var path = AssetDatabase.GetAssetPath(m);
+                var guid = AssetDatabase.AssetPathToGUID(path);
+                var lastWriteTime = File.GetLastWriteTime(path);
+                return $"{guid}.{lastWriteTime:yyyyMMddHHmmss}";
+            });
+            return HashUtils.ComputeHash(string.Join("|", guidWithTimes), HashUtils.HashType.SHA1);
+        }
+
+        protected static string GetAssetPathFromMesh(MeshData meshData)
+        {
+            var path = AssetDatabase.GetAssetPath(meshData.Mesh);
+            var fbxPath = AssetDatabase.GetAssetPath(AssetDatabase.LoadMainAssetAtPath(path));
+            return fbxPath;
+        }
+
+        protected static string? GetFBXAssetSha256(MeshData meshData)
+        {
+            if (meshData.Mesh == null) return null;
+            var assetPath = GetAssetPathFromMesh(meshData);
+            if (string.IsNullOrEmpty(assetPath)) return null;
+            var assetGuid = AssetDatabase.AssetPathToGUID(assetPath);
+            var lastWriteTime = File.GetLastWriteTime(assetPath);
+            return $"{assetGuid}.{lastWriteTime:yyyyMMddHHmmss}";
+        }
+
+        protected static string GetIconName(MeshData[] meshData2)
+        {
+            var iconNames = meshData2.Select(meshData =>
+            {
+                if (meshData.Mesh == null) return "";
+                var fbxAssetGuid = GetFBXAssetSha256(meshData);
+                var matsSha256 = GetMaterialsSha256(meshData);
+                return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
+            });
+            return HashUtils.ComputeHash(string.Join("|", iconNames), HashUtils.HashType.SHA1);
+        }
+#endif
 #if UNITY_EDITOR
         [SerializeField] protected TextureImporter? iconImporter;
         [SerializeField] protected Preset? preset;

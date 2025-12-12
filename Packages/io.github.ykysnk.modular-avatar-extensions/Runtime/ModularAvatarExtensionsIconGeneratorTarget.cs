@@ -1,8 +1,10 @@
 using System.Collections;
 using io.github.ykysnk.utils;
 using nadena.dev.modular_avatar.core;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
@@ -21,7 +23,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (iconGenerator == null || modularAvatarMenuItem == null) return;
             if (iconGenerator.IconTexture == null ||
                 modularAvatarMenuItem.PortableControl.Icon == iconGenerator.IconTexture) return;
+#if UNITY_EDITOR
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
+#endif
             modularAvatarMenuItem.PortableControl.Icon = iconGenerator.IconTexture;
         }
 
