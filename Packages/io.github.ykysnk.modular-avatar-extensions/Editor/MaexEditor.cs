@@ -1,6 +1,7 @@
 using io.github.ykysnk.utils.Editor;
 using JetBrains.Annotations;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
@@ -16,9 +17,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
         protected override VisualElement? CreateErrorHandleInspectorGUI()
         {
-            if (CreateInnerInspectorGUI() == null) return null;
-            // TODO
-            return CreateInnerInspectorGUI();
+            var tree = CreateInnerInspectorGUI();
+            if (tree == null) return null;
+            var root = new VisualElement();
+            root.Add(tree);
+            root.Bind(serializedObject);
+            InternalLocalizationExtensions.Helper.UILocalize(root);
+            return root;
         }
 
         [PublicAPI]

@@ -18,11 +18,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
         protected override VisualElement? CreateInnerInspectorGUI()
         {
-            var visualTree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(visualTree);
-            visualTree.Bind(serializedObject);
-
-            var errorBox = visualTree.Q<HelpBox>("errorMenuItem");
+            var tree = uxml!.CloneTree();
+            var errorBox = tree.Q<HelpBox>("errorMenuItem");
             errorBox.style.display = DisplayStyle.None;
             EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
             {
@@ -33,7 +30,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     : DisplayStyle.Flex;
             };
 
-            var button = visualTree.Q<Button>("generateIcon");
+            var button = tree.Q<Button>("generateIcon");
             button.clicked += () =>
             {
                 var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
@@ -41,7 +38,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 iconGeneratorBase.ForceGenerateIcon();
             };
 
-            var presetField = visualTree.Q<ObjectField>("preset");
+            var presetField = tree.Q<ObjectField>("preset");
             var presetGuid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             presetField.value = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(presetGuid));
             presetField.RegisterValueChangedCallback(evt =>
@@ -58,8 +55,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 iconGeneratorBase.Preset = preset;
             });
 
-            OnCreateInnerInspectorGUI(visualTree);
-            return visualTree;
+            OnCreateInnerInspectorGUI(tree);
+            return tree;
         }
 
         [PublicAPI]

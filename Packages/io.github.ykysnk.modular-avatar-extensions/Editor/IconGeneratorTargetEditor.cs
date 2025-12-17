@@ -1,6 +1,5 @@
 using nadena.dev.modular_avatar.core;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,11 +17,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
         protected override VisualElement? CreateInnerInspectorGUI()
         {
-            var visualTree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(visualTree);
-            visualTree.Bind(serializedObject);
-
-            var errorBox = visualTree.Q<HelpBox>("errorMenuItem");
+            var tree = uxml!.CloneTree();
+            var errorBox = tree.Q<HelpBox>("errorMenuItem");
             errorBox.style.display = DisplayStyle.None;
             EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
             {
@@ -33,7 +29,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     : DisplayStyle.Flex;
             };
 
-            return visualTree;
+            return tree;
         }
     }
 }
