@@ -14,6 +14,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         private const string IconPath =
             "Packages/io.github.ykysnk.modular-avatar-extensions/Runtime/Icons/Icon_MAEX_Script.png";
 
+        internal const string SystemName = "Modular Avatar EX";
+
         static Util() => EditorApplication.update += TryRun;
 
         private static void TryRun()

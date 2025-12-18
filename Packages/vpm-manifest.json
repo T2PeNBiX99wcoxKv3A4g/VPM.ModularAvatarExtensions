@@ -32,6 +32,18 @@
     },
     "d4rkpl4y3r.d4rkavataroptimizer": {
       "version": "3.12.5"
+    },
+    "dev.hai-vr.animator-as-code.v1": {
+      "version": "1.2.0"
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.7"
+    },
+    "lyuma.av3emulator": {
+      "version": "3.4.10"
+    },
+    "io.github.ykysnk.yky-toolkit": {
+      "version": "0.1.0"
     }
   },
   "locked": {
@@ -46,7 +58,7 @@
       "dependencies": {}
     },
     "nadena.dev.ndmf": {
-      "version": "1.10.0",
+      "version": "1.10.1",
       "dependencies": {}
     },
     "net.nekobako.editor-patcher": {
@@ -66,7 +78,7 @@
       "dependencies": {}
     },
     "io.github.ykysnk.localization": {
-      "version": "0.4.2",
+      "version": "0.5.0",
       "dependencies": {
         "io.github.ykysnk.utils": ">=0.22.0"
       }
@@ -88,6 +100,28 @@
     "d4rkpl4y3r.d4rkavataroptimizer": {
       "version": "3.12.5",
       "dependencies": {}
+    },
+    "dev.hai-vr.animator-as-code.v1": {
+      "version": "1.2.0",
+      "dependencies": {}
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.7",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.5.2 <3.11.X"
+      }
+    },
+    "lyuma.av3emulator": {
+      "version": "3.4.10",
+      "dependencies": {
+        "com.vrchat.avatars": "^3.1.0"
+      }
+    },
+    "io.github.ykysnk.yky-toolkit": {
+      "version": "0.1.0",
+      "dependencies": {
+        "io.github.ykysnk.utils": ">=0.23.3"
+      }
     }
   }
 }

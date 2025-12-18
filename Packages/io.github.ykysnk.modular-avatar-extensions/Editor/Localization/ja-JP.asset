@@ -326,3 +326,12 @@ MonoBehaviour:
   - key: label.icon_generator_target.icon_generator
     translate: "\u30A2\u30A4\u30B3\u30F3\u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\u30FC"
     tooltip: The result height after scale
+  - key: label.param_data.param_value
+    translate: "\u76EE\u6A19\u5024"
+    tooltip: The result height after scale
+  - key: label.param_only_object.reverse
+    translate: "\u6761\u4EF6\u3092\u53CD\u8EE2"
+    tooltip: The result height after scale
+  - key: label.param_only_object.high_priority
+    translate: "\u9AD8\u512A\u5148\u5EA6"
+    tooltip: The result height after scale

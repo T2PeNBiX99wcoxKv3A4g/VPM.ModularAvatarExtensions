@@ -327,3 +327,12 @@ MonoBehaviour:
   - key: label.icon_generator_target.icon_generator
     translate: Icon Generator
     tooltip: The result height after scale
+  - key: label.param_data.param_value
+    translate: Target Value
+    tooltip: The result height after scale
+  - key: label.param_only_object.reverse
+    translate: Inverse condition
+    tooltip: The result height after scale
+  - key: label.param_only_object.high_priority
+    translate: High Priority
+    tooltip: The result height after scale

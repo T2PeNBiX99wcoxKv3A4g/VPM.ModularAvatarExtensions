@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/io.github.ykysnk.modular-avatar-extensions/Editor/ParamDataEditor.uss?fileID=7433441132597879392&amp;guid=4212cdc0d9363be4c9a7b5fb82c36067&amp;type=3#ParamDataEditor"/>
+    <ui:VisualElement
+            style="flex-direction: row; white-space: nowrap; justify-content: space-between; align-items: center;">
+        <ui:TextField picking-mode="Ignore" value="filler text" binding-path="paramName" name="paramName"
+                      style="max-width: 85%;"/>
+        <ui:EnumField
+                type="io.github.ykysnk.ModularAvatarExtensions.ParamData+Type, io.github.ykysnk.modular-avatar-extensions"
+                binding-path="paramType" name="paramType" style="max-width: 15%;"/>
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <ui:Label tabindex="-1" text="label.param_data.param_value" parse-escape-sequences="true"
+                  display-tooltip-when-elided="true"/>
+        <ui:VisualElement name="Values" style="flex-grow: 1; max-width: 20%;">
+            <ui:IntegerField value="42" binding-path="paramIntValue" name="paramIntValue" is-delayed="true"
+                             class="custom_label" style="display: flex;"/>
+            <ui:FloatField value="42.2" name="paramFloatValue" binding-path="paramFloatValue" class="custom_label"
+                           style="display: none;"/>
+            <ui:Toggle name="paramBoolValue" binding-path="paramBoolValue" class="custom_label small_toggle"
+                       style="display: none;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

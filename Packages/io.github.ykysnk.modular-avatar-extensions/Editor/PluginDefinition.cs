@@ -27,6 +27,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             seq.Run(ViewPositionPass.Instance);
 #endif
             seq.Run(WorldScalePass.Instance);
+            seq.Run(IconGeneratorPass.Instance);
+            seq.Run(ParamOnlyObjectPass.Instance);
 
             seq = InPhase(BuildPhase.Transforming);
 
