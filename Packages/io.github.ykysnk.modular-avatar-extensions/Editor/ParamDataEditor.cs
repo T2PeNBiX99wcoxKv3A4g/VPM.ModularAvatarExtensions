@@ -9,7 +9,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CustomPropertyDrawer(typeof(ParamData))]
     internal class ParamDataEditor : PropertyDrawer
     {
-        public override VisualElement? CreatePropertyGUI(SerializedProperty property)
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var uxml =
                 AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
