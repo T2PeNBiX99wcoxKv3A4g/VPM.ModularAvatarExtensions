@@ -1,4 +1,5 @@
 #if MAEX_VRCSDK3_BASE
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -7,13 +8,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [AddComponentMenu("Modular Avatar EX/MAEX Preview Mode Only Object")]
     public class ModularAvatarExtensionsPreviewModeOnlyObject : ModularAvatarExtensionsParamOnlyObjectBase
     {
-        protected override void OnChange()
+        public override List<ParamData> ParamDatas => new()
         {
-            paramDatas = new()
-            {
-                new("PreviewMode", !reverse)
-            };
-        }
+            new("PreviewMode", !reverse)
+        };
     }
 }
 #endif

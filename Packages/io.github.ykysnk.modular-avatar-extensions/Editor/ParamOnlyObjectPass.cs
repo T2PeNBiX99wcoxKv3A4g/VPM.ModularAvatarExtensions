@@ -36,7 +36,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 using (ErrorReport.WithContextObject(gameObject))
                     try
                     {
-                        var allParams = components.SelectMany(x => x.paramDatas).GroupBy(x => x.paramName)
+                        var allParams = components.SelectMany(x => x.ParamDatas).GroupBy(x => x.paramName)
                             .Select(x => x.First())
                             .ToArray();
                         var reverse = components.Any(x => x is ModularAvatarExtensionsParamOnlyObject)

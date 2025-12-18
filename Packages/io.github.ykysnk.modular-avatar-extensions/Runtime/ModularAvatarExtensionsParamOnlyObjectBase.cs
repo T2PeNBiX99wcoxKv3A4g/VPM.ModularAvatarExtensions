@@ -7,7 +7,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     {
         public bool reverse;
         public bool highPriority;
-        public List<ParamData> paramDatas = new();
+
+        public abstract List<ParamData> ParamDatas { get; }
     }
 }
 #endif
