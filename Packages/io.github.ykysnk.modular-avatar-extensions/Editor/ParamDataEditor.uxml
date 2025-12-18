@@ -12,12 +12,9 @@
         <ui:Label tabindex="-1" text="label.param_data.param_value" parse-escape-sequences="true"
                   display-tooltip-when-elided="true"/>
         <ui:VisualElement name="Values" style="flex-grow: 1; max-width: 20%;">
-            <ui:IntegerField value="42" binding-path="paramIntValue" name="paramIntValue" is-delayed="true"
-                             class="custom_label" style="display: flex;"/>
-            <ui:FloatField value="42.2" name="paramFloatValue" binding-path="paramFloatValue" class="custom_label"
-                           style="display: none;"/>
-            <ui:Toggle name="paramBoolValue" binding-path="paramBoolValue" class="custom_label small_toggle"
-                       style="display: none;"/>
+            <ui:IntegerField value="42" name="paramIntValue" class="custom_label" style="display: flex;"/>
+            <ui:FloatField value="42.2" name="paramFloatValue" class="custom_label" style="display: none;"/>
+            <ui:Toggle name="paramBoolValue" class="custom_label small_toggle" style="display: none;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

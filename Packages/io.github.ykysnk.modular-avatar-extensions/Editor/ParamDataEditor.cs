@@ -26,6 +26,26 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
             tree.Bind(property.serializedObject);
 
+            var paramField = new FloatField
+            {
+                style =
+                {
+                    display = DisplayStyle.None
+                }
+            };
+
+            tree.Add(paramField);
+            paramField.BindProperty(property.FindPropertyRelative("paramValue"));
+
+            var floatField = tree.Q<FloatField>("paramFloatValue");
+            floatField.RegisterValueChangedCallback(evt => paramField.value = evt.newValue);
+
+            var intField = tree.Q<IntegerField>("paramIntValue");
+            intField.RegisterValueChangedCallback(evt => paramField.value = evt.newValue);
+
+            var boolField = tree.Q<Toggle>("paramBoolValue");
+            boolField.RegisterValueChangedCallback(evt => paramField.value = evt.newValue ? 1f : 0f);
+
             var enumField = tree.Q<EnumField>("paramType");
             EditorApplication.delayCall += () => OnTypeChanged(true, enumField.value, enumField.value);
             enumField.RegisterValueChangedCallback(evt => OnTypeChanged(false, evt.previousValue, evt.newValue));
@@ -33,10 +53,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void OnTypeChanged(bool isInit, Enum previousEnum, Enum newEnum)
             {
-                var floatField = tree.Q<FloatField>("paramFloatValue");
-                var intField = tree.Q<IntegerField>("paramIntValue");
-                var boolField = tree.Q<Toggle>("paramBoolValue");
-
                 floatField.style.display = DisplayStyle.None;
                 intField.style.display = DisplayStyle.None;
                 boolField.style.display = DisplayStyle.None;
@@ -48,6 +64,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     ParamData.Type.Bool => boolField.value ? 1f : 0f,
                     _ => 0
                 };
+
+                if (isInit)
+                {
+                    floatField.value = paramField.value;
+                    intField.value = (int)paramField.value;
+                    boolField.value = paramField.value > 0;
+                }
 
                 switch (newEnum)
                 {
