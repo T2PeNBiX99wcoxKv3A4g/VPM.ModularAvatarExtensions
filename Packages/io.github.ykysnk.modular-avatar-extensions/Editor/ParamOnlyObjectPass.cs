@@ -89,7 +89,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             foreach (var (data, gameObjects) in heightPriorityParamData)
             {
                 var layer = heightPriorityController.NewLayer(
-                    $"ParamOnlyObjectHighPriority/{HashUtils.ComputeHash(string.Join("|", data.ParamDatas.Select(x => x.paramName)), HashUtils.HashType.MD5)}");
+                    $"ParamOnlyObjectHighPriority/{HashUtils.ComputeHash(string.Join("|", data.ParamDatas.Select(x => x.paramName)), HashUtils.HashType.MD5)}/{(data.Reverse ? "Reverse" : "Normal")}");
                 var offClip = aac.NewClip().Toggling(gameObjects.ToArray(), data.Reverse);
                 var onClip = aac.NewClip().Toggling(gameObjects.ToArray(), !data.Reverse);
 
@@ -112,7 +112,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             foreach (var (data, gameObjects) in lowPriorityParamData)
             {
                 var layer = lowPriorityController.NewLayer(
-                    $"ParamOnlyObjectLowPriority/{HashUtils.ComputeHash(string.Join("|", data.ParamDatas.Select(x => x.paramName)), HashUtils.HashType.MD5)}");
+                    $"ParamOnlyObjectLowPriority/{HashUtils.ComputeHash(string.Join("|", data.ParamDatas.Select(x => x.paramName)), HashUtils.HashType.MD5)}/{(data.Reverse ? "Reverse" : "Normal")}");
                 var offClip = aac.NewClip().Toggling(gameObjects.ToArray(), data.Reverse);
                 var onClip = aac.NewClip().Toggling(gameObjects.ToArray(), !data.Reverse);
 
