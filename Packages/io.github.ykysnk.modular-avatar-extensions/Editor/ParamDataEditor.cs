@@ -18,7 +18,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             if (uxml == null)
             {
                 var errorTree = new VisualElement();
-                errorTree.Add(new Label("Failed to load uxml assets, please reimport the package to fix this issue."));
+                errorTree.Add(new HelpBox("Failed to load uxml assets, please reimport the package to fix this issue.",
+                    HelpBoxMessageType.Error));
                 return errorTree;
             }
 
