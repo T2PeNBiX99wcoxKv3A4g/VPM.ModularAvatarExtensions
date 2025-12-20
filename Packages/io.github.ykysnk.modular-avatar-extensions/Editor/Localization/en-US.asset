@@ -336,3 +336,12 @@ MonoBehaviour:
   - key: label.param_only_object.high_priority
     translate: High Priority
     tooltip: The result height after scale
+  - key: label.material_change_data.material
+    translate: Set material to
+    tooltip: The result height after scale
+  - key: label.material_change_data.material_index_item
+    translate: 'Element {0}: {1}'
+    tooltip: The result height after scale
+  - key: label.material_change_data.material_selected_value
+    translate: Element {0}
+    tooltip: The result height after scale
