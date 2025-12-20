@@ -26,6 +26,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
                 s.Run(TurnOffInBuildPass.Instance);
                 s.Run(TurnOnInBuildPass.Instance);
                 s.Run(EditorOnlyPass.Instance);
+                s.Run(ChangeMaterialInBuildPass.Instance);
 #if MAEX_VRCSDK3_BASE
                 s.Run(ViewPositionPass.Instance);
 #endif
