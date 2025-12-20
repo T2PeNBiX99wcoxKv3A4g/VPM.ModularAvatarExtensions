@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement style="flex-grow: 1; margin-right: 5px;">
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+            <io.github.ykysnk.ModularAvatarExtensions.Editor.UIElements.MaterialField name="materialIndex"
+                                                                                      class="localize-skip"
+                                                                                      style="width: 20%; max-width: 20%;"/>
+            <uie:ObjectField type="UnityEngine.Material, UnityEngine.CoreModule" name="previewMaterial"
+                             style="width: 80%;"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+            <ui:Label tabindex="-1" text="label.material_change_data.material" parse-escape-sequences="true"
+                      display-tooltip-when-elided="true" style="width: 20%;"/>
+            <uie:ObjectField binding-path="material" name="material" type="UnityEngine.Material, UnityEngine.CoreModule"
+                             allow-scene-objects="false" style="width: 80%;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
