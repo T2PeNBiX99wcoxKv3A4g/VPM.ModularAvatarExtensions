@@ -55,7 +55,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             {
                 if (ConsoleLog)
                     Debug.LogException(e);
-                OnError(e);
+                OnError(e, Type.UGUI);
                 EditorGUILayout.HelpBox($"Editor Error: {e.Message}\n{e.StackTrace}", MessageType.Error, true);
             }
 
