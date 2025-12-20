@@ -31,7 +31,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
 #endif
                 s.Run(WorldScalePass.Instance);
                 s.Run(IconGeneratorPass.Instance);
+#if MAEX_VRCSDK3_BASE
                 s.Run(ParamOnlyObjectPass.Instance);
+#endif
             });
 
             seq = InPhase(BuildPhase.Transforming);

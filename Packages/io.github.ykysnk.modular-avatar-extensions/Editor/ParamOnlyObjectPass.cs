@@ -13,6 +13,7 @@ using VRC.SDK3.Avatars.Components;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
+    [RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
     internal class ParamOnlyObjectPass : MaexPass<ParamOnlyObjectPass>
     {
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.ParamOnlyObject";

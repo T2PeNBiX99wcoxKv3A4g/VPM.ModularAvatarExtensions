@@ -7,6 +7,7 @@ using VRC.SDKBase;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
+    [RunsOnPlatforms(WellKnownPlatforms.VRChatAvatar30)]
     internal class ViewPositionPass : MaexPass<ViewPositionPass>
     {
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.ViewPosition";
