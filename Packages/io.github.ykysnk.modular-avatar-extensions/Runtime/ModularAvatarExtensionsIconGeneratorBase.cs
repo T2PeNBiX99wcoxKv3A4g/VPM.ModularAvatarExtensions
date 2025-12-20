@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -260,7 +261,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             {
                 var path = AssetDatabase.GetAssetPath(m);
                 var guid = AssetDatabase.AssetPathToGUID(path);
-                var lastWriteTime = File.GetLastWriteTime(path);
+                var lastWriteTime = !string.IsNullOrEmpty(path) ? File.GetLastWriteTime(path) : DateTime.MinValue;
                 return $"{guid}.{lastWriteTime:yyyyMMddHHmmss}";
             });
             return HashUtils.ComputeHash(string.Join("|", guidWithTimes), HashUtils.HashType.SHA1);
