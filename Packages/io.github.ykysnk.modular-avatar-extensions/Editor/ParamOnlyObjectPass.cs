@@ -80,6 +80,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 DefaultsProvider = new AacDefaultsProvider(true)
             });
 
+            // TODO: Maybe optimize reverse layers
             var heightPriorityParamData = paramDataWithGameObject.Where(x => x.Key.HighPriority).ToArray();
             var lowPriorityParamData = paramDataWithGameObject.Where(x => !x.Key.HighPriority).ToArray();
             var emptyClip = aac.NewClip();
