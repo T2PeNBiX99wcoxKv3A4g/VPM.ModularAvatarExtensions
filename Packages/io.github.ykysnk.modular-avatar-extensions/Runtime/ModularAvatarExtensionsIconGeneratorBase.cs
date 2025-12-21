@@ -99,7 +99,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
             if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
             objects = GetAllObjects();
-            objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
+            objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Distinct().Select(o => o.FullName())),
                 HashUtils.HashType.SHA1);
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
@@ -113,7 +113,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected bool ShouldGenerateIcon()
         {
 #if UNITY_EDITOR
-            var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
+            var meshDatas = objects.Distinct().Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
             return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
                    gameObject.scene.IsValid() && !Utils.IsInPrefab();
@@ -132,7 +132,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
 #if UNITY_EDITOR
             if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath);
-            var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
+            var meshDatas = objects.Distinct().Select(obj => new MeshData(obj)).ToArray();
             var oldIconName = iconName;
             var newIconName = GetIconName(meshDatas);
             var newIconPath = Path.Combine(FolderPath, newIconName);
