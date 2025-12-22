@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -39,18 +40,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private static Material[] GetMaterials(GameObject obj)
         {
-            if (obj.TryGetComponent<SkinnedMeshRenderer>(out var skinnedMeshRenderer))
-                return skinnedMeshRenderer.sharedMaterials;
-            if (obj.TryGetComponent<MeshRenderer>(out var meshRenderer))
-                return meshRenderer.materials;
-            var skinnedMeshRenderers = obj.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-            if (skinnedMeshRenderers.Length > 0) return skinnedMeshRenderers[0].sharedMaterials;
-            var meshRenderers = obj.GetComponentsInChildren<MeshRenderer>(true);
-            return meshRenderers.Length > 0
-                ? meshRenderers[0].materials
-                : new Material[]
-                {
-                };
+            if (obj.TryGetComponent<Renderer>(out var renderer))
+                return renderer.sharedMaterials;
+
+            var renderers = obj.GetComponentsInChildren<Renderer>(true);
+            return renderers.FirstOrDefault()?.sharedMaterials ?? new Material[]
+            {
+            };
         }
     }
 }
