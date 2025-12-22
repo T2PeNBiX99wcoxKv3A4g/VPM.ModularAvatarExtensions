@@ -42,7 +42,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
 
 #if UNITY_EDITOR
-        static ModularAvatarExtensionsIconGeneratorBase() => EditorApplication.wantsToQuit += WantToQuit;
+        static ModularAvatarExtensionsIconGeneratorBase()
+        {
+            EditorApplication.wantsToQuit -= WantToQuit;
+            EditorApplication.wantsToQuit += WantToQuit;
+        }
 #endif
 
         public Texture2D? IconTexture => iconTexture;
@@ -71,15 +75,21 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             }
         }
 
+        private void OnProjectChanged()
+        {
+            OnChange();
+            Check();
+        }
+
         protected virtual void Check()
         {
-            shouldGenerateIcon = ShouldGenerateIcon();
-
             if (shouldGenerateIcon)
             {
                 shouldGenerateIcon = false;
                 GenerateIcon();
             }
+            else
+                shouldGenerateIcon = ShouldGenerateIcon();
 
             if (modularAvatarMenuItem == null || iconTexture == null ||
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
@@ -112,9 +122,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
 
-            EditorApplication.projectChanged -= Check;
+            EditorApplication.projectChanged -= OnProjectChanged;
             if (!gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
-            EditorApplication.projectChanged += Check;
+            EditorApplication.projectChanged += OnProjectChanged;
 #endif
         }
 
@@ -134,6 +144,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             OnChange();
             shouldGenerateIcon = true;
+            Check();
         }
 
         protected void GenerateIcon()
