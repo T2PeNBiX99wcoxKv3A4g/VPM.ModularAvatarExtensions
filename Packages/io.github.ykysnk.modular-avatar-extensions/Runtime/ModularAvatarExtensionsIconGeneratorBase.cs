@@ -61,10 +61,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public string IconName => iconName;
 
+#if UNITY_EDITOR
         private void OnEnable() => StartCoroutine(CheckLoop());
+#endif
 
         protected override void OnDestroy() => RemoveUnusedIcon();
 
+#if UNITY_EDITOR
         private IEnumerator CheckLoop()
         {
             while (enabled && gameObject.activeSelf)
@@ -74,6 +77,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 yield return new WaitForSeconds(2f);
             }
         }
+#endif
 
         private void OnProjectChanged()
         {
@@ -81,8 +85,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             Check();
         }
 
+
         protected virtual void Check()
         {
+#if UNITY_EDITOR
             if (shouldGenerateIcon)
             {
                 shouldGenerateIcon = false;
@@ -93,10 +99,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (modularAvatarMenuItem == null || iconTexture == null ||
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
-#if UNITY_EDITOR
+
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
-#endif
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
+            EditorUtility.SetDirty(modularAvatarMenuItem);
+#endif
         }
 
         private static bool WantToQuit()
@@ -170,11 +177,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
             preset?.ApplyTo(iconImporter);
             iconImporter.SaveAndReimport();
+            EditorUtility.SetDirty(this);
 
             if (modularAvatarMenuItem == null || iconTexture == null ||
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
             modularAvatarMenuItem.PortableControl.Icon = iconTexture;
+            EditorUtility.SetDirty(modularAvatarMenuItem);
 #endif
         }
 
