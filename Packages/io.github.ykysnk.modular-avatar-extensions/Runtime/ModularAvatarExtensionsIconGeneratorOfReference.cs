@@ -12,5 +12,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected override List<GameObject> GetAllObjects() =>
             avatarObjectReferences.ConvertAll(ao => ao.Get(this)).Where(go => go != null).ToList();
+
+        protected override List<ShapeKeyData> GetAllShapeKeyDatas() => new();
     }
 }

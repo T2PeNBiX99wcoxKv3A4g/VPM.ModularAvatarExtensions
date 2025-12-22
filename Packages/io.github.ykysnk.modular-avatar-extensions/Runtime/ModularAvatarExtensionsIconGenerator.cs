@@ -11,6 +11,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     public class ModularAvatarExtensionsIconGenerator : ModularAvatarExtensionsIconGeneratorBase
     {
         [SerializeField] private ModularAvatarObjectToggle? modularAvatarObjectToggle;
+        [SerializeField] private ModularAvatarShapeChanger? modularAvatarShapeChanger;
 
         protected override void Check()
         {
@@ -29,6 +30,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected override void OnChange()
         {
             modularAvatarObjectToggle = GetComponent<ModularAvatarObjectToggle>();
+            modularAvatarShapeChanger = GetComponent<ModularAvatarShapeChanger>();
             base.OnChange();
         }
 
@@ -45,6 +47,22 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 modularAvatarMenuItem.GetComponentsInChildren<ModularAvatarObjectToggle>(true);
             return allSubModularAvatarObjectToggles
                 .SelectMany(toggle => toggle.Objects.Select(to => to.Object.Get(this)).Where(go => go != null)).ToList();
+        }
+
+        protected override List<ShapeKeyData> GetAllShapeKeyDatas()
+        {
+            if (modularAvatarShapeChanger == null) return new();
+            return modularAvatarShapeChanger.Shapes.Where(x => x.Object.Get(this) != null)
+                .Select(x =>
+                {
+                    var go = x.Object.Get(this);
+                    return new ShapeKeyData
+                    {
+                        gameObject = go,
+                        shapeKeyName = x.ShapeName,
+                        value = x.ChangeType == ShapeChangeType.Set ? x.Value : 100f
+                    };
+                }).ToList();
         }
     }
 }

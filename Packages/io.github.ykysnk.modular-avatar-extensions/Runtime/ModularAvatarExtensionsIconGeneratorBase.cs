@@ -13,7 +13,7 @@ using UnityEngine;
 #if UNITY_EDITOR // Lets me sleep plz
 using UnityEditor;
 using UnityEditor.Presets;
-using Directory = UnityEngine.Windows.Directory;
+using UnityDirectory = UnityEngine.Windows.Directory;
 using UnityFile = UnityEngine.Windows.File;
 #endif
 
@@ -24,7 +24,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [DisallowMultipleComponent]
     public abstract class ModularAvatarExtensionsIconGeneratorBase : AvatarMaexComponent
     {
-        protected const string FolderPath = "Assets/ModularAvatarExtensionsIconGenerator";
+        public const string FolderPath = "Assets/ModularAvatarExtensionsIconGenerator";
         protected const int TargetLayer = 21;
         protected const int CaptureWidthAndHeight = 2048;
         protected const int ScaleWidthAndHeight = 256;
@@ -33,6 +33,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         [SerializeField] protected ModularAvatarMenuItem? modularAvatarMenuItem;
         [SerializeField] protected Texture2D? iconTexture;
+        [SerializeField] protected List<ShapeKeyData> shapeKeyDatas = new();
         [SerializeField] protected List<GameObject> objects = new();
         [SerializeField] protected string objectsHash = "";
         [SerializeField] protected string iconName = "";
@@ -53,6 +54,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             set => preset = value;
         }
 #endif
+
+        public string IconName => iconName;
 
         private void OnEnable() => StartCoroutine(CheckLoop());
 
@@ -98,22 +101,27 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #if UNITY_EDITOR
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
             if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
-            objects = GetAllObjects();
-            objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Distinct().Select(o => o.FullName())),
+            objects = GetAllObjects().Distinct().ToList();
+            objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
                 HashUtils.HashType.SHA1);
+            shapeKeyDatas = GetAllShapeKeyDatas().Distinct().ToList();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
             shouldGenerateIcon = ShouldGenerateIcon();
 
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
+
+            EditorApplication.projectChanged -= Check;
+            if (!gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
+            EditorApplication.projectChanged += Check;
 #endif
         }
 
         protected bool ShouldGenerateIcon()
         {
 #if UNITY_EDITOR
-            var meshDatas = objects.Distinct().Select(obj => new MeshData(obj)).ToArray();
+            var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
             return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
                    gameObject.scene.IsValid() && !Utils.IsInPrefab();
@@ -131,13 +139,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected void GenerateIcon()
         {
 #if UNITY_EDITOR
-            if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath);
-            var meshDatas = objects.Distinct().Select(obj => new MeshData(obj)).ToArray();
+            if (!UnityDirectory.Exists(FolderPath)) UnityDirectory.CreateDirectory(FolderPath);
+            var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject).ToDictionary(x => x.Key,
+                x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
+            var meshDatas = objects.Select(obj => new MeshData(obj))
+                .ToArray();
             var oldIconName = iconName;
             var newIconName = GetIconName(meshDatas);
             var newIconPath = Path.Combine(FolderPath, newIconName);
             if (oldIconName != newIconName) Task.Run(RemoveUnusedIcon);
-            var bytes = SaveMeshAsPng(meshDatas, scaleWidth, scaleHeight);
+            var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
             if (bytes != null) UnityFile.WriteAllBytes($"{newIconPath}.png", bytes);
             iconName = newIconName;
             AssetDatabase.Refresh();
@@ -163,7 +174,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         // Refs: https://github.com/weasel-club/OneClickInventory/blob/main/Editor/Util/IconUtil.cs#L24
-        protected static byte[]? SaveMeshAsPng(MeshData[] meshDatas, int scaleWidth, int scaleHeight)
+        protected static byte[]? SaveMeshAsPng(MeshData[] meshDatas,
+            Dictionary<GameObject, List<ShapeKeyValue>> shapeKeyDatas, int scaleWidth, int scaleHeight)
         {
 #if UNITY_EDITOR
             var tempObj = new GameObject("TempObj")
@@ -174,18 +186,31 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
             };
 
+            var cloneShapeKeyDatas = new Dictionary<GameObject, List<ShapeKeyValue>>();
+
             foreach (var meshData in meshDatas)
             {
                 var clone = Instantiate(meshData.GameObject, tempObj.transform, true);
                 clone.SetActive(true);
+                if (shapeKeyDatas.TryGetValue(meshData.GameObject, out var shapeKeyValues))
+                    cloneShapeKeyDatas.TryAdd(clone.gameObject, shapeKeyValues);
             }
 
-            var renderer = tempObj.GetComponentsInChildren<Renderer>() ?? new Renderer[]
-            {
-            };
-            var newMeshDatas = renderer.Select(r => new MeshData(r.gameObject));
+            var renderer = tempObj.GetComponentsInChildren<Renderer>().ToList();
+            var newMeshDatas = renderer.Select(r => new MeshData(r.gameObject)).ToList();
 
             ChangeLayer(tempObj, TargetLayer);
+
+            foreach (var newMeshData in newMeshDatas)
+            {
+                if (newMeshData.Renderer is not SkinnedMeshRenderer skinnedMeshRenderer) continue;
+                if (!cloneShapeKeyDatas.TryGetValue(skinnedMeshRenderer.gameObject, out var shapeKeyValues)) continue;
+                foreach (var shapeKeyValue in shapeKeyValues)
+                {
+                    if (shapeKeyValue is not { ShapeKeyIndex: > -1, Value: > 0 }) continue;
+                    skinnedMeshRenderer.SetBlendShapeWeight(shapeKeyValue.ShapeKeyIndex, shapeKeyValue.Value);
+                }
+            }
 
             var camObj = new GameObject("TempCam");
             var cam = camObj.AddComponent<Camera>();
@@ -254,6 +279,29 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected abstract List<GameObject> GetAllObjects();
 
+        protected abstract List<ShapeKeyData> GetAllShapeKeyDatas();
+
+#if UNITY_EDITOR
+        [InitializeOnLoadMethod]
+        public static void RemoveAllUnusedIconLoader()
+        {
+            EditorApplication.projectChanged -= RemoveAllUnusedIcon;
+            EditorApplication.projectChanged += RemoveAllUnusedIcon;
+        }
+
+        public static void RemoveAllUnusedIcon()
+        {
+            foreach (var path in Directory.GetFiles(FolderPath, "*.png"))
+            {
+                var iconName = Path.GetFileNameWithoutExtension(path);
+                var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
+                if (allIconGenerator.Any(x => x.iconName == iconName)) continue;
+                Utils.Log(nameof(RemoveAllUnusedIcon), $"Removing unused icon: {iconName}");
+                UnityFile.Delete(path);
+            }
+        }
+#endif
+
 #if UNITY_EDITOR
         protected static string GetMaterialsSha256(MeshData meshData)
         {
@@ -284,7 +332,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             return $"{assetGuid}.{lastWriteTime:yyyyMMddHHmmss}";
         }
 
-        protected static string GetIconName(MeshData[] meshData2)
+        protected string GetIconName(MeshData[] meshData2)
         {
             var iconNames = meshData2.Select(meshData =>
             {
@@ -293,7 +341,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var matsSha256 = GetMaterialsSha256(meshData);
                 return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
             });
-            return HashUtils.ComputeHash(string.Join("|", iconNames), HashUtils.HashType.SHA1);
+            return HashUtils.ComputeHash(string.Join("|", iconNames) + string.Join("|", shapeKeyDatas),
+                HashUtils.HashType.SHA1);
         }
 #endif
 #if UNITY_EDITOR
