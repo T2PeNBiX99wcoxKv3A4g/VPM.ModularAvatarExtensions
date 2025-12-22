@@ -1,6 +1,5 @@
 using nadena.dev.modular_avatar.core;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
@@ -25,12 +24,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;
             };
-
-            var iconTextureField = container.Q<ObjectField>("iconTexture");
-            iconTextureField.SetEnabled(false);
-
-            var iconField = container.Q<ObjectField>("icon");
-            iconField.SetEnabled(false);
         }
     }
 }

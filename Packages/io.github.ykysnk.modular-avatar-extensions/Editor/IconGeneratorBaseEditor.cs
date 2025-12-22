@@ -55,6 +55,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 iconGeneratorBase.Preset = preset;
             });
 
+            var iconTextureField = tree.Q<ObjectField>("iconTexture");
+            iconTextureField.SetEnabled(false);
+
+            var iconField = tree.Q<ObjectField>("icon");
+            iconField.SetEnabled(false);
+
             OnCreateInnerInspectorGUI(tree);
             return tree;
         }

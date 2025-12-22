@@ -73,13 +73,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected virtual void Check()
         {
+            shouldGenerateIcon = ShouldGenerateIcon();
+
             if (shouldGenerateIcon)
             {
                 shouldGenerateIcon = false;
                 GenerateIcon();
             }
-            else
-                shouldGenerateIcon = ShouldGenerateIcon();
 
             if (modularAvatarMenuItem == null || iconTexture == null ||
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
