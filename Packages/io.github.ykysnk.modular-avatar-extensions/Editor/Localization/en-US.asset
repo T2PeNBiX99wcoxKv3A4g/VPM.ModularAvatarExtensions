@@ -357,3 +357,6 @@ MonoBehaviour:
   - key: label.icon_generator_base_report_window.full_path
     translate: Asset Path
     tooltip: 
+  - key: label.object_reference_data.shape_key_values
+    translate: Shape Keys
+    tooltip: 
