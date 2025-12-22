@@ -316,31 +316,43 @@ MonoBehaviour:
     tooltip: "\u30B9\u30B1\u30FC\u30EA\u30F3\u30B0\u3057\u305F\u306E\u7D50\u679C\u306E\u9AD8\u3055"
   - key: label.icon_generator.object_toggle_not_found
     translate: "\u300CMA\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u30C8\u30B0\u30EB\u300D\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\uFF01"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.icon_generator.menu_item_not_found
     translate: "\u300CMA\u30E1\u30CB\u30E5\u30FC\u30A2\u30A4\u30C6\u30E0\u300D\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\uFF01"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.icon_generator.avatar_object_references
     translate: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u53C2\u7167"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.icon_generator_target.icon_generator
     translate: "\u30A2\u30A4\u30B3\u30F3\u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\u30FC"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.param_data.param_value
     translate: "\u76EE\u6A19\u5024"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.param_only_object.reverse
     translate: "\u6761\u4EF6\u3092\u53CD\u8EE2"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.param_only_object.high_priority
     translate: "\u9AD8\u512A\u5148\u5EA6"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.material_change_data.material
     translate: "\u5909\u66F4\u5148\u306E\u30DE\u30C6\u30EA\u30A2\u30EB"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.material_change_data.material_index_item
     translate: "\u30A8\u30EC\u30E1\u30F3\u30C8 {0}: {1}"
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.material_change_data.material_selected_value
     translate: "\u30A8\u30EC\u30E1\u30F3\u30C8 {0}"
-    tooltip: The result height after scale
+    tooltip: 
+  - key: label.icon_generator_base_report_window.report
+    translate: "\u30A2\u30A4\u30B3\u30F3\u4F7F\u7528\u30D1\u30B9\u30EC\u30DD\u30FC\u30C8"
+    tooltip: 
+  - key: label.icon_generator_base_report_window.icon_name
+    translate: "\u30A2\u30A4\u30B3\u30F3\u540D"
+    tooltip: 
+  - key: label.icon_generator_base_report_window.full_name
+    translate: "\u30D5\u30EB\u30CD\u30FC\u30E0"
+    tooltip: 
+  - key: label.icon_generator_base_report_window.full_path
+    translate: "\u30A2\u30BB\u30C3\u30C8\u30D1\u30B9"
+    tooltip: 

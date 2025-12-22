@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <ui:Label tabindex="-1" text="label.icon_generator_base_report_window.report" parse-escape-sequences="true"
+              display-tooltip-when-elided="true"
+              style="-unity-font-style: normal; font-size: 20px; -unity-text-align: upper-center;"/>
+    <ui:ListView show-border="true" virtualization-method="DynamicHeight" name="needFindIds"
+                 show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple" reorder-mode="Animated"
+                 binding-path="reportData" show-bound-collection-size="false"
+                 style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;"/>
+</ui:UXML>

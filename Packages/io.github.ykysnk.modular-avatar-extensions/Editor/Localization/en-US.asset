@@ -317,31 +317,43 @@ MonoBehaviour:
     tooltip: The result height after scale
   - key: label.icon_generator.object_toggle_not_found
     translate: The 'MA Object Toggle' is not found!
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.icon_generator.menu_item_not_found
     translate: The 'MA Menu Item' is not found!
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.icon_generator.avatar_object_references
     translate: Object References
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.icon_generator_target.icon_generator
     translate: Icon Generator
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.param_data.param_value
     translate: Target Value
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.param_only_object.reverse
     translate: Inverse condition
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.param_only_object.high_priority
     translate: High Priority
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.material_change_data.material
     translate: Set material to
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.material_change_data.material_index_item
     translate: 'Element {0}: {1}'
-    tooltip: The result height after scale
+    tooltip: 
   - key: label.material_change_data.material_selected_value
     translate: Element {0}
-    tooltip: The result height after scale
+    tooltip: 
+  - key: label.icon_generator_base_report_window.report
+    translate: Icon used path report
+    tooltip: 
+  - key: label.icon_generator_base_report_window.icon_name
+    translate: Icon Name
+    tooltip: 
+  - key: label.icon_generator_base_report_window.full_name
+    translate: Full Name
+    tooltip: 
+  - key: label.icon_generator_base_report_window.full_path
+    translate: Asset Path
+    tooltip: 
