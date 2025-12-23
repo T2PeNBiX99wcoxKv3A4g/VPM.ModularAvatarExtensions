@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.utils.Editor;
@@ -37,21 +36,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             shapeKeyName.BindProperty(property.FindPropertyRelative("shapeKeyName"));
 
             var shapeKeyNameField = tree.Q<DropdownField>("shapeKeyName");
-            shapeKeyNameField.RegisterValueChangedCallback(evt => { shapeKeyName.value = evt.newValue; });
+            shapeKeyNameField.RegisterValueChangedCallback(evt => shapeKeyName.value = evt.newValue);
 
-            var tempButton = new Button
-            {
-                text = "Temp Update Button"
-            };
-            tempButton.clicked += UpdateShapeDropdown;
-
-            tree.Add(tempButton);
-
-            // tree.RegisterCallback<SerializedPropertyChangeEvent>(_ =>
-            // {
-            //     Utils.Log(nameof(ShapeKeyValueReferenceEditor), $"SerializedPropertyChangeEvent: {property.propertyPath}");
-            //     UpdateShapeDropdown();
-            // });
+            var reference = tree.Q<PropertyField>("reference");
+            reference.label = "";
+            reference.RegisterValueChangeCallback(_ => UpdateShapeDropdown());
             EditorApplication.delayCall += UpdateShapeDropdown;
             UpdateShapeDropdown();
 
@@ -59,10 +48,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void UpdateShapeDropdown()
             {
-                var findIndex = property.propertyPath.IndexOf(".shapeKeyValues.Array", StringComparison.Ordinal);
-                if (findIndex < 0) return;
-                var findProperty = property.serializedObject.FindProperty(property.propertyPath[..findIndex]);
-                var targetObject = AvatarObjectReference.Get(findProperty.FindPropertyRelative("reference"));
+                var targetObject = AvatarObjectReference.Get(property.FindPropertyRelative("reference"));
                 var shapeNames = new List<string>();
 
                 if (targetObject != null &&
@@ -83,8 +69,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     {
                         if (shapeNames.Count < 1)
                             return "<color=\"red\">Empty</color>";
-                        return !shapeNames.Contains(shapeKeyName.value)
-                            ? $"<color=\"red\">{shapeKeyName.value}</color>"
+                        return !shapeNames.Contains(s)
+                            ? $"<color=\"red\">{s}</color>"
                             : s;
                     };
             }
