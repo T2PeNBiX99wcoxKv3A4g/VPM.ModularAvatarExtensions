@@ -1,6 +1,8 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; flex-direction: row; align-self: stretch; justify-content: space-between;">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <uie:PropertyField binding-path="reference" name="reference"/>
+    <ui:VisualElement
+            style="flex-grow: 1; flex-direction: row; align-self: stretch; justify-content: space-between; margin-right: 5px;">
         <ui:DropdownField name="shapeKeyName" style="width: 80%;"/>
-        <ui:FloatField value="42.2" name="value" binding-path="value" style="width: 16%;"/>
+        <ui:FloatField value="42.2" name="value" binding-path="value" style="width: 20%; align-self: stretch;"/>
     </ui:VisualElement>
 </ui:UXML>

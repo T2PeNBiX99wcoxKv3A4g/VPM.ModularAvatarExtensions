@@ -360,3 +360,9 @@ MonoBehaviour:
   - key: label.object_reference_data.shape_key_values
     translate: Shape Keys
     tooltip: 
+  - key: label.icon_generator_of_reference.add_reference_extra_data
+    translate: Add Reference Extra Data...
+    tooltip: 
+  - key: label.shape_key_value_reference.reference
+    translate: Reference
+    tooltip: 

@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated" show-add-remove-footer="true"
+                 show-foldout-header="false" reorderable="true" selection-type="Multiple"
+                 virtualization-method="DynamicHeight" show-border="true" binding-path="shapeKeyValues"
+                 name="shapeKeyValues" show-bound-collection-size="false"/>
+</ui:UXML>
