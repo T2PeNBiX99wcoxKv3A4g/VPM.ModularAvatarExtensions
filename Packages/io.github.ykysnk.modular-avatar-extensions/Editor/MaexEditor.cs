@@ -63,7 +63,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         }
 
         [PublicAPI]
-        protected abstract void OnInnerInspectorGUI();
+        protected virtual void OnInnerInspectorGUI()
+        {
+        }
 
         [PublicAPI]
         protected virtual VisualElement? CreateInnerInspectorGUI() => null;

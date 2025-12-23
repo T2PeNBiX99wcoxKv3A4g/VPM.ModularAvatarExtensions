@@ -44,9 +44,5 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             };
             return tree;
         }
-
-        protected override void OnInnerInspectorGUI()
-        {
-        }
     }
 }

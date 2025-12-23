@@ -64,9 +64,5 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             OnChange();
             serializedObject.ApplyModifiedProperties();
         }
-
-        protected override void OnInnerInspectorGUI()
-        {
-        }
     }
 }
