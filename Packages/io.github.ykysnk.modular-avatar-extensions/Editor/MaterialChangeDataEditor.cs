@@ -35,21 +35,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             if (property.serializedObject.targetObject is not ModularAvatarExtensionsChangeMaterialInBuild
                 targetComponent)
-            {
-                var errorTree = new VisualElement();
-                errorTree.Add(new HelpBox("Target object is not ModularAvatarExtensionsChangeMaterialInBuild.",
-                    HelpBoxMessageType.Error));
-                return errorTree;
-            }
+                return BasicEditor.CreateErrorUI("Target object is not ModularAvatarExtensionsChangeMaterialInBuild.");
 
             var renderer = targetComponent.Renderer;
             if (renderer == null)
-            {
-                var errorTree = new VisualElement();
-                errorTree.Add(new HelpBox("Renderer is not assigned or found in the target component.",
-                    HelpBoxMessageType.Warning));
-                return errorTree;
-            }
+                return BasicEditor.CreateWarningUI("Renderer is not assigned or found in the target component.");
 
             var materialIndexField = new IntegerField
             {
