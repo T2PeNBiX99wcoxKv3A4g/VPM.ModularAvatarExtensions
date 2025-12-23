@@ -5,30 +5,35 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    [AddComponentMenu("Modular Avatar EX/MAEX Icon Generator Of Referance")]
+    [AddComponentMenu("Modular Avatar EX/MAEX Icon Generator Of Reference")]
     public class ModularAvatarExtensionsIconGeneratorOfReference : ModularAvatarExtensionsIconGeneratorBase
     {
         [SerializeField] private List<AvatarObjectReference> avatarObjectReferences = new();
-        [SerializeField] private List<ObjectReferenceData> objectReferenceDatas = new();
-
-        protected override void OnChange()
-        {
-            if (avatarObjectReferences.Count < 1) return;
-            objectReferenceDatas = avatarObjectReferences.Select(x => new ObjectReferenceData(x, new())).ToList();
-            avatarObjectReferences.Clear();
-        }
 
         protected override List<GameObject> GetAllObjects() =>
-            objectReferenceDatas.ConvertAll(ao => ao.reference.Get(this)).Where(go => go != null).ToList();
+            avatarObjectReferences.ConvertAll(ao => ao.Get(this)).Where(go => go != null).ToList();
 
-        protected override List<ShapeKeyData> GetAllShapeKeyDatas() =>
-            (from referenceData in objectReferenceDatas
-            from shapeKeyValue in referenceData.shapeKeyValues
-            select new ShapeKeyData
+        protected override List<ShapeKeyData> GetAllShapeKeyDatas()
+        {
+            if (!TryGetComponent<IconGeneratorOfReferenceWithShapeKey>(out var iconGeneratorOfReferenceWithShapeKey))
+                return new();
+            var gameObjects = avatarObjectReferences.ConvertAll(ao => ao.Get(this)).Where(go => go != null);
+            return iconGeneratorOfReferenceWithShapeKey.ShapeKeyValues.Select(x =>
+                (gameObject: x.reference.Get(this), x.shapeKeyName, x.value)).Where(x =>
             {
-                gameObject = referenceData.reference.Get(this),
-                shapeKeyName = shapeKeyValue.shapeKeyName,
-                value = shapeKeyValue.value
+                if (x.gameObject == null || !gameObjects.Contains(x.gameObject)) return false;
+                if (!x.gameObject.TryGetComponent<SkinnedMeshRenderer>(out var skinnedMeshRenderer)) return false;
+                var mesh = skinnedMeshRenderer.sharedMesh;
+                var shapeNames = Enumerable.Range(0, mesh.blendShapeCount)
+                    .Select(y => mesh.GetBlendShapeName(y))
+                    .ToList();
+                return shapeNames.Contains(x.shapeKeyName);
+            }).Select(x => new ShapeKeyData
+            {
+                gameObject = x.gameObject,
+                shapeKeyName = x.shapeKeyName,
+                value = x.value
             }).ToList();
+        }
     }
 }
