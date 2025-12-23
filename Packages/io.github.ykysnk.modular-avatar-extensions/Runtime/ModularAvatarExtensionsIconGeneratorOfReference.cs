@@ -9,10 +9,26 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     public class ModularAvatarExtensionsIconGeneratorOfReference : ModularAvatarExtensionsIconGeneratorBase
     {
         [SerializeField] private List<AvatarObjectReference> avatarObjectReferences = new();
+        [SerializeField] private List<ObjectReferenceData> objectReferenceDatas = new();
+
+        protected override void OnChange()
+        {
+            if (avatarObjectReferences.Count < 1) return;
+            objectReferenceDatas = avatarObjectReferences.Select(x => new ObjectReferenceData(x, new())).ToList();
+            avatarObjectReferences.Clear();
+        }
 
         protected override List<GameObject> GetAllObjects() =>
-            avatarObjectReferences.ConvertAll(ao => ao.Get(this)).Where(go => go != null).ToList();
+            objectReferenceDatas.ConvertAll(ao => ao.reference.Get(this)).Where(go => go != null).ToList();
 
-        protected override List<ShapeKeyData> GetAllShapeKeyDatas() => new();
+        protected override List<ShapeKeyData> GetAllShapeKeyDatas() =>
+            (from referenceData in objectReferenceDatas
+            from shapeKeyValue in referenceData.shapeKeyValues
+            select new ShapeKeyData
+            {
+                gameObject = referenceData.reference.Get(this),
+                shapeKeyName = shapeKeyValue.shapeKeyName,
+                value = shapeKeyValue.value
+            }).ToList();
     }
 }
