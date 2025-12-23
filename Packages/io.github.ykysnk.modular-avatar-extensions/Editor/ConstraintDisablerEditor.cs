@@ -1,7 +1,9 @@
 using System.Linq;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UIElements;
 #if MAEX_VRCSDK3_BASE
 using VRC.Dynamics;
 #endif
@@ -12,42 +14,39 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class ConstraintDisablerEditor : MaexEditor
     {
-        private const string ConstraintProp = "constraint";
-        private const string StopDisableProp = "stopDisable";
-        private SerializedProperty? _constraint;
-        private SerializedProperty? _stopDisable;
+        [SerializeField] private VisualTreeAsset? uxml;
 
-        protected override void OnEnable()
+        protected override VisualElement? CreateInnerInspectorGUI()
         {
-            base.OnEnable();
-            _constraint = serializedObject.FindProperty(ConstraintProp);
-            _stopDisable = serializedObject.FindProperty(StopDisableProp);
+            var tree = uxml!.CloneTree();
+            var constraint = tree.Q<ObjectField>("constraint");
+            constraint.style.display = DisplayStyle.None;
+
+            var constraintError = tree.Q<HelpBox>("constraintError");
+            constraintError.style.display = DisplayStyle.None;
+
+            EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
+            {
+                var component = (ModularAvatarExtensionsConstraintDisabler)target;
+                var isConstraint = component.constraint is
+#if MAEX_VRCSDK3_BASE
+                    VRCConstraintBase or
+#endif
+                    IConstraint;
+                var count = component.GetComponents<Component>().Count(c => c && c is
+#if MAEX_VRCSDK3_BASE
+                    VRCConstraintBase or
+#endif
+                    IConstraint);
+
+                constraint.style.display = count > 1 || !isConstraint ? DisplayStyle.Flex : DisplayStyle.None;
+                constraintError.style.display = count > 1 || !isConstraint ? DisplayStyle.Flex : DisplayStyle.None;
+            };
+            return tree;
         }
 
         protected override void OnInnerInspectorGUI()
         {
-            var component = (ModularAvatarExtensionsConstraintDisabler)target;
-            var isConstraint = component.constraint is
-#if MAEX_VRCSDK3_BASE
-                VRCConstraintBase or
-#endif
-                IConstraint;
-            var count = component.GetComponents<Component>().Count(c => c && c is
-#if MAEX_VRCSDK3_BASE
-                VRCConstraintBase or
-#endif
-                IConstraint);
-
-            if (count > 1)
-                EditorGUILayout.PropertyField(_constraint, "label.constraint_disabler.constraint".G());
-            EditorGUILayout.PropertyField(_stopDisable, "label.constraint_disabler.stop_disable".G());
-
-            if (!isConstraint)
-                EditorGUILayout.HelpBox("label.constraint_disabler.constraint_error".S(),
-                    MessageType.Error, true);
-
-            EditorGUILayout.HelpBox("label.constraint_disabler.info".S(), MessageType.Info,
-                true);
         }
     }
 }

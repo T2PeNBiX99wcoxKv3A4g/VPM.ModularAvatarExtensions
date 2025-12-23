@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <uie:ObjectField label="label.constraint_disabler.constraint" type="VRC.Dynamics.DynamicsComponent, VRC.Dynamics"
+                     name="constraint" binding-path="constraint"/>
+    <ui:HelpBox message-type="Error" name="constraintError" text="label.constraint_disabler.constraint_error"/>
+    <ui:Toggle label="label.constraint_disabler.stop_disable" binding-path="stopDisable" name="stopDisable"/>
+    <ui:HelpBox message-type="Info" name="info" text="label.constraint_disabler.info"/>
+</ui:UXML>
