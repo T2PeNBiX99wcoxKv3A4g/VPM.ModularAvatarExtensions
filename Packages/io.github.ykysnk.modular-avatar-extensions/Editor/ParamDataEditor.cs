@@ -16,13 +16,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
                     AssetDatabase.GUIDToAssetPath("980f6f042e1ace545bdddb4d9f7238e8"));
 
-            if (uxml == null)
-            {
-                var errorTree = new VisualElement();
-                errorTree.Add(new HelpBox("Failed to load uxml assets, please reimport the package to fix this issue.",
-                    HelpBoxMessageType.Error));
-                return errorTree;
-            }
+            if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
 
             var tree = uxml.CloneTree();
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
