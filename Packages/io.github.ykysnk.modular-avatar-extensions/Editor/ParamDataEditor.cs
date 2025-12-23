@@ -1,5 +1,6 @@
 #if MAEX_VRCSDK3_BASE
 using System;
+using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
