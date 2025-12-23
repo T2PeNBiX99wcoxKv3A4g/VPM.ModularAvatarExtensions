@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using io.github.ykysnk.ModularAvatarExtensions.ExtraData;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected override List<ShapeKeyData> GetAllShapeKeyDatas()
         {
-            if (!TryGetComponent<IconGeneratorOfReferenceWithShapeKey>(out var iconGeneratorOfReferenceWithShapeKey))
+            if (!TryGetComponent<ExtraDataWithShapeKey>(out var iconGeneratorOfReferenceWithShapeKey))
                 return new();
             var gameObjects = avatarObjectReferences.ConvertAll(ao => ao.Get(this)).Where(go => go != null);
             return iconGeneratorOfReferenceWithShapeKey.ShapeKeyValues.Select(x =>

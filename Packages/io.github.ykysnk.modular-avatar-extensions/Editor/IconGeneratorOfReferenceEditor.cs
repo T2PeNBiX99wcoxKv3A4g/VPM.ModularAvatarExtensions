@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Reflection;
+using io.github.ykysnk.ModularAvatarExtensions.ExtraData;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,7 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         protected override void OnCreateInnerInspectorGUI(TemplateContainer container)
         {
             var referenceExtraDatasAdd = container.Q<DropdownField>("referenceExtraDatasAdd");
-            var type = typeof(IReferenceExtraData);
+            var type = typeof(IExtraData);
             var types = type.Assembly.GetTypes().Where(t =>
                 t is { IsClass: true, IsAbstract: false, IsInterface: false } && type.IsAssignableFrom(t));
             var nameWithTypes = types.ToDictionary(x =>

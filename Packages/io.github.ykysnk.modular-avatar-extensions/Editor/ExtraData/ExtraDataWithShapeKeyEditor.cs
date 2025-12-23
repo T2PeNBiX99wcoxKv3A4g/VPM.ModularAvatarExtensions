@@ -1,12 +1,13 @@
+using io.github.ykysnk.ModularAvatarExtensions.ExtraData;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace io.github.ykysnk.ModularAvatarExtensions.Editor
+namespace io.github.ykysnk.ModularAvatarExtensions.Editor.ExtraData
 {
-    [CustomEditor(typeof(IconGeneratorOfReferenceWithShapeKey))]
+    [CustomEditor(typeof(ExtraDataWithShapeKey))]
     [CanEditMultipleObjects]
-    internal class IconGeneratorOfReferenceWithShapeKeyEditor : MaexEditor
+    internal class ExtraDataWithShapeKeyEditor : MaexEditor
     {
         [SerializeField] protected VisualTreeAsset? uxml;
 
