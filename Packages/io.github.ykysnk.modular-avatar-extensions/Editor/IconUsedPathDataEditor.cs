@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
     [CustomPropertyDrawer(typeof(IconUsedPathData))]
-    public class IconUsedPathDataEditor : PropertyDrawer
+    internal class IconUsedPathDataEditor : PropertyDrawer
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
