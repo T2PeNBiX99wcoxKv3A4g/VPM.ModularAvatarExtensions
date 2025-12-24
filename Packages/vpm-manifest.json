@@ -3,9 +3,6 @@
     "nadena.dev.modular-avatar": {
       "version": "1.14.3"
     },
-    "io.github.ykysnk.utils": {
-      "version": "0.0.1"
-    },
     "net.nekobako.editor-patcher": {
       "version": "1.0.0"
     },
@@ -44,6 +41,9 @@
     },
     "io.github.ykysnk.yky-toolkit": {
       "version": "0.1.0"
+    },
+    "io.github.ykysnk.utils": {
+      "version": "0.26.0"
     }
   },
   "locked": {
@@ -52,10 +52,6 @@
       "dependencies": {
         "nadena.dev.ndmf": ">=1.10.0 <2.0.0-a"
       }
-    },
-    "io.github.ykysnk.utils": {
-      "version": "0.25.2",
-      "dependencies": {}
     },
     "nadena.dev.ndmf": {
       "version": "1.10.1",
@@ -122,6 +118,10 @@
       "dependencies": {
         "io.github.ykysnk.utils": ">=0.23.3"
       }
+    },
+    "io.github.ykysnk.utils": {
+      "version": "0.26.2",
+      "dependencies": {}
     }
   }
 }
