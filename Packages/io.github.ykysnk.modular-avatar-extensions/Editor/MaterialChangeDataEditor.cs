@@ -72,7 +72,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 previewMaterialField.value = renderer.sharedMaterials[x.newValue.Key];
             });
 
-            EditorApplication.delayCall += OnDelayCall;
+            tree.schedule.Execute(OnDelayCall);
             return tree;
 
             void OnDelayCall()

@@ -16,16 +16,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var tree = uxml!.CloneTree();
             var errorBox = tree.Q<HelpBox>("errorMenuItem");
             errorBox.style.display = DisplayStyle.None;
-            EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
+            errorBox.schedule.Execute(SetDisplay).Every(100);
+            SetDisplay();
+            return tree;
+
+            void SetDisplay()
             {
-                var iconGeneratorTarget = (ModularAvatarExtensionsIconGeneratorTarget)target;
-                if (iconGeneratorTarget == null) return;
+                if (target is not ModularAvatarExtensionsIconGeneratorTarget iconGeneratorTarget) return;
                 errorBox.style.display = iconGeneratorTarget.TryGetComponent<ModularAvatarMenuItem>(out _)
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;
-            };
-
-            return tree;
+            }
         }
     }
 }

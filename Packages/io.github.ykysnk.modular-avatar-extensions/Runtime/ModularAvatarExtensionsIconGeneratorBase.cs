@@ -85,7 +85,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             Check();
         }
 
-
         protected virtual void Check()
         {
 #if UNITY_EDITOR

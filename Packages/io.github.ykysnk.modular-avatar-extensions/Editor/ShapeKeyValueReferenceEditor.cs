@@ -41,8 +41,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var reference = tree.Q<PropertyField>("reference");
             reference.label = "";
             reference.RegisterValueChangeCallback(_ => UpdateShapeDropdown());
-            EditorApplication.delayCall += UpdateShapeDropdown;
-            UpdateShapeDropdown();
+            reference.schedule.Execute(UpdateShapeDropdown);
 
             return tree;
 

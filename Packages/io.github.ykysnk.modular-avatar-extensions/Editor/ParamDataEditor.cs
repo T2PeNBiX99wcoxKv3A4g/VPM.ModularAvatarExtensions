@@ -43,7 +43,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             boolField.RegisterValueChangedCallback(evt => paramField.value = evt.newValue ? 1f : 0f);
 
             var enumField = tree.Q<EnumField>("paramType");
-            EditorApplication.delayCall += () => OnTypeChanged(true, enumField.value, enumField.value);
+            enumField.schedule.Execute(() => OnTypeChanged(true, enumField.value, enumField.value));
             enumField.RegisterValueChangedCallback(evt => OnTypeChanged(false, evt.previousValue, evt.newValue));
             return tree;
 

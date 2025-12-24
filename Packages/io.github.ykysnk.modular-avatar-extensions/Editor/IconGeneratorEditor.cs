@@ -12,10 +12,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         {
             var errorBox = container.Q<HelpBox>("errorObjectToggle");
             errorBox.style.display = DisplayStyle.None;
-            EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
+            errorBox.schedule.Execute(SetDisplay).Every(100);
+            return;
+
+            void SetDisplay()
             {
-                var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
-                if (iconGeneratorBase == null) return;
+                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
 
                 var isSubMenu = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out var menuItem) &&
                                 menuItem.PortableControl.Type == PortableControlType.SubMenu;
@@ -23,7 +25,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarObjectToggle>(out _) || isSubMenu
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;
-            };
+            }
         }
     }
 }

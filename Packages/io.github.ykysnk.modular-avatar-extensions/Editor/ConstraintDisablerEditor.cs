@@ -25,9 +25,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var constraintError = tree.Q<HelpBox>("constraintError");
             constraintError.style.display = DisplayStyle.None;
 
-            EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
+            tree.schedule.Execute(SetDisplay).Every(100);
+            SetDisplay();
+            return tree;
+
+            void SetDisplay()
             {
-                var component = (ModularAvatarExtensionsConstraintDisabler)target;
+                if (target is not ModularAvatarExtensionsConstraintDisabler component) return;
                 var isConstraint = component.constraint is
 #if MAEX_VRCSDK3_BASE
                     VRCConstraintBase or
@@ -41,8 +45,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                 constraint.style.display = count > 1 || !isConstraint ? DisplayStyle.Flex : DisplayStyle.None;
                 constraintError.style.display = count > 1 || !isConstraint ? DisplayStyle.Flex : DisplayStyle.None;
-            };
-            return tree;
+            }
         }
     }
 }

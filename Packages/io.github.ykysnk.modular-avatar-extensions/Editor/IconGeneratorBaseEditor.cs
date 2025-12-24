@@ -17,20 +17,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var tree = uxml!.CloneTree();
             var errorBox = tree.Q<HelpBox>("errorMenuItem");
             errorBox.style.display = DisplayStyle.None;
-            EditorApplication.hierarchyWindowItemOnGUI += (_, _) =>
-            {
-                var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
-                if (iconGeneratorBase == null) return;
-                errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out _)
-                    ? DisplayStyle.None
-                    : DisplayStyle.Flex;
-            };
+            errorBox.schedule.Execute(SetDisplay).Every(100);
+            SetDisplay();
 
             var button = tree.Q<Button>("generateIcon");
             button.clicked += () =>
             {
-                var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
-                if (iconGeneratorBase == null) return;
+                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
                 iconGeneratorBase.ForceGenerateIcon();
             };
 
@@ -41,7 +34,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             {
                 if (evt.newValue is not Preset preset) return;
                 if (preset != null && preset.GetTargetFullTypeName() != typeof(TextureImporter).FullName) return;
-                var iconGeneratorBase = (ModularAvatarExtensionsIconGeneratorBase)target;
+                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
                 var newPresetPath = AssetDatabase.GetAssetPath(preset);
                 var newPresetGuid = AssetDatabase.AssetPathToGUID(newPresetPath);
                 var oldPresetGuid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
@@ -59,6 +52,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             OnCreateInnerInspectorGUI(tree);
             return tree;
+
+            void SetDisplay()
+            {
+                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out _)
+                    ? DisplayStyle.None
+                    : DisplayStyle.Flex;
+            }
         }
 
         [PublicAPI]
