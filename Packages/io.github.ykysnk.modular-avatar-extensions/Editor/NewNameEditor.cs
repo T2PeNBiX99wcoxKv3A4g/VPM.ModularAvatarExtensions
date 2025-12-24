@@ -1,4 +1,7 @@
 using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -6,23 +9,28 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class NewNameEditor : MaexEditor
     {
-        private const string NewNameProp = "newName";
-        private const string ChangeOnInspectorProp = "changeOnInspector";
+        [SerializeField] private VisualTreeAsset? uxml;
 
-        private SerializedProperty? _changeOnInspector;
-        private SerializedProperty? _newName;
-
-        protected override void OnEnable()
+        protected override VisualElement CreateInnerInspectorGUI()
         {
-            _newName = serializedObject.FindProperty(NewNameProp);
-            _changeOnInspector = serializedObject.FindProperty(ChangeOnInspectorProp);
-        }
+            var tree = uxml!.CloneTree();
+            var newNameField = tree.Q<TextField>("newName");
+            var oldNameObjectField = tree.Q<ObjectField>("oldNameObject");
+            oldNameObjectField.SetEnabled(false);
+            var newNameObjectField = tree.Q<ObjectField>("newNameObject");
+            newNameObjectField.SetEnabled(false);
+            tree.schedule.Execute(SetName).Every(100);
+            SetName();
+            return tree;
 
-        protected override void OnInnerInspectorGUI()
-        {
-            EditorGUILayout.PropertyField(_newName, "label.new_name.new_name".G());
-            EditorGUILayout.PropertyField(_changeOnInspector, "label.new_name.change_on_inspector".G());
-            EditorGUILayout.HelpBox("label.new_name.info".Sf(_newName?.stringValue), MessageType.Info, true);
+            void SetName()
+            {
+                if (target is not ModularAvatarExtensionsNewName newName) return;
+                oldNameObjectField.value = newName.gameObject;
+                newNameObjectField.value = newName.gameObject;
+                var newNameObjectFieldLabel = newNameObjectField.Q<Label>();
+                newNameObjectFieldLabel.text = newNameField.value;
+            }
         }
     }
 }

@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement
+            style="flex-grow: 1; flex-direction: row; margin-top: 2px; margin-right: 4px; margin-bottom: 2px; margin-left: 4px;">
+        <ui:Label tabindex="-1" text="label.new_name.new_name" parse-escape-sequences="true"
+                  display-tooltip-when-elided="true"/>
+        <ui:Toggle name="changeOnInspector" binding-path="changeOnInspector" text="label.new_name.change_on_inspector"/>
+    </ui:VisualElement>
+    <ui:TextField picking-mode="Ignore" value="filler text" binding-path="newName" name="newName"/>
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+        <uie:ObjectField name="oldNameObject" style="width: 45%;"/>
+        <ui:Label tabindex="-1" text="→" parse-escape-sequences="true" display-tooltip-when-elided="true"
+                  style="align-self: stretch; -unity-text-align: middle-center; justify-content: space-around;"/>
+        <uie:ObjectField name="newNameObject" style="width: 45%;"/>
+    </ui:VisualElement>
+</ui:UXML>
