@@ -2,8 +2,10 @@
     <ui:TextField picking-mode="Ignore" label="label.icon_generator_base_report_window.icon_name" value="filler text"
                   binding-path="iconName" name="iconName" readonly="true" style="flex-direction: column;"/>
     <uie:ObjectField name="iconNameObject"/>
-    <ui:ListView name="usedPaths" binding-path="usedPaths" virtualization-method="DynamicHeight" show-border="true"
-                 selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
-                 show-bound-collection-size="false" reorder-mode="Animated"
-                 style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;"/>
+    <ui:Foldout value="false">
+        <ui:ListView name="usedPaths" binding-path="usedPaths" virtualization-method="DynamicHeight" show-border="true"
+                     selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
+                     show-bound-collection-size="false" reorder-mode="Animated"
+                     style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;"/>
+    </ui:Foldout>
 </ui:UXML>
