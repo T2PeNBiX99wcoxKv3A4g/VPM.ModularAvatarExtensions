@@ -1,4 +1,4 @@
-using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
@@ -37,8 +37,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual void SetPath()
         {
 #if UNITY_EDITOR
-            var isInPrefab = Utils.IsInPrefab();
-            if (isInPrefab || reference == null) return;
+            if (!gameObject.IsSceneObject() || reference == null) return;
             if (!component) return;
             var proxy = new RootTransformProxy(component!, RootTransformFieldName);
             var obj = reference.Get(this);

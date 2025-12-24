@@ -1,7 +1,7 @@
 #if MAEX_VRCSDK3_BASE
 using System.Collections.Generic;
 using System.Linq;
-using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
 using VRC.Dynamics;
@@ -24,7 +24,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected override void SetPath()
         {
             base.SetPath();
-            if (component == null || Utils.IsInPrefab()) return;
+            if (component == null || !gameObject.IsSceneObject()) return;
             if (setIgnoreTransforms)
             {
                 if (ignoreTransformsReferences is { Count: > 0 })

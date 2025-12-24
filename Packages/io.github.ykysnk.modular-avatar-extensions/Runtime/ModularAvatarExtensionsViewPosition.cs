@@ -1,5 +1,6 @@
 #if MAEX_VRCSDK3_BASE
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using nadena.dev.ndmf.runtime;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void Update()
         {
-            if (!gameObject.scene.IsValid() || Utils.IsInPrefab() || Utils.IsPlaying()) return;
+            if (!gameObject.IsSceneObject() || Utils.IsPlaying) return;
             if (avatarDescriptor == null) return;
             var oldPosition = transform.position;
             var newPosition = oldPosition;

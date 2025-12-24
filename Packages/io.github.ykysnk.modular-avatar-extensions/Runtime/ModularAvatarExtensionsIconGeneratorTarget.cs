@@ -1,5 +1,5 @@
 using System.Collections;
-using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -33,7 +33,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             while (enabled && gameObject.activeSelf)
             {
-                if (gameObject.scene.IsValid() && !Utils.IsInPrefab())
+                if (gameObject.IsSceneObject())
                     Check();
                 yield return new WaitForSeconds(2f);
             }
@@ -41,7 +41,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected override void OnChange()
         {
-            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
+            if (!gameObject.activeSelf || !gameObject.IsSceneObject()) return;
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
         }
     }

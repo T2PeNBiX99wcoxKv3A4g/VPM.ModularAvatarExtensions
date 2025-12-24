@@ -1,4 +1,4 @@
-using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void Update()
         {
-            if (Utils.IsInPrefab() || !isLock) return;
+            if (!gameObject.IsSceneObject() || !isLock) return;
 
             var oldPosition = transform.localPosition;
             var newPosition = oldPosition;

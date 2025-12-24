@@ -1,4 +1,4 @@
-using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -14,7 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             if (string.IsNullOrEmpty(newName))
                 newName = gameObject.name;
-            if (gameObject.name == newName || !changeOnInspector || Utils.IsInPrefab()) return;
+            if (gameObject.name == newName || !changeOnInspector || !gameObject.IsSceneObject()) return;
             gameObject.name = newName!;
         }
     }

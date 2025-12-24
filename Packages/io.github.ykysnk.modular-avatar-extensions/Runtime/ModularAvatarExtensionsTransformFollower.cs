@@ -1,4 +1,3 @@
-using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using nadena.dev.modular_avatar.core;
@@ -25,7 +24,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void Update()
         {
-            if (Utils.IsInPrefab() || !isLock || string.IsNullOrEmpty(reference?.referencePath)) return;
+            if (!gameObject.IsSceneObject() || !isLock || string.IsNullOrEmpty(reference?.referencePath)) return;
 
             var obj = reference?.Get(this);
             if (obj == null) return;

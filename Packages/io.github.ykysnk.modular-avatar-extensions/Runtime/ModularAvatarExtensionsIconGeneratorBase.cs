@@ -72,7 +72,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             while (enabled && gameObject.activeSelf)
             {
-                if (gameObject.scene.IsValid() && !Utils.IsInPrefab())
+                if (gameObject.IsSceneObject())
                     Check();
                 yield return new WaitForSeconds(2f);
             }
@@ -81,6 +81,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void OnProjectChanged()
         {
+#if UNITY_EDITOR
+            if (!gameObject.IsSceneObject() || Utils.IsPlaying) return;
+#endif
             OnChange();
             Check();
         }
@@ -116,7 +119,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
 #if UNITY_EDITOR
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
-            if (!gameObject.activeSelf || !gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
+            if (!gameObject.activeSelf || !gameObject.IsSceneObject()) return;
             objects = GetAllObjects().Distinct().ToList();
             objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
                 HashUtils.HashType.SHA1);
@@ -129,7 +132,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
 
             EditorApplication.projectChanged -= OnProjectChanged;
-            if (!gameObject.scene.IsValid() || Utils.IsInPrefab()) return;
+            if (!gameObject.IsSceneObject()) return;
             EditorApplication.projectChanged += OnProjectChanged;
 #endif
         }
@@ -139,8 +142,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #if UNITY_EDITOR
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
-            return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
-                   gameObject.scene.IsValid() && !Utils.IsInPrefab();
+            return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) && gameObject.IsSceneObject();
 #else
             return false;
 #endif
