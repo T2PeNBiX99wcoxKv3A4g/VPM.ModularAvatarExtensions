@@ -33,7 +33,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected override void OnChange()
         {
             var rootObj = RuntimeUtil.FindAvatarInParents(transform);
-            rootObj?.TryGetComponent<VRC_AvatarDescriptor>(out avatarDescriptor);
+            if (!rootObj?.TryGetComponent<VRC_AvatarDescriptor>(out avatarDescriptor) ?? false)
+                avatarDescriptor = null;
         }
     }
 }
