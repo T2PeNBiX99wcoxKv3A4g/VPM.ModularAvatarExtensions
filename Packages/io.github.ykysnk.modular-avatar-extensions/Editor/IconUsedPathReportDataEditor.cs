@@ -1,6 +1,8 @@
+using System.IO;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
@@ -19,6 +21,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var tree = uxml.CloneTree();
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
             tree.Bind(property.serializedObject);
+
+            var iconNameField = tree.Q<TextField>("iconName");
+            var iconNameObjectField = tree.Q<ObjectField>("iconNameObject");
+            iconNameObjectField.SetEnabled(false);
+            iconNameObjectField.schedule.Execute(() =>
+            {
+                var iconPath = Path.Combine(ModularAvatarExtensionsIconGeneratorBase.FolderPath,
+                    $"{iconNameField.value}.png");
+                var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath);
+                iconNameObjectField.value = icon;
+            });
             return tree;
         }
     }
