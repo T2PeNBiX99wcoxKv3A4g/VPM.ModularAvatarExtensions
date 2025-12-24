@@ -1,4 +1,5 @@
 using System.Collections;
+using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
@@ -20,20 +21,22 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void Check()
         {
+#if UNITY_EDITOR
             if (iconGenerator == null || modularAvatarMenuItem == null) return;
             if (iconGenerator.IconTexture == null ||
                 modularAvatarMenuItem.PortableControl.Icon == iconGenerator.IconTexture) return;
-#if UNITY_EDITOR
+
             Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
-#endif
             modularAvatarMenuItem.PortableControl.Icon = iconGenerator.IconTexture;
+            EditorUtility.SetDirty(modularAvatarMenuItem);
+#endif
         }
 
         private IEnumerator CheckLoop()
         {
             while (enabled && gameObject.activeSelf)
             {
-                if (gameObject.IsSceneObject())
+                if (gameObject.IsSceneObject() && !Utils.IsPlaying)
                     Check();
                 yield return new WaitForSeconds(2f);
             }
