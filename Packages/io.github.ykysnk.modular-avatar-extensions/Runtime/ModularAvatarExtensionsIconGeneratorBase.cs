@@ -148,10 +148,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public void ForceGenerateIcon()
         {
-            Utils.Log(nameof(ForceGenerateIcon), $"Force generating icon: {IsFirst}");
             if (!IsFirst) return;
             OnChange();
-            Utils.Log(nameof(ForceGenerateIcon), $"Force generating icon 2: {IsFirst}");
             shouldGenerateIcon = true;
             Check();
         }
