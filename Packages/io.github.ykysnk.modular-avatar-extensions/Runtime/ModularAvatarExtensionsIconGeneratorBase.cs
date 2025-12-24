@@ -72,21 +72,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             while (enabled && gameObject.activeSelf)
             {
-                if (gameObject.IsSceneObject())
+                if (gameObject.IsSceneObject() && !Utils.IsPlaying)
                     Check();
                 yield return new WaitForSeconds(2f);
             }
         }
 #endif
-
-        private void OnProjectChanged()
-        {
-#if UNITY_EDITOR
-            if (!gameObject.IsSceneObject() || Utils.IsPlaying) return;
-#endif
-            OnChange();
-            Check();
-        }
 
         protected virtual void Check()
         {
@@ -130,10 +121,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
-
-            EditorApplication.projectChanged -= OnProjectChanged;
-            if (!gameObject.IsSceneObject()) return;
-            EditorApplication.projectChanged += OnProjectChanged;
 #endif
         }
 
