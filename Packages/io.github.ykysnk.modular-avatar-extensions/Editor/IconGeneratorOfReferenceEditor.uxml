@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.modular-avatar-extensions/Editor/IconGeneratorBaseEditor.uss?fileID=7433441132597879392&amp;guid=2537803ec88150a4fb48cccbd06ef07b&amp;type=3#IconGeneratorBaseEditor"/>
     <ui:HelpBox name="errorMenuItem" message-type="Error" text="label.icon_generator.menu_item_not_found"/>
+    <ui:HelpBox message-type="Info" text="label.icon_generator.non_first" name="nonFirstInfo"/>
     <ui:ListView binding-path="avatarObjectReferences" virtualization-method="DynamicHeight"
                  name="avatarObjectReferences" show-border="true" reorderable="true" show-foldout-header="true"
                  show-add-remove-footer="true" show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"

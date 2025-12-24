@@ -60,9 +60,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public string IconName => iconName;
 
-        protected bool IsFirst => GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First() == this;
+        public bool IsFirst => GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First() == this;
 
-        protected ModularAvatarExtensionsIconGeneratorBase First =>
+        public ModularAvatarExtensionsIconGeneratorBase First =>
             GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First();
 
 #if UNITY_EDITOR

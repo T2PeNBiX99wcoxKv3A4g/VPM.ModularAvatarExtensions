@@ -369,3 +369,6 @@ MonoBehaviour:
   - key: label.move_to_root.new_path
     translate: Path change to
     tooltip: 
+  - key: label.icon_generator.non_first
+    translate: This component is not the first component, icon generation is disabled.
+    tooltip: 

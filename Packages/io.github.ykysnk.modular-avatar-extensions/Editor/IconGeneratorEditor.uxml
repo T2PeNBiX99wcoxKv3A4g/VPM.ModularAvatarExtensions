@@ -2,6 +2,7 @@
     <Style src="project://database/Packages/io.github.ykysnk.modular-avatar-extensions/Editor/IconGeneratorBaseEditor.uss?fileID=7433441132597879392&amp;guid=2537803ec88150a4fb48cccbd06ef07b&amp;type=3#IconGeneratorBaseEditor"/>
     <ui:HelpBox name="errorMenuItem" message-type="Error" text="label.icon_generator.menu_item_not_found"/>
     <ui:HelpBox name="errorObjectToggle" message-type="Error" text="label.icon_generator.object_toggle_not_found"/>
+    <ui:HelpBox message-type="Info" text="label.icon_generator.non_first" name="nonFirstInfo"/>
     <ui:VisualElement style="flex-direction: row;">
         <ui:VisualElement style="min-width: 80%; align-self: stretch; padding-right: 6px;">
             <uie:ObjectField binding-path="iconTexture" name="iconTexture"

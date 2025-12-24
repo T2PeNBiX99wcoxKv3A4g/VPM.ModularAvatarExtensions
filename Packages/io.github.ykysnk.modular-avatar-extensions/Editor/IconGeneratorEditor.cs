@@ -14,6 +14,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         protected override void OnCreateInnerInspectorGUI(TemplateContainer container)
         {
+            var generateIconButton = container.Q<Button>("generateIcon");
+            var nonFirstInfo = container.Q<HelpBox>("nonFirstInfo");
+            nonFirstInfo.style.display = DisplayStyle.None;
+
             var errorBox = container.Q<HelpBox>("errorObjectToggle");
             errorBox.style.display = DisplayStyle.None;
             errorBox.schedule.Execute(SetDisplay).Every(100);
@@ -56,6 +60,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarObjectToggle>(out _) || isSubMenu
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;
+
+                generateIconButton.SetEnabled(iconGeneratorBase.IsFirst);
+                nonFirstInfo.style.display = iconGeneratorBase.IsFirst ? DisplayStyle.None : DisplayStyle.Flex;
             }
         }
     }

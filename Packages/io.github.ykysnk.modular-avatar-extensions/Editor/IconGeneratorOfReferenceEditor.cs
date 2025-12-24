@@ -13,6 +13,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         protected override void OnCreateInnerInspectorGUI(TemplateContainer container)
         {
+            var generateIconButton = container.Q<Button>("generateIcon");
+            var nonFirstInfo = container.Q<HelpBox>("nonFirstInfo");
+            nonFirstInfo.style.display = DisplayStyle.None;
+            nonFirstInfo.schedule.Execute(SetDisplay).Every(100);
+
             var referenceExtraDatasAdd = container.Q<DropdownField>("referenceExtraDatasAdd");
             var type = typeof(IExtraData);
             var types = type.Assembly.GetTypes().Where(t =>
@@ -39,6 +44,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                 referenceExtraDatasAdd.value = "";
             });
+            return;
+
+            void SetDisplay()
+            {
+                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                generateIconButton.SetEnabled(iconGeneratorBase.IsFirst);
+                nonFirstInfo.style.display = iconGeneratorBase.IsFirst ? DisplayStyle.None : DisplayStyle.Flex;
+            }
         }
     }
 }
