@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <ui:Toggle label="label.world_scale.editor_only" binding-path="editorOnly" name="editorOnly"/>
+    <ui:HelpBox message-type="Info" text="label.world_scale.info"/>
+</ui:UXML>

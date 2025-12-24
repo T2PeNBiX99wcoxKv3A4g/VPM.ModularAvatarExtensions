@@ -1,5 +1,7 @@
 #if MAEX_VRCSDK3_BASE
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -7,23 +9,21 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class ViewPositionEditor : MaexEditor
     {
-        private const string IsLockProp = "isLock";
+        [SerializeField] private VisualTreeAsset? uxml;
 
-        private SerializedProperty? _isLock;
-
-        protected override void OnEnable()
+        protected override VisualElement? CreateInnerInspectorGUI()
         {
-            _isLock = serializedObject.FindProperty(IsLockProp);
-        }
+            var tree = uxml!.CloneTree();
+            var errorInfo = tree.Q<HelpBox>("errorInfo");
+            errorInfo.schedule.Execute(SetDisplay).Every(100);
+            SetDisplay();
+            return tree;
 
-        protected override void OnInnerInspectorGUI()
-        {
-            var viewPosition = (ModularAvatarExtensionsViewPosition)target;
-            if (viewPosition.avatarDescriptor == null)
-                EditorGUILayout.HelpBox("label.view_position.info".S(), MessageType.Error, true);
-
-            EditorGUILayout.PropertyField(_isLock, "label.view_position.is_lock".G());
-            EditorGUILayout.HelpBox("label.view_position.info2".S(), MessageType.Info, true);
+            void SetDisplay()
+            {
+                if (target is not ModularAvatarExtensionsViewPosition viewPosition) return;
+                errorInfo.style.display = viewPosition.avatarDescriptor == null ? DisplayStyle.Flex : DisplayStyle.None;
+            }
         }
     }
 #endif

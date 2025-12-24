@@ -1,4 +1,6 @@
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -6,9 +8,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class TurnOnInBuildEditor : MaexEditor
     {
-        protected override void OnInnerInspectorGUI()
+        [SerializeField] private VisualTreeAsset? uxml;
+
+        protected override VisualElement? CreateInnerInspectorGUI()
         {
-            EditorGUILayout.HelpBox("label.turn_on_in_build.info".S(), MessageType.Info, true);
+            var tree = uxml!.CloneTree();
+            return tree;
         }
     }
 }

@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <ui:HelpBox message-type="Info" text="label.turn_off_in_build.info"/>
+</ui:UXML>
