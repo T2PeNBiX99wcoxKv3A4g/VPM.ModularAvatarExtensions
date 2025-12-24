@@ -1,5 +1,7 @@
 #if MAEX_D4RK_AVATAR_OPTIMIZER
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -7,9 +9,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class D4RkAvatarOptimizerExcludeEditor : MaexEditor
     {
-        protected override void OnInnerInspectorGUI()
+        [SerializeField] private VisualTreeAsset? uxml;
+
+        protected override VisualElement? CreateInnerInspectorGUI()
         {
-            EditorGUILayout.HelpBox("label.d4rk_avatar_optimizer_exclude.info".S(), MessageType.Info, true);
+            var tree = uxml!.CloneTree();
+            return tree;
         }
     }
 #endif

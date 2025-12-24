@@ -1,4 +1,6 @@
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -6,9 +8,21 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class MoveToRootEditor : MaexEditor
     {
-        protected override void OnInnerInspectorGUI()
+        [SerializeField] private VisualTreeAsset? uxml;
+
+        protected override VisualElement? CreateInnerInspectorGUI()
         {
-            EditorGUILayout.HelpBox("label.move_to_root.info".S(), MessageType.Info, true);
+            var tree = uxml!.CloneTree();
+            var newPath = tree.Q<TextField>("newPath");
+            newPath.schedule.Execute(SetNewPath).Every(100);
+            SetNewPath();
+            return tree;
+
+            void SetNewPath()
+            {
+                if (target is not ModularAvatarExtensionsMoveToRoot moveToRoot) return;
+                newPath.value = $"{moveToRoot.transform.root.name}/{moveToRoot.name}";
+            }
         }
     }
 }

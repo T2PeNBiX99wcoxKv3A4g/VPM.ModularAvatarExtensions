@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/io.github.ykysnk.modular-avatar-extensions/Editor/MoveToRootEditor.uss?fileID=7433441132597879392&amp;guid=5f9868f35b0ed70438cb8245b731a3b7&amp;type=3#MoveToRootEditor"/>
+    <ui:TextField picking-mode="Ignore" label="label.move_to_root.new_path" readonly="true" name="newPath"
+                  class="custom_label"/>
+</ui:UXML>

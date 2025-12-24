@@ -365,3 +365,6 @@ MonoBehaviour:
   - key: label.shape_key_value_reference.reference
     translate: "\u53C2\u7167"
     tooltip: 
+  - key: label.move_to_root.new_path
+    translate: "\u30D1\u30B9\u5909\u66F4\u5148"
+    tooltip: 

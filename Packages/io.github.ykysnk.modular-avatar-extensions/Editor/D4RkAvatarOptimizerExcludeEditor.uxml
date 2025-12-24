@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:HelpBox message-type="Info" text="label.d4rk_avatar_optimizer_exclude.info"/>
+</ui:UXML>

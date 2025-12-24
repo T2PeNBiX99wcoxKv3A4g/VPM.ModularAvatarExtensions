@@ -1,4 +1,6 @@
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -6,9 +8,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class EditorOnlyEditor : MaexEditor
     {
-        protected override void OnInnerInspectorGUI()
+        [SerializeField] private VisualTreeAsset? uxml;
+
+        protected override VisualElement? CreateInnerInspectorGUI()
         {
-            EditorGUILayout.HelpBox("label.editor_only.info".S(), MessageType.Info, true);
+            var tree = uxml!.CloneTree();
+            return tree;
         }
     }
 }

@@ -1,4 +1,7 @@
 using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
@@ -7,11 +10,34 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     internal class MoveToRootOfReferenceEditor : MaexEditor
     {
         private const string ReferenceProp = "reference";
+        [SerializeField] private VisualTreeAsset? uxml;
         private SerializedProperty? _reference;
 
         protected override void OnEnable()
         {
             _reference = serializedObject.FindProperty(ReferenceProp);
+        }
+
+        protected override VisualElement? CreateInnerInspectorGUI()
+        {
+            var tree = uxml!.CloneTree();
+            var newPath = tree.Q<TextField>("newPath");
+            var reference = tree.Q<PropertyField>("reference");
+            reference.label = "";
+            reference.RegisterValueChangeCallback(_ => SetNewPath());
+            newPath.schedule.Execute(SetNewPath).Every(100);
+            SetNewPath();
+            return tree;
+
+            void SetNewPath()
+            {
+                if (target is not ModularAvatarExtensionsMoveToRootOfReference moveToRootOfReference) return;
+                var setName = moveToRootOfReference.reference?.Get(moveToRootOfReference)?.name;
+                if (string.IsNullOrEmpty(setName))
+                    setName = "None";
+
+                newPath.value = $"{moveToRootOfReference.transform.root.name}/{setName}";
+            }
         }
 
         protected override void OnInnerInspectorGUI()

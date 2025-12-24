@@ -366,3 +366,6 @@ MonoBehaviour:
   - key: label.shape_key_value_reference.reference
     translate: Reference
     tooltip: 
+  - key: label.move_to_root.new_path
+    translate: Path change to
+    tooltip: 

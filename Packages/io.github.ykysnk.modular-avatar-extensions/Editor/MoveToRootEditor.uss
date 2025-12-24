@@ -1,0 +1,5 @@
+.custom_label .unity-base-field__label {
+    margin-right: 2px;
+    min-width: 0;
+    flex-basis: auto;
+}
