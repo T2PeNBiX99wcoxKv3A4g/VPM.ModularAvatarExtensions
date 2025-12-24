@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <uie:PropertyField binding-path="reference" name="reference" type="UnityEngine.Transform, UnityEngine.CoreModule"/>
-    <ui:ListView binding-path="shapeKeyValues" view-data-key="shapeKeyValues" selection-type="Multiple"
-                 show-alternating-row-backgrounds="ContentOnly" reorderable="true" reorder-mode="Animated"
-                 show-add-remove-footer="true" virtualization-method="DynamicHeight" show-border="true"
-                 show-bound-collection-size="true" name="shapeKeyValues" show-foldout-header="true"
-                 header-title="label.object_reference_data.shape_key_values"
-                 style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;"/>
-</ui:UXML>
