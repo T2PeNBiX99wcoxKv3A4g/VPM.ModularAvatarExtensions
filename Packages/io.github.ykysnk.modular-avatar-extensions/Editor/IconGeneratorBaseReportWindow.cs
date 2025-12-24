@@ -24,7 +24,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             rootVisualElement.Add(tree);
         }
 
-        [MenuItem("Assets/Modular Avatar EX/Find icon used path")]
+        [MenuItem("Assets/Modular Avatar EX/Find icons used path", false, Util.ToolsMenuItemPriority)]
         private static void CreateReport(MenuCommand menuCommand)
         {
             var needFindIds = (from guid in Selection.assetGUIDs
@@ -37,6 +37,20 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var window = GetWindow<IconGeneratorBaseReportWindow>("label.icon_generator_base_report_window.report".S());
             window.reportData = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>()
                 .Where(x => needFindIds.Contains(x.IconName)).GroupBy(x => x.IconName).ToDictionary(x => x.Key,
+                    x => x.Select(y => new IconUsedPathData(y?.FullName() ?? "", y?.gameObject)).ToList())
+                .Select(x => new IconUsedPathReportData(x.Key, x.Value)).ToList();
+        }
+
+        [MenuItem("Tools/Modular Avatar EX/All icons used path", false, Util.ToolsMenuItemPriority)]
+        private static void CreateAllIconReport(MenuCommand menuCommand)
+        {
+            if (!Directory.Exists(ModularAvatarExtensionsIconGeneratorBase.FolderPath)) return;
+            var allIds = Directory.GetFiles(ModularAvatarExtensionsIconGeneratorBase.FolderPath)
+                .Where(x => Path.GetExtension(x) == ".png").Select(Path.GetFileNameWithoutExtension).ToList();
+
+            var window = GetWindow<IconGeneratorBaseReportWindow>("label.icon_generator_base_report_window.report".S());
+            window.reportData = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>()
+                .GroupBy(x => x.IconName).ToDictionary(x => x.Key,
                     x => x.Select(y => new IconUsedPathData(y?.FullName() ?? "", y?.gameObject)).ToList())
                 .Select(x => new IconUsedPathReportData(x.Key, x.Value)).ToList();
         }

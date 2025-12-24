@@ -15,6 +15,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             "Packages/io.github.ykysnk.modular-avatar-extensions/Runtime/Icons/Icon_MAEX_Script.png";
 
         internal const string SystemName = "Modular Avatar EX";
+        internal const int ToolsMenuItemPriority = 101;
 
         static Util() => EditorApplication.update += TryRun;
 

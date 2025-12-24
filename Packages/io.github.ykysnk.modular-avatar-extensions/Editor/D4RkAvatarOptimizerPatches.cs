@@ -17,7 +17,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         private const string CacheGetAllExcludedTransformsName = "cache_GetAllExcludedTransforms";
 
         [InitializeOnLoadMethod]
-        [MenuItem("Tools/Modular Avatar EX/ReInitialize D4Rk Avatar Optimizer Patches")]
+        [MenuItem("Tools/Modular Avatar EX/ReInitialize D4Rk Avatar Optimizer Patches", false,
+            Util.ToolsMenuItemPriority)]
         private static void Initialize()
         {
             var harmony = new Harmony(PatchId);
