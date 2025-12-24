@@ -30,9 +30,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 if (!nameWithTypes.TryGetValue(evt.newValue, out var addType)) return;
                 foreach (var component in targets)
                 {
-                    if (component is not ModularAvatarExtensionsIconGeneratorOfReference iconGeneratorOfReference)
+                    if (component is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase)
                         continue;
-                    var obj = iconGeneratorOfReference.gameObject;
+                    var obj = iconGeneratorBase.gameObject;
                     Undo.AddComponent(obj, addType);
                     EditorUtility.SetDirty(obj);
                 }

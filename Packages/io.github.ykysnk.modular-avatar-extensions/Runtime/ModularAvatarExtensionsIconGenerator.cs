@@ -8,6 +8,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [AddComponentMenu("Modular Avatar EX/MAEX Icon Generator")]
+    [DisallowMultipleComponent]
     public class ModularAvatarExtensionsIconGenerator : ModularAvatarExtensionsIconGeneratorBase
     {
         [SerializeField] private ModularAvatarObjectToggle? modularAvatarObjectToggle;

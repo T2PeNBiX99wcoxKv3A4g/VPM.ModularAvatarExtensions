@@ -21,7 +21,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [PublicAPI]
     [ExecuteInEditMode]
-    [DisallowMultipleComponent]
     public abstract class ModularAvatarExtensionsIconGeneratorBase : AvatarMaexComponent
     {
         public const string FolderPath = "Assets/ModularAvatarExtensionsIconGenerator";
@@ -61,6 +60,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public string IconName => iconName;
 
+        protected bool IsFirst => GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First() == this;
+
+        protected ModularAvatarExtensionsIconGeneratorBase First =>
+            GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First();
+
 #if UNITY_EDITOR
         private void OnEnable() => StartCoroutine(CheckLoop());
 #endif
@@ -90,6 +94,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             else
                 shouldGenerateIcon = ShouldGenerateIcon();
 
+            if (!IsFirst)
+            {
+                iconTexture = First.iconTexture;
+                iconName = First.iconName;
+                return;
+            }
+
             if (modularAvatarMenuItem == null || iconTexture == null ||
                 iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
 
@@ -110,17 +121,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
 #if UNITY_EDITOR
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
-            if (!gameObject.activeSelf || !gameObject.IsSceneObject()) return;
-            objects = GetAllObjects().Distinct().ToList();
+            var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
+            preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
+            if (!gameObject.activeSelf || !gameObject.IsSceneObject() || !IsFirst) return;
+            objects = GetAllObjectsFromAllGenerator().Distinct().ToList();
             objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
                 HashUtils.HashType.SHA1);
-            shapeKeyDatas = GetAllShapeKeyDatas().Distinct().ToList();
+            shapeKeyDatas = GetAllShapeKeyDatasFromAllGenerator().Distinct().ToList();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
             shouldGenerateIcon = ShouldGenerateIcon();
-
-            var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
-            preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
 #endif
         }
 
@@ -129,7 +139,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #if UNITY_EDITOR
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
-            return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) && gameObject.IsSceneObject();
+            return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
+                   gameObject.IsSceneObject() && IsFirst;
 #else
             return false;
 #endif
@@ -137,7 +148,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public void ForceGenerateIcon()
         {
+            Utils.Log(nameof(ForceGenerateIcon), $"Force generating icon: {IsFirst}");
+            if (!IsFirst) return;
             OnChange();
+            Utils.Log(nameof(ForceGenerateIcon), $"Force generating icon 2: {IsFirst}");
             shouldGenerateIcon = true;
             Check();
         }
@@ -289,6 +303,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected abstract List<ShapeKeyData> GetAllShapeKeyDatas();
 
+        protected IEnumerable<GameObject> GetAllObjectsFromAllGenerator() =>
+            GetComponents<ModularAvatarExtensionsIconGeneratorBase>().SelectMany(x => x.GetAllObjects());
+
+        protected IEnumerable<ShapeKeyData> GetAllShapeKeyDatasFromAllGenerator() =>
+            GetComponents<ModularAvatarExtensionsIconGeneratorBase>().SelectMany(x => x.GetAllShapeKeyDatas());
+
 #if UNITY_EDITOR
         [InitializeOnLoadMethod]
         public static void RemoveAllUnusedIconLoader()
@@ -349,7 +369,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var matsSha256 = GetMaterialsSha256(meshData);
                 return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
             });
-            return HashUtils.ComputeHash(string.Join("|", iconNames) + string.Join("|", shapeKeyDatas),
+            return HashUtils.ComputeHash(
+                string.Join("|", iconNames) + string.Join("|",
+                    shapeKeyDatas.Select(x => $"{x.gameObject.FullName()}/{x.shapeKeyName}/{x.value}")),
                 HashUtils.HashType.SHA1);
         }
 #endif

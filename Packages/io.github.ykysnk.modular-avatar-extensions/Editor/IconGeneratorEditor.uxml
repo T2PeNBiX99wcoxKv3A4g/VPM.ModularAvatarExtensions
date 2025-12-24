@@ -17,4 +17,5 @@
         <uie:ObjectField name="icon" binding-path="iconTexture" type="UnityEngine.Texture2D, UnityEngine.CoreModule"
                          class="square-objectfield"/>
     </ui:VisualElement>
+    <ui:DropdownField name="referenceExtraDatasAdd"/>
 </ui:UXML>

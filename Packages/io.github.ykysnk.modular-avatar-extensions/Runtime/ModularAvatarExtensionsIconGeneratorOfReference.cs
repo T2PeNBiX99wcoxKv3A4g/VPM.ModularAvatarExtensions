@@ -7,6 +7,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [AddComponentMenu("Modular Avatar EX/MAEX Icon Generator Of Reference")]
+    [DisallowMultipleComponent]
     public class ModularAvatarExtensionsIconGeneratorOfReference : ModularAvatarExtensionsIconGeneratorBase
     {
         [SerializeField] private List<AvatarObjectReference> avatarObjectReferences = new();
