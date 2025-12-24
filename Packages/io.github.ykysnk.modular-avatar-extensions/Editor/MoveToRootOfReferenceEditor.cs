@@ -18,7 +18,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             _reference = serializedObject.FindProperty(ReferenceProp);
         }
 
-        protected override VisualElement? CreateInnerInspectorGUI()
+        protected override VisualElement CreateInnerInspectorGUI()
         {
             var tree = uxml!.CloneTree();
             var newPath = tree.Q<TextField>("newPath");

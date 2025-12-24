@@ -12,7 +12,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         [SerializeField] protected VisualTreeAsset? uxml;
 
-        protected override VisualElement? CreateInnerInspectorGUI()
+        protected override VisualElement CreateInnerInspectorGUI()
         {
             var tree = uxml!.CloneTree();
             var errorBox = tree.Q<HelpBox>("errorMenuItem");

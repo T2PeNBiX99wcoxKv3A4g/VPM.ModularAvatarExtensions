@@ -16,7 +16,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         [SerializeField] private VisualTreeAsset? uxml;
 
-        protected override VisualElement? CreateInnerInspectorGUI()
+        protected override VisualElement CreateInnerInspectorGUI()
         {
             var tree = uxml!.CloneTree();
             var constraint = tree.Q<ObjectField>("constraint");
