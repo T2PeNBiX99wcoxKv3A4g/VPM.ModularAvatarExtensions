@@ -5,7 +5,7 @@
     <ui:ListView binding-path="avatarObjectReferences" virtualization-method="DynamicHeight"
                  name="avatarObjectReferences" show-border="true" reorderable="true" show-foldout-header="true"
                  show-add-remove-footer="true" show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
-                 header-title="label.icon_generator.avatar_object_references"/>
+                 header-title="label.icon_generator.avatar_object_references" reorder-mode="Animated"/>
     <ui:VisualElement style="flex-direction: row;">
         <ui:VisualElement style="min-width: 80%; align-self: stretch; padding-right: 6px;">
             <uie:ObjectField binding-path="iconTexture" name="iconTexture"
