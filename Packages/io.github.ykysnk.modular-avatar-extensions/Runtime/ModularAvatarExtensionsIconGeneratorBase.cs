@@ -124,10 +124,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
             if (!gameObject.activeSelf || !gameObject.IsSceneObject() || !IsFirst) return;
-            objects = GetAllObjectsFromAllGenerator().Distinct().ToList();
+            objects = GetAllObjectsFromAllGenerator().Distinct().OrderBy(x => x.name).ToList();
             objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
                 HashUtils.HashType.SHA1);
-            shapeKeyDatas = GetAllShapeKeyDatasFromAllGenerator().Distinct().ToList();
+            shapeKeyDatas = GetAllShapeKeyDatasFromAllGenerator().Distinct().OrderBy(x => x.shapeKeyName).ToList();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
             shouldGenerateIcon = ShouldGenerateIcon();
