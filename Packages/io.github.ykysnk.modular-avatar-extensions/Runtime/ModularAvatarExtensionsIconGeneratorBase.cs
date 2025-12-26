@@ -118,7 +118,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
             if (!gameObject.activeSelf || !gameObject.IsSceneObject() || !IsFirst) return;
             objects = GetAllObjectsFromAllGenerator().Distinct().OrderBy(x => x.name).ToList();
-            objectsHash = GetListHash(objects.Select(RuntimeUtil.AvatarRootPath));
+            objectsHash = ListHash(objects.Select(RuntimeUtil.AvatarRootPath));
             shapeKeyDatas = GetAllShapeKeyDatasFromAllGenerator().Distinct().OrderBy(x => x.shapeKeyName).ToList();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
@@ -138,10 +138,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
-        public static string GetListHash<T>(IEnumerable<T> enumerable) =>
+        public static string ListHash<T>(IEnumerable<T> enumerable) =>
             HashUtils.ComputeHash(enumerable, HashUtils.HashType.SHA1);
 
-        public static string GetStringHash(params string[] strings) =>
+        public static string StringHash(params string[] strings) =>
             HashUtils.ComputeHash(string.Join("|", strings), HashUtils.HashType.SHA1);
 
         public void ForceGenerateIcon()
@@ -393,7 +393,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var lastWriteTime = !string.IsNullOrEmpty(path) ? File.GetLastWriteTime(path) : DateTime.MinValue;
                 return $"{guid}.{lastWriteTime:yyyyMMddHHmmss}";
             });
-            return GetListHash(guidWithTimes);
+            return ListHash(guidWithTimes);
         }
 
         protected static string GetAssetPathFromMesh(MeshData meshData)
@@ -422,7 +422,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var matsSha256 = GetMaterialsSha256(meshData);
                 return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
             });
-            return GetStringHash(iconNames.ListString(),
+            return StringHash(iconNames.ListString(),
                 shapeKeyDatas.Select(x => $"{RuntimeUtil.AvatarRootPath(x.gameObject)}/{x.shapeKeyName}/{x.value}")
                     .ListString());
         }

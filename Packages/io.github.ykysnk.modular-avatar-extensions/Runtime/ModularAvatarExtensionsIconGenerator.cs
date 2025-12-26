@@ -18,7 +18,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             if (modularAvatarObjectToggle != null)
             {
-                var objectsHash2 = GetListHash(modularAvatarObjectToggle.Objects.Select(to =>
+                var objectsHash2 = ListHash(modularAvatarObjectToggle.Objects.Select(to =>
                     RuntimeUtil.AvatarRootPath(to.Object.Get(this))));
                 if (objectsHash2 != objectsHash) OnChange();
             }
