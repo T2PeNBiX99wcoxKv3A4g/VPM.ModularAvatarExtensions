@@ -139,9 +139,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         public static string GetListHash<T>(IEnumerable<T> enumerable) =>
-            HashUtils.ComputeHash(GetListString(enumerable), HashUtils.HashType.SHA1);
-
-        public static string GetListString<T>(IEnumerable<T> enumerable) => string.Join("|", enumerable);
+            HashUtils.ComputeHash(enumerable, HashUtils.HashType.SHA1);
 
         public static string GetStringHash(params string[] strings) =>
             HashUtils.ComputeHash(string.Join("|", strings), HashUtils.HashType.SHA1);
@@ -424,8 +422,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var matsSha256 = GetMaterialsSha256(meshData);
                 return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
             });
-            return GetStringHash(GetListString(iconNames), GetListString(shapeKeyDatas.Select(x =>
-                $"{RuntimeUtil.AvatarRootPath(x.gameObject)}/{x.shapeKeyName}/{x.value}")));
+            return GetStringHash(iconNames.ListString(),
+                shapeKeyDatas.Select(x => $"{RuntimeUtil.AvatarRootPath(x.gameObject)}/{x.shapeKeyName}/{x.value}")
+                    .ListString());
         }
 #endif
 #if UNITY_EDITOR
