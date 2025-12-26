@@ -347,7 +347,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var count = 0;
             reportPaths.ForEach(path =>
             {
-                EditorUtility.DisplayProgressBar("Remove All Unused Icon", path, (float)count / reportPaths.Count);
+                var fullPath = Path.GetFullPath(path);
+                var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+                EditorUtility.DisplayProgressBar("Remove All Unused Icon", cutPath, (float)count / reportPaths.Count);
                 AssetDatabase.DeleteAsset(path);
                 count++;
             });
@@ -364,7 +366,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var paths = Directory.GetFiles(FolderPath, "*.png");
             foreach (var path in paths)
             {
-                EditorUtility.DisplayProgressBar("Set Preset To All Icon", path, (float)count / paths.Length);
+                var fullPath = Path.GetFullPath(path);
+                var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+                EditorUtility.DisplayProgressBar("Set Preset To All Icon", cutPath, (float)count / paths.Length);
                 count++;
                 var iconImporter = AssetImporter.GetAtPath(path) as TextureImporter;
                 if (iconImporter == null) continue;
