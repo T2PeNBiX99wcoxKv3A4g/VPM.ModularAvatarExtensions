@@ -322,14 +322,44 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public static void RemoveAllUnusedIcon()
         {
-            foreach (var path in Directory.GetFiles(FolderPath, "*.png"))
+            var reportPaths = (from path in Directory.GetFiles(FolderPath, "*.png")
+                let iconName = Path.GetFileNameWithoutExtension(path)
+                let allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>()
+                where allIconGenerator.All(x => x.iconName != iconName)
+                select path).ToList();
+            if (reportPaths.Count < 1) return;
+
+            var count = 0;
+            reportPaths.ForEach(path =>
             {
-                var iconName = Path.GetFileNameWithoutExtension(path);
-                var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
-                if (allIconGenerator.Any(x => x.iconName == iconName)) continue;
-                Utils.Log(nameof(RemoveAllUnusedIcon), $"Removing unused icon: {iconName}");
+                EditorUtility.DisplayProgressBar("Remove All Unused Icon", path, (float)count / reportPaths.Count);
                 AssetDatabase.DeleteAsset(path);
+                count++;
+            });
+            EditorUtility.ClearProgressBar();
+        }
+
+        public static void SetPresetToAllIcon()
+        {
+            var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
+            var preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
+            if (preset == null) return;
+
+            var count = 0;
+            var paths = Directory.GetFiles(FolderPath, "*.png");
+            foreach (var path in paths)
+            {
+                EditorUtility.DisplayProgressBar("Set Preset To All Icon", path, (float)count / paths.Length);
+                count++;
+                var iconImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+                if (iconImporter == null) continue;
+                iconImporter.alphaIsTransparency = true;
+                iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
+                preset.ApplyTo(iconImporter);
+                iconImporter.SaveAndReimport();
             }
+
+            EditorUtility.ClearProgressBar();
         }
 #endif
 
