@@ -13,8 +13,6 @@ using UnityEngine;
 #if UNITY_EDITOR // Lets me sleep plz
 using UnityEditor;
 using UnityEditor.Presets;
-using UnityDirectory = UnityEngine.Windows.Directory;
-using UnityFile = UnityEngine.Windows.File;
 #endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -157,7 +155,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected void GenerateIcon()
         {
 #if UNITY_EDITOR
-            if (!UnityDirectory.Exists(FolderPath)) UnityDirectory.CreateDirectory(FolderPath);
+            if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
             var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject).ToDictionary(x => x.Key,
                 x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
             var meshDatas = objects.Select(obj => new MeshData(obj))
@@ -167,7 +165,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var newIconPath = Path.Combine(FolderPath, newIconName);
             if (oldIconName != newIconName) Task.Run(RemoveUnusedIcon);
             var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
-            if (bytes != null) UnityFile.WriteAllBytes($"{newIconPath}.png", bytes);
+            if (bytes != null) File.WriteAllBytes($"{newIconPath}.png", bytes);
             iconName = newIconName;
             AssetDatabase.Refresh();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>($"{newIconPath}.png");
@@ -291,9 +289,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
             var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
-            if (!UnityFile.Exists(iconPath)) return;
-            UnityFile.Delete(iconPath);
-            AssetDatabase.Refresh();
+            if (!File.Exists(iconPath)) return;
+            AssetDatabase.DeleteAsset(iconPath);
 #endif
         }
 
@@ -323,7 +320,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
                 if (allIconGenerator.Any(x => x.iconName == iconName)) continue;
                 Utils.Log(nameof(RemoveAllUnusedIcon), $"Removing unused icon: {iconName}");
-                UnityFile.Delete(path);
+                AssetDatabase.DeleteAsset(path);
             }
         }
 #endif
