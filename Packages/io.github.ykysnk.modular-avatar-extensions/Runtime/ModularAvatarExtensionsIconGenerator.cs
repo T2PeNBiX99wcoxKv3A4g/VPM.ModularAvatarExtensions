@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using io.github.ykysnk.utils.Extensions;
-using io.github.ykysnk.utils.NonUdon;
 using nadena.dev.modular_avatar.core;
+using nadena.dev.ndmf.runtime;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -18,10 +17,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             if (modularAvatarObjectToggle != null)
             {
-                var objectsHash2 =
-                    HashUtils.ComputeHash(
-                        string.Join("|", modularAvatarObjectToggle.Objects.Select(to => to.Object.Get(this).FullName())),
-                        HashUtils.HashType.SHA1);
+                var objectsHash2 = GetListHash(modularAvatarObjectToggle.Objects.Select(to =>
+                    RuntimeUtil.AvatarRootPath(to.Object.Get(this))));
                 if (objectsHash2 != objectsHash) OnChange();
             }
 

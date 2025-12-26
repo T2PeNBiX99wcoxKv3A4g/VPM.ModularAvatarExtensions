@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
 #if UNITY_EDITOR // Lets me sleep plz
+using nadena.dev.ndmf.runtime;
 using UnityEditor;
 using UnityEditor.Presets;
 #endif
@@ -123,8 +124,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
             if (!gameObject.activeSelf || !gameObject.IsSceneObject() || !IsFirst) return;
             objects = GetAllObjectsFromAllGenerator().Distinct().OrderBy(x => x.name).ToList();
-            objectsHash = HashUtils.ComputeHash(string.Join("|", objects.Select(o => o.FullName())),
-                HashUtils.HashType.SHA1);
+            objectsHash = GetListHash(objects.Select(RuntimeUtil.AvatarRootPath));
             shapeKeyDatas = GetAllShapeKeyDatasFromAllGenerator().Distinct().OrderBy(x => x.shapeKeyName).ToList();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
@@ -143,6 +143,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             return false;
 #endif
         }
+
+        public static string GetListHash<T>(IEnumerable<T> enumerable) =>
+            HashUtils.ComputeHash(GetListString(enumerable), HashUtils.HashType.SHA1);
+
+        public static string GetListString<T>(IEnumerable<T> enumerable) => string.Join("|", enumerable);
+
+        public static string GetStringHash(params string[] strings) =>
+            HashUtils.ComputeHash(string.Join("|", strings), HashUtils.HashType.SHA1);
 
         public void ForceGenerateIcon()
         {
@@ -335,7 +343,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var lastWriteTime = !string.IsNullOrEmpty(path) ? File.GetLastWriteTime(path) : DateTime.MinValue;
                 return $"{guid}.{lastWriteTime:yyyyMMddHHmmss}";
             });
-            return HashUtils.ComputeHash(string.Join("|", guidWithTimes), HashUtils.HashType.SHA1);
+            return GetListHash(guidWithTimes);
         }
 
         protected static string GetAssetPathFromMesh(MeshData meshData)
@@ -364,10 +372,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var matsSha256 = GetMaterialsSha256(meshData);
                 return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
             });
-            return HashUtils.ComputeHash(
-                string.Join("|", iconNames) + string.Join("|",
-                    shapeKeyDatas.Select(x => $"{x.gameObject.FullName()}/{x.shapeKeyName}/{x.value}")),
-                HashUtils.HashType.SHA1);
+            return GetStringHash(GetListString(iconNames), GetListString(shapeKeyDatas.Select(x =>
+                $"{RuntimeUtil.AvatarRootPath(x.gameObject)}/{x.shapeKeyName}/{x.value}")));
         }
 #endif
 #if UNITY_EDITOR
