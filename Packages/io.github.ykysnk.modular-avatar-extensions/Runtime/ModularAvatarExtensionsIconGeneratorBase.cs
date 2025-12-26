@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
@@ -11,6 +9,8 @@ using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
 #if UNITY_EDITOR // Lets me sleep plz
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using nadena.dev.ndmf.runtime;
 using UnityEditor;
 using UnityEditor.Presets;
@@ -65,30 +65,24 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First();
 
 #if UNITY_EDITOR
-        private void OnEnable() => StartCoroutine(CheckLoop());
-#endif
-
-        protected override void OnDestroy() => RemoveUnusedIcon();
-
-#if UNITY_EDITOR
-        private IEnumerator CheckLoop()
+        private async UniTaskVoid CheckLoop()
         {
             while (enabled && gameObject.activeSelf)
             {
                 if (gameObject.IsSceneObject() && !Utils.IsPlaying)
-                    Check();
-                yield return new WaitForSeconds(2f);
+                    await Check();
+                await UniTask.Delay(2000, cancellationToken: _checkTokenSource?.Token ?? CancellationToken.None);
             }
         }
 #endif
 
-        protected virtual void Check()
+        protected virtual async UniTask Check()
         {
 #if UNITY_EDITOR
             if (shouldGenerateIcon)
             {
                 shouldGenerateIcon = false;
-                GenerateIcon();
+                await GenerateIcon();
             }
             else
                 shouldGenerateIcon = ShouldGenerateIcon();
@@ -157,23 +151,25 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (!IsFirst) return;
             OnChange();
             shouldGenerateIcon = true;
-            Check();
+            Check().Forget();
         }
 
-        protected void GenerateIcon()
+        protected async UniTask GenerateIcon()
         {
+            await UniTask.SwitchToMainThread();
 #if UNITY_EDITOR
             if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
-            var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject).ToDictionary(x => x.Key,
-                x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
+            var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject)
+                .ToDictionary(x => x.Key,
+                    x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
             var meshDatas = objects.Select(obj => new MeshData(obj))
                 .ToArray();
             var oldIconName = iconName;
             var newIconName = GetIconName(meshDatas);
             var newIconPath = Path.Combine(FolderPath, newIconName);
-            if (oldIconName != newIconName) Task.Run(RemoveUnusedIcon);
-            var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
-            if (bytes != null) File.WriteAllBytes($"{newIconPath}.png", bytes);
+            if (oldIconName != newIconName) RemoveUnusedIcon().Forget();
+            var bytes = await SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
+            if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
             iconName = newIconName;
             AssetDatabase.Refresh();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>($"{newIconPath}.png");
@@ -182,6 +178,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             iconImporter.alphaIsTransparency = true;
             iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
             preset?.ApplyTo(iconImporter);
+            await UniTask.Yield();
             iconImporter.SaveAndReimport();
             EditorUtility.SetDirty(this);
 
@@ -200,9 +197,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         // Refs: https://github.com/weasel-club/OneClickInventory/blob/main/Editor/Util/IconUtil.cs#L24
-        protected static byte[]? SaveMeshAsPng(MeshData[] meshDatas,
+        protected static async UniTask<byte[]?> SaveMeshAsPng(MeshData[] meshDatas,
             Dictionary<GameObject, List<ShapeKeyValue>> shapeKeyDatas, int scaleWidth, int scaleHeight)
         {
+            await UniTask.SwitchToMainThread();
 #if UNITY_EDITOR
             var tempObj = new GameObject("TempObj")
             {
@@ -238,6 +236,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
             }
 
+            await UniTask.Yield();
+
             var camObj = new GameObject("TempCam");
             var cam = camObj.AddComponent<Camera>();
             cam.clearFlags = CameraClearFlags.Nothing;
@@ -267,6 +267,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             cam.transform.position = center + Vector3.forward * minDistance;
 
+            await UniTask.Yield();
+
             var rt = new RenderTexture(CaptureWidthAndHeight, CaptureWidthAndHeight, 24);
             cam.targetTexture = rt;
             cam.Render();
@@ -290,14 +292,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
-        protected void RemoveUnusedIcon()
+        protected async UniTaskVoid RemoveUnusedIcon()
         {
+            await UniTask.SwitchToMainThread();
 #if UNITY_EDITOR
             if (IsQuitting || string.IsNullOrEmpty(iconName)) return;
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
             var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
             if (!File.Exists(iconPath)) return;
+            await UniTask.Yield();
             AssetDatabase.DeleteAsset(iconPath);
 #endif
         }
@@ -311,6 +315,24 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected IEnumerable<ShapeKeyData> GetAllShapeKeyDatasFromAllGenerator() =>
             GetComponents<ModularAvatarExtensionsIconGeneratorBase>().SelectMany(x => x.GetAllShapeKeyDatas());
+
+#if UNITY_EDITOR
+        private CancellationTokenSource? _checkTokenSource;
+
+        private void OnEnable()
+        {
+            _checkTokenSource = new();
+            CheckLoop().Forget();
+        }
+
+        private void OnDisable() => _checkTokenSource?.Cancel();
+
+        protected override void OnDestroy()
+        {
+            RemoveUnusedIcon().Forget();
+            _checkTokenSource?.Cancel();
+        }
+#endif
 
 #if UNITY_EDITOR
         [InitializeOnLoadMethod]

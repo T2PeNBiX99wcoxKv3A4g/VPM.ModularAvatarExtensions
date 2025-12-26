@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using nadena.dev.modular_avatar.core;
 using nadena.dev.ndmf.runtime;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] private ModularAvatarObjectToggle? modularAvatarObjectToggle;
         [SerializeField] private ModularAvatarShapeChanger? modularAvatarShapeChanger;
 
-        protected override void Check()
+        protected override async UniTask Check()
         {
             if (modularAvatarObjectToggle != null)
             {
@@ -22,7 +23,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 if (objectsHash2 != objectsHash) OnChange();
             }
 
-            base.Check();
+            await base.Check();
         }
 
         protected override void OnChange()
