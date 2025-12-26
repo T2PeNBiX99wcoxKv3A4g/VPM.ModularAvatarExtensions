@@ -166,7 +166,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var newIconName = GetIconName(meshDatas);
             var newIconPath = Path.Combine(FolderPath, newIconName);
             if (oldIconName != newIconName) RemoveUnusedIcon().Forget();
-            var bytes = await SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
+            var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
             if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
             iconName = newIconName;
             AssetDatabase.Refresh();
@@ -195,10 +195,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         // Refs: https://github.com/weasel-club/OneClickInventory/blob/main/Editor/Util/IconUtil.cs#L24
-        protected static async UniTask<byte[]?> SaveMeshAsPng(MeshData[] meshDatas,
+        protected static byte[]? SaveMeshAsPng(MeshData[] meshDatas,
             Dictionary<GameObject, List<ShapeKeyValue>> shapeKeyDatas, int scaleWidth, int scaleHeight)
         {
-            await UniTask.SwitchToMainThread();
 #if UNITY_EDITOR
             var tempObj = new GameObject("TempObj")
             {
@@ -234,8 +233,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
             }
 
-            await UniTask.Yield();
-
             var camObj = new GameObject("TempCam");
             var cam = camObj.AddComponent<Camera>();
             cam.clearFlags = CameraClearFlags.Nothing;
@@ -264,8 +261,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var center = totalBounds.center;
 
             cam.transform.position = center + Vector3.forward * minDistance;
-
-            await UniTask.Yield();
 
             var rt = new RenderTexture(CaptureWidthAndHeight, CaptureWidthAndHeight, 24);
             cam.targetTexture = rt;
