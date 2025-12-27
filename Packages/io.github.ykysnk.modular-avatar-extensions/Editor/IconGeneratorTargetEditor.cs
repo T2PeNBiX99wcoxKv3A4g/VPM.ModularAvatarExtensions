@@ -22,7 +22,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetDisplay()
             {
-                if (target is not ModularAvatarExtensionsIconGeneratorTarget iconGeneratorTarget) return;
+                if (target == null ||
+                    target is not ModularAvatarExtensionsIconGeneratorTarget iconGeneratorTarget) return;
                 errorBox.style.display = iconGeneratorTarget.TryGetComponent<ModularAvatarMenuItem>(out _)
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;

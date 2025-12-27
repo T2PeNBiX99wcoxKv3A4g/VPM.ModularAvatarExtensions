@@ -20,7 +20,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetNewPath()
             {
-                if (target is not ModularAvatarExtensionsMoveToRoot moveToRoot) return;
+                if (target == null || target is not ModularAvatarExtensionsMoveToRoot moveToRoot) return;
                 newPath.value = $"{moveToRoot.transform.root.name}/{moveToRoot.name}";
             }
         }

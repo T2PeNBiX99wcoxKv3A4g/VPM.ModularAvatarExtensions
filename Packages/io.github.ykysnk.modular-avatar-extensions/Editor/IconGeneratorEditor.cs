@@ -52,7 +52,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetDisplay()
             {
-                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                if (target == null || target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
 
                 var isSubMenu = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out var menuItem) &&
                                 menuItem.PortableControl.Type == PortableControlType.SubMenu;

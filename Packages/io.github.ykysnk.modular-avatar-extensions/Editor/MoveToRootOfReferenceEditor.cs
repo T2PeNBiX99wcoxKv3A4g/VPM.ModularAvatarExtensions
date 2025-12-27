@@ -31,7 +31,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetNewPath()
             {
-                if (target is not ModularAvatarExtensionsMoveToRootOfReference moveToRootOfReference) return;
+                if (target == null ||
+                    target is not ModularAvatarExtensionsMoveToRootOfReference moveToRootOfReference) return;
                 var setName = moveToRootOfReference.reference?.Get(moveToRootOfReference)?.name;
                 if (string.IsNullOrEmpty(setName))
                     setName = "None";

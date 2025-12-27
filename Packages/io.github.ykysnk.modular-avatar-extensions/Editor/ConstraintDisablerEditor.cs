@@ -31,7 +31,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetDisplay()
             {
-                if (target is not ModularAvatarExtensionsConstraintDisabler component) return;
+                if (target == null || target is not ModularAvatarExtensionsConstraintDisabler component) return;
                 var isConstraint = component.constraint is
 #if MAEX_VRCSDK3_BASE
                     VRCConstraintBase or

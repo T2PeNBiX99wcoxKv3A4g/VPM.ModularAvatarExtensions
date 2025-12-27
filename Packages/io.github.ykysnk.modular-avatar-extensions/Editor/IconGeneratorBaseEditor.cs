@@ -23,7 +23,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var button = tree.Q<Button>("generateIcon");
             button.clicked += () =>
             {
-                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                if (target == null || target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
                 iconGeneratorBase.ForceGenerateIcon();
             };
 
@@ -34,7 +34,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             {
                 if (evt.newValue is not Preset preset) return;
                 if (preset != null && preset.GetTargetFullTypeName() != typeof(TextureImporter).FullName) return;
-                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                if (target == null || target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
                 var newPresetPath = AssetDatabase.GetAssetPath(preset);
                 var newPresetGuid = AssetDatabase.AssetPathToGUID(newPresetPath);
                 var oldPresetGuid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
@@ -55,7 +55,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetDisplay()
             {
-                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                if (target == null || target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
                 errorBox.style.display = iconGeneratorBase.TryGetComponent<ModularAvatarMenuItem>(out _)
                     ? DisplayStyle.None
                     : DisplayStyle.Flex;

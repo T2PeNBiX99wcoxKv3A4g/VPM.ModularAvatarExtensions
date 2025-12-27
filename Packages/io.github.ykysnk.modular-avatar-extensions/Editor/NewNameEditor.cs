@@ -25,7 +25,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetName()
             {
-                if (target is not ModularAvatarExtensionsNewName newName) return;
+                if (target == null || target is not ModularAvatarExtensionsNewName newName) return;
                 oldNameObjectField.value = newName.gameObject;
                 newNameObjectField.value = newName.gameObject;
                 var newNameObjectFieldLabel = newNameObjectField.Q<Label>();

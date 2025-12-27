@@ -48,7 +48,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetDisplay()
             {
-                if (target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
+                if (target == null || target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
                 generateIconButton.SetEnabled(iconGeneratorBase.IsFirst);
                 nonFirstInfo.style.display = iconGeneratorBase.IsFirst ? DisplayStyle.None : DisplayStyle.Flex;
             }

@@ -21,7 +21,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             void SetDisplay()
             {
-                if (target is not ModularAvatarExtensionsViewPosition viewPosition) return;
+                if (target == null || target is not ModularAvatarExtensionsViewPosition viewPosition) return;
                 errorInfo.style.display = viewPosition.avatarDescriptor == null ? DisplayStyle.Flex : DisplayStyle.None;
             }
         }
