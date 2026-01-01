@@ -1,6 +1,8 @@
 using io.github.ykysnk.utils.Extensions;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
@@ -13,6 +15,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected override void OnChange()
         {
+#if UNITY_EDITOR
             if (string.IsNullOrEmpty(newName))
                 newName = gameObject.name;
             if (gameObject.name == newName || !changeOnInspector || !gameObject.IsSceneObject()) return;
@@ -23,6 +26,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             gameObject.name = newName!;
             EditorUtility.SetDirty(gameObject);
             EditorUtility.SetDirty(this);
+#endif
         }
     }
 }
