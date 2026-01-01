@@ -11,7 +11,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
     internal static class ConstraintDisablerMenu
     {
-        [MenuItem("GameObject/Modular Avatar EX/Add Constraint Disabler", false, 10)]
+        [MenuItem("GameObject/Modular Avatar EX/Add Constraint Disabler", false, Util.GameObjectMenuPriority)]
         private static void Menu(MenuCommand menuCommand)
         {
             var obj = menuCommand.context as GameObject;

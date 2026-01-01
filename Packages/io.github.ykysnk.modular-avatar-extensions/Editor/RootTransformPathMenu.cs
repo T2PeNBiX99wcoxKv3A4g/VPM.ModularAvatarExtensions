@@ -9,7 +9,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
     internal static class RootTransformPathMenu
     {
-        [MenuItem("GameObject/Modular Avatar EX/Add Root Transform Path", false, 10)]
+        [MenuItem("GameObject/Modular Avatar EX/Add Root Transform Path", false, Util.GameObjectMenuPriority)]
         private static void Menu(MenuCommand menuCommand)
         {
             var obj = menuCommand.context as GameObject;

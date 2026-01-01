@@ -16,6 +16,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
         internal const string SystemName = "Modular Avatar EX";
         internal const int ToolsMenuItemPriority = 101;
+        internal const int GameObjectMenuPriority = -999;
 
         static Util() => EditorApplication.update += TryRun;
 
