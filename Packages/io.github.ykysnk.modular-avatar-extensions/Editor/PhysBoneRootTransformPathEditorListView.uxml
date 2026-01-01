@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row;">
+        <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" enable-rich-text="true"
+                  name="propName"/>
+        <ui:Toggle name="set"/>
+    </ui:VisualElement>
+    <ui:ListView show-add-remove-footer="true" virtualization-method="DynamicHeight" show-border="true"
+                 selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly" reorderable="true"
+                 reorder-mode="Animated" name="references" show-bound-collection-size="false"/>
+</ui:UXML>

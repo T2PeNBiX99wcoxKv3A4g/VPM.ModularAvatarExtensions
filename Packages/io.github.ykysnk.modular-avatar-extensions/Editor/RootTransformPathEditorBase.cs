@@ -1,68 +1,35 @@
-using System;
 using JetBrains.Annotations;
-using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
     [PublicAPI]
     internal abstract class RootTransformPathEditorBase<T> : MaexEditor where T : Component
     {
-        protected const string ReferenceProp = "reference";
-        protected const string ComponentProp = "component";
-        protected SerializedProperty? Component;
-        protected SerializedProperty? Reference;
+        [SerializeField] protected VisualTreeAsset? uxml;
 
-        protected abstract string RootTransformType { get; }
-
-        protected override void OnEnable()
+        protected override VisualElement CreateInnerInspectorGUI()
         {
-            Reference = serializedObject.FindProperty(ReferenceProp);
-            Component = serializedObject.FindProperty(ComponentProp);
-        }
+            var tree = uxml!.CloneTree();
+            var componentNotFoundField = tree.Q<HelpBox>("componentNotFound");
+            var componentField = tree.Q<ObjectField>("component");
+            componentField.schedule.Execute(SetDisplay).Every(100);
+            SetDisplay();
 
-        public override void OnInspectorGUI()
-        {
-            if (IsBaseOnOldInspectorGUI)
-                base.OnInspectorGUI();
+            return tree;
 
-            serializedObject.Update();
-            EditorGUI.BeginChangeCheck();
-
-            try
+            void SetDisplay()
             {
-                var component = (RootTransformPathBase<T>)target;
-                var count = component.GetComponents<T>().Length;
-
-                if (count > 1)
-                    EditorGUILayout.PropertyField(Component,
-                        $"label.root_transform_path_base.{RootTransformType}.component".G());
-                EditorGUILayout.PropertyField(Reference,
-                    "label.root_transform_path_base.root_transform".G());
-
-                OnInnerInspectorGUI();
-
-                EditorGUILayout.HelpBox(
-                    string.IsNullOrEmpty(component.reference?.referencePath)
-                        ? $"label.root_transform_path_base.{RootTransformType}.info".S()
-                        : string.Format($"label.root_transform_path_base.{RootTransformType}.info2".S(),
-                            component.reference?.referencePath),
-                    MessageType.Info,
-                    true);
-                InternalLocalizationExtensions.Helper.SelectLanguageGUI();
+                if (target == null || target is not RootTransformPathBase<T> rootTransformPathBase) return;
+                componentNotFoundField.style.display = rootTransformPathBase.GetComponents<T>().Length < 1
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
+                componentField.style.display = rootTransformPathBase.GetComponents<T>().Length is < 1 or > 1
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
             }
-            catch (Exception e)
-            {
-                if (ConsoleLog)
-                    Debug.LogException(e);
-                OnError(e, Type.UGUI);
-                EditorGUILayout.HelpBox($"Editor Error: {e.Message}\n{e.StackTrace}", MessageType.Error, true);
-            }
-
-            if (!EditorGUI.EndChangeCheck())
-                return;
-            OnChange();
-            serializedObject.ApplyModifiedProperties();
         }
     }
 }

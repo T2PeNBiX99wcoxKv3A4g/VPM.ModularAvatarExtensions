@@ -8,7 +8,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     [CanEditMultipleObjects]
     internal class ContactReceiverRootTransformPathEditor : RootTransformPathEditorBase<VRCContactReceiver>
     {
-        protected override string RootTransformType => "contact_receiver";
     }
 #endif
 }
