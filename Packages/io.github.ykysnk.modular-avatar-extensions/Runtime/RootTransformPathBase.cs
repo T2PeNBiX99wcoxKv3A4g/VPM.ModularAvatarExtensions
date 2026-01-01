@@ -2,6 +2,9 @@ using io.github.ykysnk.utils.Extensions;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
@@ -43,13 +46,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var obj = reference.Get(this);
             if (!obj)
             {
+                Undo.RecordObject(component, "Change Root Transform");
                 proxy.rootTransform = null;
+                EditorUtility.SetDirty(component);
                 return;
             }
 
             var getTransform = obj.transform;
             if (proxy.rootTransform == getTransform) return;
+            Undo.RecordObject(component, "Change Root Transform");
             proxy.rootTransform = getTransform;
+            EditorUtility.SetDirty(component);
 #endif
         }
     }

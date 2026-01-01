@@ -1,4 +1,5 @@
 using io.github.ykysnk.utils.Extensions;
+using UnityEditor;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
@@ -15,7 +16,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (string.IsNullOrEmpty(newName))
                 newName = gameObject.name;
             if (gameObject.name == newName || !changeOnInspector || !gameObject.IsSceneObject()) return;
+            Undo.RecordObjects(new Object[]
+            {
+                gameObject, this
+            }, "Change Object Name");
             gameObject.name = newName!;
+            EditorUtility.SetDirty(gameObject);
+            EditorUtility.SetDirty(this);
         }
     }
 }
