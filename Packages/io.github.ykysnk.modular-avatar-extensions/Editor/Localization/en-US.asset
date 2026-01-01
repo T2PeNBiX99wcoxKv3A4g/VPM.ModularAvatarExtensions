@@ -372,3 +372,6 @@ MonoBehaviour:
   - key: label.icon_generator.non_first
     translate: This component is not the first component, icon generation is disabled.
     tooltip: 
+  - key: label.root_transform_path_base.component_not_found
+    translate: The required component is not found!
+    tooltip: 
