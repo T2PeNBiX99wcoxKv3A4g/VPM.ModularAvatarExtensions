@@ -15,7 +15,8 @@
     "io.github.ykysnk.modular-avatar-extensions",
     "io.github.ykysnk.utils.non-udon",
     "d4rkpl4y3r.d4rkavataroptimizer.Editor",
-    "AnimatorAsCode.V1"
+    "AnimatorAsCode.V1",
+    "UniTask"
   ],
   "includePlatforms": [
     "Editor"
