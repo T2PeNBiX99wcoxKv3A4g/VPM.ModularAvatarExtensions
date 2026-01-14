@@ -114,13 +114,13 @@
       }
     },
     "io.github.ykysnk.yky-toolkit": {
-      "version": "0.2.5",
+      "version": "0.6.1",
       "dependencies": {
-        "io.github.ykysnk.utils": ">=0.23.3"
+        "io.github.ykysnk.utils": ">=0.26.8"
       }
     },
     "io.github.ykysnk.utils": {
-      "version": "0.26.5",
+      "version": "0.30.2",
       "dependencies": {}
     }
   }
