@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using nadena.dev.ndmf.runtime;
 using UnityEngine;
+using Progress = UnityEditor.Progress;
 #if UNITY_EDITOR // Lets me sleep plz
 using UnityEditor;
 using UnityEditor.Presets;
@@ -154,37 +155,54 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         protected async UniTask GenerateIcon()
         {
-            await UniTask.SwitchToMainThread();
 #if UNITY_EDITOR
             if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
-            var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject)
-                .ToDictionary(x => x.Key,
-                    x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
-            var meshDatas = objects.Select(obj => new MeshData(obj))
-                .ToArray();
-            var oldIconName = iconName;
-            var newIconName = GetIconName(meshDatas);
-            var newIconPath = Path.Combine(FolderPath, newIconName);
-            if (oldIconName != newIconName) RemoveUnusedIcon().Forget();
-            var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
-            if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
-            iconName = newIconName;
-            AssetDatabase.Refresh();
-            iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>($"{newIconPath}.png");
-            iconImporter = AssetImporter.GetAtPath($"{newIconPath}.png") as TextureImporter;
-            if (iconImporter == null) return;
-            iconImporter.alphaIsTransparency = true;
-            iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
-            preset?.ApplyTo(iconImporter);
-            await UniTask.Yield();
-            iconImporter.SaveAndReimport();
-            EditorUtility.SetDirty(this);
 
-            if (modularAvatarMenuItem == null || iconTexture == null ||
-                iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
-            Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
-            modularAvatarMenuItem.PortableControl.Icon = iconTexture;
-            EditorUtility.SetDirty(modularAvatarMenuItem);
+            var progressId = Progress.Start(
+                "Generate Icon",
+                "Generating icon...",
+                Progress.Options.Sticky | Progress.Options.Indefinite
+            );
+
+            try
+            {
+                var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject)
+                    .ToDictionary(x => x.Key,
+                        x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
+                var meshDatas = objects.Select(obj => new MeshData(obj))
+                    .ToArray();
+                var oldIconName = iconName;
+                var newIconName = GetIconName(meshDatas);
+                var newIconPath = Path.Combine(FolderPath, newIconName);
+                if (oldIconName != newIconName) RemoveUnusedIcon().Forget();
+                Progress.Report(progressId, 0, $"Generating: {newIconName}");
+                var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
+                if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
+                iconName = newIconName;
+                AssetDatabase.Refresh();
+                iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>($"{newIconPath}.png");
+                iconImporter = AssetImporter.GetAtPath($"{newIconPath}.png") as TextureImporter;
+                if (iconImporter == null) return;
+                iconImporter.alphaIsTransparency = true;
+                iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
+                preset?.ApplyTo(iconImporter);
+                await UniTask.Delay(100);
+                iconImporter.SaveAndReimport();
+                EditorUtility.SetDirty(this);
+                Progress.Finish(progressId);
+
+                if (modularAvatarMenuItem == null || iconTexture == null ||
+                    iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
+                Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
+                modularAvatarMenuItem.PortableControl.Icon = iconTexture;
+                EditorUtility.SetDirty(modularAvatarMenuItem);
+            }
+            catch (Exception ex)
+            {
+                Progress.Finish(progressId, Progress.Status.Failed);
+                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
+                    $"Generate Icon Error: {ex.Message}\n{ex.StackTrace}");
+            }
 #endif
         }
 
@@ -285,16 +303,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
-        protected async UniTaskVoid RemoveUnusedIcon()
+        protected async UniTask RemoveUnusedIcon()
         {
-            await UniTask.SwitchToMainThread();
 #if UNITY_EDITOR
             if (IsQuitting || string.IsNullOrEmpty(iconName)) return;
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
             var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
             if (!File.Exists(iconPath)) return;
-            await UniTask.Yield();
+            await UniTask.Delay(100);
             AssetDatabase.DeleteAsset(iconPath);
 #endif
         }
@@ -335,51 +352,146 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             EditorApplication.projectChanged += RemoveAllUnusedIcon;
         }
 
-        public static void RemoveAllUnusedIcon()
+        public static async UniTask RemoveAllUnusedIconAsync(CancellationToken token)
         {
-            var reportPaths = (from path in Directory.GetFiles(FolderPath, "*.png")
-                let iconName = Path.GetFileNameWithoutExtension(path)
-                let allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>()
-                where allIconGenerator.All(x => x.iconName != iconName)
-                select path).ToList();
-            if (reportPaths.Count < 1) return;
-
-            var count = 0;
-            reportPaths.ForEach(path =>
+            var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
+            var reportPaths = await UniTask.RunOnThreadPool(() =>
             {
-                var fullPath = Path.GetFullPath(path);
-                var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
-                EditorUtility.DisplayProgressBar("Remove All Unused Icon", cutPath, (float)count / reportPaths.Count);
-                AssetDatabase.DeleteAsset(path);
-                count++;
+                return Directory.GetFiles(FolderPath, "*.png")
+                    .Where(path => allIconGenerator.All(x => x.iconName != Path.GetFileNameWithoutExtension(path)))
+                    .ToList();
+            }, cancellationToken: token);
+
+            if (reportPaths.Count < 1)
+                return;
+
+            var total = reportPaths.Count;
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            var progressId = Progress.Start(
+                "Remove All Unused Icon",
+                "Deleting unused icons...",
+                Progress.Options.Sticky
+            );
+
+            Progress.RegisterCancelCallback(progressId, () =>
+            {
+                if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
+                    return false;
+                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by user.");
+                cts.Cancel();
+                return true;
             });
-            EditorUtility.ClearProgressBar();
+
+            try
+            {
+                for (var i = 0; i < total; i++)
+                {
+                    if (cts.IsCancellationRequested)
+                        throw new OperationCanceledException(cts.Token);
+
+                    var path = reportPaths[i];
+                    var fullPath = Path.GetFullPath(path);
+                    var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+
+                    Progress.Report(progressId, (float)i / total, $"Deleting: {cutPath}");
+                    AssetDatabase.DeleteAsset(path);
+
+                    await UniTask.Delay(100, cancellationToken: token);
+                }
+
+                Progress.Finish(progressId);
+            }
+            catch (OperationCanceledException)
+            {
+                Progress.Finish(progressId, Progress.Status.Canceled);
+                Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Remove was cancelled.");
+            }
+            catch (Exception ex)
+            {
+                Progress.Finish(progressId, Progress.Status.Failed);
+                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
+                    $"Remove Error: {ex.Message}\n{ex.StackTrace}");
+            }
+            finally
+            {
+                Progress.UnregisterCancelCallback(progressId);
+            }
         }
 
-        public static void SetPresetToAllIcon()
+        public static async UniTask RemoveAllUnusedIconAsync() => await RemoveAllUnusedIconAsync(CancellationToken.None);
+
+        public static void RemoveAllUnusedIcon() => RemoveAllUnusedIconAsync().Forget();
+
+        public static async UniTask ApplyPresetToAllIconAsync(CancellationToken token)
         {
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
             if (preset == null) return;
 
-            var count = 0;
             var paths = Directory.GetFiles(FolderPath, "*.png");
-            foreach (var path in paths)
-            {
-                var fullPath = Path.GetFullPath(path);
-                var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
-                EditorUtility.DisplayProgressBar("Set Preset To All Icon", cutPath, (float)count / paths.Length);
-                count++;
-                var iconImporter = AssetImporter.GetAtPath(path) as TextureImporter;
-                if (iconImporter == null) continue;
-                iconImporter.alphaIsTransparency = true;
-                iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
-                preset.ApplyTo(iconImporter);
-                iconImporter.SaveAndReimport();
-            }
+            var total = paths.Length;
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            var progressId = Progress.Start("Apply Preset To All Icon", "Applying preset to icons...",
+                Progress.Options.Sticky);
 
-            EditorUtility.ClearProgressBar();
+            Progress.RegisterCancelCallback(progressId, () =>
+            {
+                if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
+                    return false;
+                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by user.");
+                cts.Cancel();
+                return true;
+            });
+
+            try
+            {
+                for (var i = 0; i < total; i++)
+                {
+                    if (cts.IsCancellationRequested)
+                        throw new OperationCanceledException(cts.Token);
+
+                    var path = paths[i];
+                    var fullPath = Path.GetFullPath(path);
+                    var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+
+                    Progress.Report(progressId, (float)i / total, $"Applying: {cutPath}");
+
+                    var iconImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+                    if (iconImporter == null)
+                        continue;
+
+                    iconImporter.alphaIsTransparency = true;
+                    iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
+
+                    preset.ApplyTo(iconImporter);
+                    iconImporter.SaveAndReimport();
+
+                    await UniTask.Delay(100, cancellationToken: token);
+                }
+
+                Progress.Finish(progressId);
+            }
+            catch (OperationCanceledException)
+            {
+                Progress.Finish(progressId, Progress.Status.Canceled);
+                Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Apply was cancelled.");
+            }
+            catch (Exception ex)
+            {
+                Progress.Finish(progressId, Progress.Status.Failed);
+                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
+                    $"Apply Error: {ex.Message}\n{ex.StackTrace}");
+            }
+            finally
+            {
+                Progress.UnregisterCancelCallback(progressId);
+            }
         }
+
+        public static async UniTask ApplyPresetToAllIconAsync() =>
+            await ApplyPresetToAllIconAsync(CancellationToken.None);
+
+        public static void ApplyPresetToAllIcon() => ApplyPresetToAllIconAsync().Forget();
 #endif
 
 #if UNITY_EDITOR
