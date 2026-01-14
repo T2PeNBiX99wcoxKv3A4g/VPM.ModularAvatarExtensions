@@ -11,5 +11,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         [MenuItem("Tools/Modular Avatar EX/Apply Preset To All Icon", false, Util.ToolsMenuItemPriority)]
         private static void MenuApplyPresetToAllIcon(MenuCommand menuCommand) =>
             ModularAvatarExtensionsIconGeneratorBase.ApplyPresetToAllIcon();
+
+        [MenuItem("Tools/Modular Avatar EX/Force Generate All Icons", false, Util.ToolsMenuItemPriority)]
+        private static void MenuForceGenerateAllIcons(MenuCommand menuCommand) =>
+            ModularAvatarExtensionsIconGeneratorBase.ForceGenerateAllIcons();
     }
 }

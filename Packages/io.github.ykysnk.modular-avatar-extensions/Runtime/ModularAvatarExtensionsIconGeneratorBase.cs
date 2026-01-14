@@ -153,6 +153,62 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             Check().Forget();
         }
 
+        public static void ForceGenerateAllIcons() => ForceGenerateAllIconsAsync(CancellationToken.None).Forget();
+
+        public static async UniTask ForceGenerateAllIconsAsync() =>
+            await ForceGenerateAllIconsAsync(CancellationToken.None);
+
+        public static async UniTask ForceGenerateAllIconsAsync(CancellationToken token)
+        {
+            var iconGenerators = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            var progressId = Progress.Start(
+                "Force Generate All Icons",
+                "Force Generating all icons...",
+                Progress.Options.Sticky
+            );
+
+            Progress.RegisterCancelCallback(progressId, () =>
+            {
+                if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
+                    return false;
+                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by user.");
+                cts.Cancel();
+                return true;
+            });
+
+            try
+            {
+                for (var i = 0; i < iconGenerators.Length; i++)
+                {
+                    var iconGenerator = iconGenerators[i];
+                    if (cts.IsCancellationRequested)
+                        throw new OperationCanceledException(cts.Token);
+
+                    Progress.Report(progressId, (float)i / iconGenerators.Length, $"Generating: {iconGenerator.name}");
+                    iconGenerator.ForceGenerateIcon();
+                    await UniTask.Delay(100, cancellationToken: token);
+                }
+
+                Progress.Finish(progressId);
+            }
+            catch (OperationCanceledException)
+            {
+                Progress.Finish(progressId, Progress.Status.Canceled);
+                Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Generate was cancelled.");
+            }
+            catch (Exception ex)
+            {
+                Progress.Finish(progressId, Progress.Status.Failed);
+                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
+                    $"Generate Error: {ex.Message}\n{ex.StackTrace}");
+            }
+            finally
+            {
+                Progress.UnregisterCancelCallback(progressId);
+            }
+        }
+
         protected async UniTask GenerateIcon()
         {
 #if UNITY_EDITOR
@@ -368,7 +424,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var total = reportPaths.Count;
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
             var progressId = Progress.Start(
-                "Remove All Unused Icon",
+                "Remove All Unused Icons",
                 "Deleting unused icons...",
                 Progress.Options.Sticky
             );
