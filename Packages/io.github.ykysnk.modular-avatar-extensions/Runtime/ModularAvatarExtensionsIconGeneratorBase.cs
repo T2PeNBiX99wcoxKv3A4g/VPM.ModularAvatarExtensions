@@ -404,11 +404,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [InitializeOnLoadMethod]
         public static void RemoveAllUnusedIconLoader()
         {
-            EditorApplication.projectChanged -= RemoveAllUnusedIcon;
-            EditorApplication.projectChanged += RemoveAllUnusedIcon;
+            EditorApplication.projectChanged -= RemoveAllUnusedIcons;
+            EditorApplication.projectChanged += RemoveAllUnusedIcons;
         }
 
-        public static async UniTask RemoveAllUnusedIconAsync(CancellationToken token)
+        public static async UniTask RemoveAllUnusedIconsAsync(CancellationToken token)
         {
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             var reportPaths = await UniTask.RunOnThreadPool(() =>
@@ -474,11 +474,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             }
         }
 
-        public static async UniTask RemoveAllUnusedIconAsync() => await RemoveAllUnusedIconAsync(CancellationToken.None);
+        public static async UniTask RemoveAllUnusedIconsAsync() =>
+            await RemoveAllUnusedIconsAsync(CancellationToken.None);
 
-        public static void RemoveAllUnusedIcon() => RemoveAllUnusedIconAsync().Forget();
+        public static void RemoveAllUnusedIcons() => RemoveAllUnusedIconsAsync().Forget();
 
-        public static async UniTask ApplyPresetToAllIconAsync(CancellationToken token)
+        public static async UniTask ApplyPresetToAllIconsAsync(CancellationToken token)
         {
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
@@ -544,10 +545,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             }
         }
 
-        public static async UniTask ApplyPresetToAllIconAsync() =>
-            await ApplyPresetToAllIconAsync(CancellationToken.None);
+        public static async UniTask ApplyPresetToAllIconsAsync() =>
+            await ApplyPresetToAllIconsAsync(CancellationToken.None);
 
-        public static void ApplyPresetToAllIcon() => ApplyPresetToAllIconAsync().Forget();
+        public static void ApplyPresetToAllIcons() => ApplyPresetToAllIconsAsync().Forget();
 #endif
 
 #if UNITY_EDITOR

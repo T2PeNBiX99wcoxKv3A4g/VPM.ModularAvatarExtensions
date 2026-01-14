@@ -4,13 +4,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
     internal static class IconGeneratorBaseMenu
     {
-        [MenuItem("Tools/Modular Avatar EX/Remove All Unused Icon", false, Util.ToolsMenuItemPriority)]
-        private static void MenuRemoveAllUnusedIcon(MenuCommand menuCommand) =>
-            ModularAvatarExtensionsIconGeneratorBase.RemoveAllUnusedIcon();
+        [MenuItem("Tools/Modular Avatar EX/Remove All Unused Icons", false, Util.ToolsMenuItemPriority)]
+        private static void MenuRemoveAllUnusedIcons(MenuCommand menuCommand) =>
+            ModularAvatarExtensionsIconGeneratorBase.RemoveAllUnusedIcons();
 
-        [MenuItem("Tools/Modular Avatar EX/Apply Preset To All Icon", false, Util.ToolsMenuItemPriority)]
-        private static void MenuApplyPresetToAllIcon(MenuCommand menuCommand) =>
-            ModularAvatarExtensionsIconGeneratorBase.ApplyPresetToAllIcon();
+        [MenuItem("Tools/Modular Avatar EX/Apply Preset To All Icons", false, Util.ToolsMenuItemPriority)]
+        private static void MenuApplyPresetToAllIcons(MenuCommand menuCommand) =>
+            ModularAvatarExtensionsIconGeneratorBase.ApplyPresetToAllIcons();
 
         [MenuItem("Tools/Modular Avatar EX/Force Generate All Icons", false, Util.ToolsMenuItemPriority)]
         private static void MenuForceGenerateAllIcons(MenuCommand menuCommand) =>
