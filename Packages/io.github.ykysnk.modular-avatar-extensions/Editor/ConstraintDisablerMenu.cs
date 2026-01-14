@@ -1,4 +1,6 @@
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using UnityEngine;
@@ -15,10 +17,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         private static void Menu(MenuCommand menuCommand)
         {
             var obj = menuCommand.context as GameObject;
+            MenuAsync(obj).Forget();
+        }
 
+        private static async UniTask MenuAsync(GameObject? obj)
+        {
             if (obj == null)
             {
-                EditorUtility.DisplayDialog("Error", "Game Object is null", "OK");
+                await EditorUtils.DisplayDialogAsync("Error", "Game Object is null");
                 return;
             }
 
@@ -38,6 +44,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 if (component.TryGetComponent<ModularAvatarExtensionsConstraintDisabler>(out _)) continue;
                 Undo.RecordObject(component, $"{component.FullName()} change");
                 Undo.AddComponent<ModularAvatarExtensionsConstraintDisabler>(component.gameObject);
+                await UniTask.Delay(100);
             }
         }
     }
