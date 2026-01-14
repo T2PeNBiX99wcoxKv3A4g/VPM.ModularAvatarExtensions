@@ -11,8 +11,8 @@ using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using nadena.dev.ndmf.runtime;
 using UnityEngine;
-using Progress = UnityEditor.Progress;
 #if UNITY_EDITOR // Lets me sleep plz
+using Progress = UnityEditor.Progress;
 using UnityEditor;
 using UnityEditor.Presets;
 #endif
@@ -160,6 +160,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public static async UniTask ForceGenerateAllIconsAsync(CancellationToken token)
         {
+#if UNITY_EDITOR
             var iconGenerators = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
             var progressId = Progress.Start(
@@ -207,6 +208,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             {
                 Progress.UnregisterCancelCallback(progressId);
             }
+#endif
         }
 
         protected async UniTask GenerateIcon()
