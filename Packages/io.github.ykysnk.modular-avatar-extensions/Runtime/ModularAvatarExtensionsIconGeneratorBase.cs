@@ -66,7 +66,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First();
 
 #if UNITY_EDITOR
-        private async UniTaskVoid CheckLoop()
+        private async UniTask CheckLoop()
         {
             while (enabled && gameObject.activeSelf)
             {
