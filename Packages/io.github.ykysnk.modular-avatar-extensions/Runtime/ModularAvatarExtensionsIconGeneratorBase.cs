@@ -246,7 +246,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 preset?.ApplyTo(iconImporter);
                 await UniTask.NextFrame();
                 iconImporter.SaveAndReimport();
-                EditorUtility.SetDirty(this);
+                if (this != null)
+                    EditorUtility.SetDirty(this);
                 Progress.Finish(progressId);
 
                 if (modularAvatarMenuItem == null || iconTexture == null ||
