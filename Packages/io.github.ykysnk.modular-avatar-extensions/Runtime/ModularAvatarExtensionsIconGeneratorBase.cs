@@ -62,8 +62,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public bool IsFirst => this != null && GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First() == this;
 
-        public ModularAvatarExtensionsIconGeneratorBase First =>
-            GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First();
+        public ModularAvatarExtensionsIconGeneratorBase? First =>
+            this == null ? null : GetComponents<ModularAvatarExtensionsIconGeneratorBase>().First();
 
 #if UNITY_EDITOR
         private async UniTask CheckLoop()
@@ -90,8 +90,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             if (!IsFirst)
             {
-                iconTexture = First.iconTexture;
-                iconName = First.iconName;
+                iconTexture = First?.iconTexture;
+                iconName = First?.iconName ?? "";
                 return;
             }
 
