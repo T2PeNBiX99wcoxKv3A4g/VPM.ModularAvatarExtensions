@@ -166,7 +166,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var progressId = Progress.Start(
                 "Force Generate All Icons",
                 "Force Generating all icons...",
-                Progress.Options.Sticky
+                Progress.Options.Managed
             );
 
             Progress.RegisterCancelCallback(progressId, () =>
@@ -188,7 +188,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
                     Progress.Report(progressId, (float)i / iconGenerators.Length, $"Generating: {iconGenerator.name}");
                     iconGenerator.ForceGenerateIcon();
-                    await UniTask.Delay(100, cancellationToken: token);
+                    await UniTask.NextFrame(token);
                 }
 
                 Progress.Finish(progressId);
@@ -219,7 +219,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var progressId = Progress.Start(
                 "Generate Icon",
                 "Generating icon...",
-                Progress.Options.Sticky | Progress.Options.Indefinite
+                Progress.Options.Managed | Progress.Options.Indefinite
             );
 
             try
@@ -244,7 +244,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 iconImporter.alphaIsTransparency = true;
                 iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
                 preset?.ApplyTo(iconImporter);
-                await UniTask.Delay(100);
+                await UniTask.NextFrame();
                 iconImporter.SaveAndReimport();
                 EditorUtility.SetDirty(this);
                 Progress.Finish(progressId);
@@ -369,7 +369,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
             var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
             if (!File.Exists(iconPath)) return;
-            await UniTask.Delay(100);
+            await UniTask.NextFrame();
             AssetDatabase.DeleteAsset(iconPath);
 #endif
         }
@@ -428,7 +428,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var progressId = Progress.Start(
                 "Remove All Unused Icons",
                 "Deleting unused icons...",
-                Progress.Options.Sticky
+                Progress.Options.Managed
             );
 
             Progress.RegisterCancelCallback(progressId, () =>
@@ -454,7 +454,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     Progress.Report(progressId, (float)i / total, $"Deleting: {cutPath}");
                     AssetDatabase.DeleteAsset(path);
 
-                    await UniTask.Delay(100, cancellationToken: token);
+                    await UniTask.NextFrame(token);
                 }
 
                 Progress.Finish(progressId);
@@ -491,7 +491,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var total = paths.Length;
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
             var progressId = Progress.Start("Apply Preset To All Icon", "Applying preset to icons...",
-                Progress.Options.Sticky);
+                Progress.Options.Managed);
 
             Progress.RegisterCancelCallback(progressId, () =>
             {
@@ -525,7 +525,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     preset.ApplyTo(iconImporter);
                     iconImporter.SaveAndReimport();
 
-                    await UniTask.Delay(100, cancellationToken: token);
+                    await UniTask.NextFrame(token);
                 }
 
                 Progress.Finish(progressId);
