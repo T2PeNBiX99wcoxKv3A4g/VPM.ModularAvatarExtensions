@@ -15,13 +15,19 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
 
         protected override void Configure()
         {
-            var seq = InPhase(BuildPhase.Generating);
+            var seq = InPhase(BuildPhase.Resolving);
             // TODO: Maybe Validate
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>
             {
-                s.Run(ConstraintDisablerPass.Instance);
-                s.Run(MoveToRootPass.Instance);
                 s.Run(NewNamePass.Instance);
+                s.Run(MoveToRootPass.Instance);
+            });
+
+            seq = InPhase(BuildPhase.Generating);
+
+            seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>
+            {
+                s.Run(ConstraintDisablerPass.Instance);
                 s.Run(RootTransformPathPass.Instance);
                 s.Run(TurnOffInBuildPass.Instance);
                 s.Run(TurnOnInBuildPass.Instance);
