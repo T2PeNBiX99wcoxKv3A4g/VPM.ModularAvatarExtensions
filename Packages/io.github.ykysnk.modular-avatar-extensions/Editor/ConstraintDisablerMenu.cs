@@ -44,7 +44,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 if (component.TryGetComponent<ModularAvatarExtensionsConstraintDisabler>(out _)) continue;
                 Undo.RecordObject(component, $"{component.FullName()} change");
                 Undo.AddComponent<ModularAvatarExtensionsConstraintDisabler>(component.gameObject);
-                await UniTask.NextFrame();
+                await UniTask.DelayFrame(10);
             }
         }
     }
