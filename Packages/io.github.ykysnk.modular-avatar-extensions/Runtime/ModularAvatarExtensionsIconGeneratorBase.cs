@@ -188,7 +188,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
                     Progress.Report(progressId, (float)i / iconGenerators.Length, $"Generating: {iconGenerator.name}");
                     iconGenerator.ForceGenerateIcon();
-                    await UniTask.NextFrame(token);
+                    await UniTask.DelayFrame(10, cancellationToken: token);
                 }
 
                 Progress.Finish(progressId);
@@ -244,11 +244,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 iconImporter.alphaIsTransparency = true;
                 iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
                 preset?.ApplyTo(iconImporter);
-                await UniTask.NextFrame();
                 iconImporter.SaveAndReimport();
                 if (this != null)
                     EditorUtility.SetDirty(this);
                 Progress.Finish(progressId);
+                await UniTask.DelayFrame(10);
 
                 if (modularAvatarMenuItem == null || iconTexture == null ||
                     iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
@@ -370,7 +370,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
             var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
             if (!File.Exists(iconPath)) return;
-            await UniTask.NextFrame();
+            await UniTask.DelayFrame(10);
             AssetDatabase.DeleteAsset(iconPath);
 #endif
         }
@@ -414,6 +414,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public static async UniTask RemoveAllUnusedIconsAsync(CancellationToken token)
         {
             var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
+            if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
             var reportPaths = await UniTask.RunOnThreadPool(() =>
             {
                 return Directory.GetFiles(FolderPath, "*.png")
@@ -455,7 +456,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     Progress.Report(progressId, (float)i / total, $"Deleting: {cutPath}");
                     AssetDatabase.DeleteAsset(path);
 
-                    await UniTask.NextFrame(token);
+                    await UniTask.DelayFrame(10, cancellationToken: token);
                 }
 
                 Progress.Finish(progressId);
@@ -487,7 +488,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
             if (preset == null) return;
-
+            if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
             var paths = Directory.GetFiles(FolderPath, "*.png");
             var total = paths.Length;
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
@@ -526,7 +527,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     preset.ApplyTo(iconImporter);
                     iconImporter.SaveAndReimport();
 
-                    await UniTask.NextFrame(token);
+                    await UniTask.DelayFrame(10, cancellationToken: token);
                 }
 
                 Progress.Finish(progressId);
