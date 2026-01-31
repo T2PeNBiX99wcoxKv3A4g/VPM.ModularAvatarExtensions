@@ -70,10 +70,10 @@ MonoBehaviour:
     translate: This object will be enabled in the avatar build process.
     tooltip: 
   - key: label.view_position.info
-    translate: Please add any avatar descriptor in avatar root
+    translate: Please add an avatar descriptor to the avatar root.
     tooltip: 
   - key: label.view_position.info2
-    translate: This object will be follow the view position
+    translate: This object will follow the view position.
     tooltip: 
   - key: label.view_position.is_lock
     translate: Lock
