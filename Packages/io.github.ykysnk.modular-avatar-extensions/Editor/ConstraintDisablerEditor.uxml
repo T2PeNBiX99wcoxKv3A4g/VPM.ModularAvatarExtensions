@@ -1,7 +1,7 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <uie:ObjectField label="label.constraint_disabler.constraint" type="VRC.Dynamics.DynamicsComponent, VRC.Dynamics"
-                     name="constraint" binding-path="constraint"/>
-    <ui:HelpBox message-type="Error" name="constraintError" text="label.constraint_disabler.constraint_error"/>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <io.github.ykysnk.ModularAvatarExtensions.Editor.UIElements.ValidatedObjectField
+            label="label.constraint_disabler.constraint" error-message="label.constraint_disabler.constraint_error"
+            binding-path="constraint" type="UnityEngine.Component, UnityEngine.CoreModule" name="constraint"/>
     <ui:Toggle label="label.constraint_disabler.is_active" binding-path="isActive" name="stopDisable"/>
     <ui:HelpBox message-type="Info" name="info" text="label.constraint_disabler.info"/>
 </ui:UXML>

@@ -1,10 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:Template name="PhysBoneRootTransformPathEditorListView"
                  src="project://database/Packages/io.github.ykysnk.modular-avatar-extensions/Editor/PhysBoneRootTransformPathEditorListView.uxml?fileID=9197481963319205126&amp;guid=5ac84edbafd02bb44aa061865e54f763&amp;type=3#PhysBoneRootTransformPathEditorListView"/>
-    <uie:ObjectField label="label.root_transform_path_base.phys_bone.component"
-                     type="UnityEngine.Component, UnityEngine.CoreModule" binding-path="component" name="component"/>
-    <ui:HelpBox name="componentNotFound" message-type="Error"
-                text="label.root_transform_path_base.component_not_found"/>
+    <io.github.ykysnk.ModularAvatarExtensions.Editor.UIElements.ValidatedObjectField name="component"
+                                                                                     binding-path="component"
+                                                                                     label="label.root_transform_path_base.phys_bone.component"
+                                                                                     error-message="label.root_transform_path_base.component_not_found"
+                                                                                     type="VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone, VRC.SDK3.Dynamics.PhysBone"/>
     <uie:PropertyField name="reference" binding-path="reference" label="label.root_transform_path_base.root_transform"/>
     <ui:Instance template="PhysBoneRootTransformPathEditorListView" name="ignoreTransformsReferences">
         <AttributeOverrides element-name="references" binding-path="ignoreTransformsReferences"/>

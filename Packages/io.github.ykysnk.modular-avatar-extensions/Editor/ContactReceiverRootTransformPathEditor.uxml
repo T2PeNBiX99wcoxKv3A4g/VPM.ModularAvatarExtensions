@@ -1,7 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <uie:ObjectField label="label.root_transform_path_base.contact_receiver.component"
-                     type="UnityEngine.Component, UnityEngine.CoreModule" binding-path="component" name="component"/>
-    <ui:HelpBox name="componentNotFound" message-type="Error"
-                text="label.root_transform_path_base.component_not_found"/>
+    <io.github.ykysnk.ModularAvatarExtensions.Editor.UIElements.ValidatedObjectField name="component"
+                                                                                     binding-path="component"
+                                                                                     label="label.root_transform_path_base.contact_receiver.component"
+                                                                                     error-message="label.root_transform_path_base.component_not_found"
+                                                                                     type="VRC.Dynamics.ContactReceiver, VRC.Dynamics"/>
     <uie:PropertyField name="reference" binding-path="reference" label="label.root_transform_path_base.root_transform"/>
 </ui:UXML>

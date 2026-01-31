@@ -1,6 +1,5 @@
-using System.Linq;
+using io.github.ykysnk.ModularAvatarExtensions.Editor.UIElements;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UIElements;
@@ -19,32 +18,21 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         protected override VisualElement CreateInnerInspectorGUI()
         {
             var tree = uxml!.CloneTree();
-            var constraint = tree.Q<ObjectField>("constraint");
-            constraint.style.display = DisplayStyle.None;
+            var constraint = tree.Q<ValidatedObjectField>("constraint");
+            constraint.AddValidator(value => value is
+#if MAEX_VRCSDK3_BASE
+                VRCConstraintBase or
+#endif
+                IConstraint);
 
-            var constraintError = tree.Q<HelpBox>("constraintError");
-            constraintError.style.display = DisplayStyle.None;
-
-            tree.schedule.Execute(SetDisplay).Every(100);
+            tree.schedule.Execute(SetDisplay).Every(1000);
             SetDisplay();
             return tree;
 
             void SetDisplay()
             {
                 if (target == null || target is not ModularAvatarExtensionsConstraintDisabler component) return;
-                var isConstraint = component.constraint is
-#if MAEX_VRCSDK3_BASE
-                    VRCConstraintBase or
-#endif
-                    IConstraint;
-                var count = component.GetComponents<Component>().Count(c => c && c is
-#if MAEX_VRCSDK3_BASE
-                    VRCConstraintBase or
-#endif
-                    IConstraint);
-
-                constraint.style.display = count > 1 || !isConstraint ? DisplayStyle.Flex : DisplayStyle.None;
-                constraintError.style.display = count > 1 || !isConstraint ? DisplayStyle.Flex : DisplayStyle.None;
+                constraint.AutoHideIfSameGameObject(component.gameObject);
             }
         }
     }
