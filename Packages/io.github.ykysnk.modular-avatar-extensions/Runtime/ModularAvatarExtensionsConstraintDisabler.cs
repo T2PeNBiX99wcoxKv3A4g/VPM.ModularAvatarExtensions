@@ -13,7 +13,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     public class ModularAvatarExtensionsConstraintDisabler : AvatarMaexComponent
     {
         public Component? constraint;
-        public bool stopDisable;
+        public bool isActive = true;
 
         protected override void OnChange()
         {
@@ -24,7 +24,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
                     IConstraint);
 
-            if (!constraint || RuntimeUtil.IsPlaying || stopDisable) return;
+            if (!constraint || RuntimeUtil.IsPlaying || !isActive) return;
 
             switch (constraint)
             {
