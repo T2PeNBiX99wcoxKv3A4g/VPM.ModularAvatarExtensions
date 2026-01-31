@@ -32,21 +32,9 @@ MonoBehaviour:
       during the build process.\r"
     tooltip: 
   - key: label.editor_only.info
-    translate: This object will be mark as editor only, all bone proxy or constraint
-      will be remove. (If want to remove this object in build, just change tag to
-      'EditorOnly')
-    tooltip: 
-  - key: label.move_to_root.info
-    translate: This object will be automatically moved to the avatar's root Transform.
-    tooltip: 
-  - key: label.move_to_root_of_reference.reference
-    translate: Move Transform
-    tooltip: Reference of transform want to move to root
-  - key: label.move_to_root_of_reference.info
-    translate: Input any object want to move to avatar root
-    tooltip: 
-  - key: label.move_to_root_of_reference.info2
-    translate: Object of '{0}' will be move to avatar root
+    translate: "This object will be marked as Editor-only, and all bone proxies and
+      constraints will be removed. If you want this object to be removed during the
+      build, change its tag to \u2018EditorOnly\u2019."
     tooltip: 
   - key: label.new_name.new_name
     translate: New Name
@@ -54,17 +42,8 @@ MonoBehaviour:
   - key: label.new_name.change_on_inspector
     translate: Change On Inspector
     tooltip: Change name in inspector
-  - key: label.new_name.info
-    translate: This object will be rename to '{0}'
-    tooltip: 
-  - key: label.phys_bone_root_transform_path.set_ignore_transforms
-    translate: Set Ignore Transforms
-    tooltip: 
   - key: label.phys_bone_root_transform_path.ignore_transforms
     translate: Ignore Transforms
-    tooltip: 
-  - key: label.phys_bone_root_transform_path.set_colliders
-    translate: Set Colliders
     tooltip: 
   - key: label.phys_bone_root_transform_path.colliders
     translate: Colliders
@@ -75,44 +54,20 @@ MonoBehaviour:
   - key: label.root_transform_path_base.contact_receiver.component
     translate: Contact Receiver
     tooltip: 
-  - key: label.root_transform_path_base.contact_receiver.info
-    translate: Input any object want to become contact receiver root transform
-    tooltip: 
-  - key: label.root_transform_path_base.contact_receiver.info2
-    translate: Object of '{0}' will become contact receiver root transform
-    tooltip: 
   - key: label.root_transform_path_base.contact_sender.component
     translate: Contact Sender
-    tooltip: 
-  - key: label.root_transform_path_base.contact_sender.info
-    translate: Input any object want to become contact sender root transform
-    tooltip: 
-  - key: label.root_transform_path_base.contact_sender.info2
-    translate: Object of '{0}' will become contact sender root transform
     tooltip: 
   - key: label.root_transform_path_base.phys_bone_collider.component
     translate: Phys Bone Collider
     tooltip: 
-  - key: label.root_transform_path_base.phys_bone_collider.info
-    translate: Input any object want to become phys bone collider root transform
-    tooltip: 
-  - key: label.root_transform_path_base.phys_bone_collider.info2
-    translate: Object of '{0}' will become phys bone collider root transform
-    tooltip: 
   - key: label.root_transform_path_base.phys_bone.component
     translate: Phys Bone
     tooltip: 
-  - key: label.root_transform_path_base.phys_bone.info
-    translate: Input any object want to become phys bone root transform
-    tooltip: 
-  - key: label.root_transform_path_base.phys_bone.info2
-    translate: Object of '{0}' will become phys bone root transform
-    tooltip: 
   - key: label.turn_off_in_build.info
-    translate: This object will be turn off in avatar building
+    translate: This object will be disabled in the avatar build process.
     tooltip: 
   - key: label.turn_on_in_build.info
-    translate: This object will be turn on in avatar building
+    translate: This object will be enabled in the avatar build process.
     tooltip: 
   - key: label.view_position.info
     translate: Please add any avatar descriptor in avatar root
