@@ -32,9 +32,9 @@ MonoBehaviour:
       during the build process.\r"
     tooltip: 
   - key: label.editor_only.info
-    translate: "This object will be marked as Editor-only, and all bone proxies and
+    translate: This object will be marked as Editor-only, and all bone proxies and
       constraints will be removed. If you want this object to be removed during the
-      build, change its tag to \u2018EditorOnly\u2019."
+      build, change its tag to 'EditorOnly'.
     tooltip: 
   - key: label.new_name.new_name
     translate: New Name
