@@ -138,7 +138,7 @@ MonoBehaviour:
     translate: Lock
     tooltip: 
   - key: label.world_scale.info
-    translate: This object scale will be match to world scale
+    translate: The scale of this object will match the world scale.
     tooltip: 
   - key: label.transform_follower.scale_offset
     translate: Scale Offset
@@ -186,7 +186,7 @@ MonoBehaviour:
     translate: Check the root transform path in '{1}'
     tooltip: 
   - key: error.new_name_pass.new_name_is_empty
-    translate: New name is empty
+    translate: The new name has not been set.
     tooltip: 
   - key: error.new_name_pass.new_name_is_empty:description
     translate: New name can't be null or empty '{0}'
@@ -240,20 +240,20 @@ MonoBehaviour:
     translate: This just a test log, doing nothing {0}
     tooltip: 
   - key: label.d4rk_avatar_optimizer_exclude.info
-    translate: This object will be exclude in d4rk Avatar Optimizer
+    translate: This object will be excluded from d4rk Avatar Optimizer.
     tooltip: 
   - key: label.transform_follower.bone_proxy_found
-    translate: Bone proxy component is found, the target will follow bone proxy's
-      target
+    translate: "Bone Proxy component detected. The target will follow the Bone Proxy\u2019s
+      target."
     tooltip: 
   - key: label.transform_follower.position_decimals
-    translate: Position Decimals
+    translate: "Position Decimal Places\r"
     tooltip: 
   - key: label.transform_follower.rotation_decimals
-    translate: Rotation Decimals
+    translate: Rotation Decimal Places
     tooltip: 
   - key: label.transform_follower.scale_decimals
-    translate: Scale Decimals
+    translate: Scale Decimal Places
     tooltip: 
   - key: label.icon_generator.icon_texture
     translate: Icon
@@ -271,10 +271,10 @@ MonoBehaviour:
     translate: Height
     tooltip: The result height after scale
   - key: label.icon_generator.object_toggle_not_found
-    translate: The 'MA Object Toggle' is not found!
+    translate: The "MA Object Toggle" is not found!
     tooltip: 
   - key: label.icon_generator.menu_item_not_found
-    translate: The 'MA Menu Item' is not found!
+    translate: The "MA Menu Item" is not found!
     tooltip: 
   - key: label.icon_generator.avatar_object_references
     translate: Object References
