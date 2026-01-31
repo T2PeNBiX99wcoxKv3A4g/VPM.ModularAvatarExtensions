@@ -21,15 +21,15 @@ MonoBehaviour:
   - key: label.constraint_disabler.constraint
     translate: Constraint
     tooltip: Constraint Component
-  - key: label.constraint_disabler.stop_disable
-    translate: Disable inactive inside inspector
+  - key: label.constraint_disabler.is_active
+    translate: Is Active
     tooltip: 
   - key: label.constraint_disabler.constraint_error
     translate: The target component is not constraint component
     tooltip: 
   - key: label.constraint_disabler.info
-    translate: The constraint component will be disable, active when avatar is in
-      building
+    translate: "The constraint component will be disabled before the build, and enabled
+      during the build process.\r"
     tooltip: 
   - key: label.editor_only.info
     translate: This object will be mark as editor only, all bone proxy or constraint
@@ -37,7 +37,7 @@ MonoBehaviour:
       'EditorOnly')
     tooltip: 
   - key: label.move_to_root.info
-    translate: This object will be move to avatar root
+    translate: This object will be automatically moved to the avatar's root Transform.
     tooltip: 
   - key: label.move_to_root_of_reference.reference
     translate: Move Transform
