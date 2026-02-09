@@ -130,7 +130,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected bool ShouldGenerateIcon()
         {
 #if UNITY_EDITOR
-            var meshDatas = objects.Where(x => x != null).Select(obj => new MeshData(obj)).ToArray();
+            var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
             return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
                    gameObject.IsSceneObject() && IsFirst;
