@@ -33,7 +33,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected ModularAvatarMenuItem? modularAvatarMenuItem;
         [SerializeField] protected Texture2D? iconTexture;
         [SerializeField] protected List<ShapeKeyData> shapeKeyDatas = new();
-        [SerializeField] protected List<GameObject> objects = new();
+        [SerializeField] protected List<GameObject>? objects = new();
         [SerializeField] protected string objectsHash = "";
         [SerializeField] protected string iconName = "";
         [SerializeField] protected bool shouldGenerateIcon;
@@ -130,6 +130,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected bool ShouldGenerateIcon()
         {
 #if UNITY_EDITOR
+            if (objects == null) return false;
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
             return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
@@ -215,6 +216,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
 #if UNITY_EDITOR
             if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
+            if (objects == null) return;
 
             var progressId = Progress.Start(
                 "Generate Icon",
