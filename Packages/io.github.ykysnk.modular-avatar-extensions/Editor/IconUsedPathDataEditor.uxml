@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:TextField picking-mode="Ignore" label="label.icon_generator_base_report_window.full_name" value="filler text"
-                  name="fullName" binding-path="fullName" readonly="true" multiline="true"
-                  style="flex-direction: column; min-height: 60px; white-space: normal;"/>
-    <ui:TextField picking-mode="Ignore" label="label.icon_generator_base_report_window.full_path" value="filler text"
-                  name="fullPath" binding-path="fullPath" readonly="true" multiline="true"
-                  style="flex-direction: column; min-height: 60px; white-space: normal;"/>
-    <uie:ObjectField binding-path="gameObject" name="gameObject"/>
-</ui:UXML>

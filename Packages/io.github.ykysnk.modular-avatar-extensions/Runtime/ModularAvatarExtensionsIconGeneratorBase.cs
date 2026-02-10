@@ -28,8 +28,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected const int CaptureWidthAndHeight = 2048;
         protected const int ScaleWidthAndHeight = 256;
 
-        protected static bool IsQuitting;
-
         [SerializeField] protected ModularAvatarMenuItem? modularAvatarMenuItem;
         [SerializeField] protected Texture2D? iconTexture;
         [SerializeField] protected List<ShapeKeyData> shapeKeyDatas = new();
@@ -39,14 +37,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected bool shouldGenerateIcon;
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
-
-#if UNITY_EDITOR
-        static ModularAvatarExtensionsIconGeneratorBase()
-        {
-            EditorApplication.wantsToQuit -= WantToQuit;
-            EditorApplication.wantsToQuit += WantToQuit;
-        }
-#endif
 
         public Texture2D? IconTexture => iconTexture;
 
@@ -104,12 +94,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
-        private static bool WantToQuit()
-        {
-            IsQuitting = true;
-            return true;
-        }
-
 
         protected override void OnChange()
         {
@@ -154,64 +138,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             Check().Forget();
         }
 
-        public static void ForceGenerateAllIcons() => ForceGenerateAllIconsAsync(CancellationToken.None).Forget();
-
-        public static async UniTask ForceGenerateAllIconsAsync() =>
-            await ForceGenerateAllIconsAsync(CancellationToken.None);
-
-        public static async UniTask ForceGenerateAllIconsAsync(CancellationToken token)
-        {
-#if UNITY_EDITOR
-            var iconGenerators = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
-            var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
-            var progressId = Progress.Start(
-                "Force Generate All Icons",
-                "Force Generating all icons...",
-                Progress.Options.Managed
-            );
-
-            Progress.RegisterCancelCallback(progressId, () =>
-            {
-                if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
-                    return false;
-                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by user.");
-                cts.Cancel();
-                return true;
-            });
-
-            try
-            {
-                for (var i = 0; i < iconGenerators.Length; i++)
-                {
-                    var iconGenerator = iconGenerators[i];
-                    if (cts.IsCancellationRequested)
-                        throw new OperationCanceledException(cts.Token);
-
-                    Progress.Report(progressId, (float)i / iconGenerators.Length, $"Generating: {iconGenerator.name}");
-                    iconGenerator.ForceGenerateIcon();
-                    await UniTask.DelayFrame(10, cancellationToken: token);
-                }
-
-                Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
-            {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Generate was cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
-                    $"Generate Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Progress.UnregisterCancelCallback(progressId);
-            }
-#endif
-        }
-
         protected async UniTask GenerateIcon()
         {
 #if UNITY_EDITOR
@@ -231,10 +157,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                         x => x.Select(y => new ShapeKeyValue(x.Key, y.shapeKeyName, y.value)).ToList());
                 var meshDatas = objects.Select(obj => new MeshData(obj))
                     .ToArray();
-                var oldIconName = iconName;
                 var newIconName = GetIconName(meshDatas);
                 var newIconPath = Path.Combine(FolderPath, newIconName);
-                if (oldIconName != newIconName) RemoveUnusedIcon().Forget();
                 Progress.Report(progressId, 0, $"Generating: {newIconName}");
                 var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
                 if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
@@ -364,19 +288,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
-        protected async UniTask RemoveUnusedIcon()
-        {
-#if UNITY_EDITOR
-            if (IsQuitting || string.IsNullOrEmpty(iconName)) return;
-            var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
-            if (allIconGenerator.Any(x => x != this && x.iconName == iconName)) return;
-            var iconPath = Path.Combine(FolderPath, $"{iconName}.png");
-            if (!File.Exists(iconPath)) return;
-            await UniTask.DelayFrame(10);
-            AssetDatabase.DeleteAsset(iconPath);
-#endif
-        }
-
         protected abstract List<GameObject> GetAllObjects();
 
         protected abstract List<ShapeKeyData> GetAllShapeKeyDatas();
@@ -398,93 +309,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         private void OnDisable() => _checkTokenSource?.Cancel();
 
-        protected override void OnDestroy()
-        {
-            RemoveUnusedIcon().Forget();
-            _checkTokenSource?.Cancel();
-        }
+        protected override void OnDestroy() => _checkTokenSource?.Cancel();
 #endif
 
 #if UNITY_EDITOR
-        [InitializeOnLoadMethod]
-        public static void RemoveAllUnusedIconLoader()
-        {
-            EditorApplication.projectChanged -= RemoveAllUnusedIcons;
-            EditorApplication.projectChanged += RemoveAllUnusedIcons;
-        }
-
-        public static async UniTask RemoveAllUnusedIconsAsync(CancellationToken token)
-        {
-            var allIconGenerator = Resources.FindObjectsOfTypeAll<ModularAvatarExtensionsIconGeneratorBase>();
-            if (!AssetDatabase.IsValidFolder(FolderPath)) Directory.CreateDirectory(FolderPath);
-            var reportPaths = await UniTask.RunOnThreadPool(() =>
-            {
-                return Directory.GetFiles(FolderPath, "*.png")
-                    .Where(path => allIconGenerator.All(x => x.iconName != Path.GetFileNameWithoutExtension(path)))
-                    .ToList();
-            }, cancellationToken: token);
-
-            if (reportPaths.Count < 1)
-                return;
-
-            var total = reportPaths.Count;
-            var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
-            var progressId = Progress.Start(
-                "Remove All Unused Icons",
-                "Deleting unused icons...",
-                Progress.Options.Managed
-            );
-
-            Progress.RegisterCancelCallback(progressId, () =>
-            {
-                if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
-                    return false;
-                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by user.");
-                cts.Cancel();
-                return true;
-            });
-
-            try
-            {
-                for (var i = 0; i < total; i++)
-                {
-                    if (cts.IsCancellationRequested)
-                        throw new OperationCanceledException(cts.Token);
-
-                    var path = reportPaths[i];
-                    var fullPath = Path.GetFullPath(path);
-                    var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
-
-                    Progress.Report(progressId, (float)i / total, $"Deleting: {cutPath}");
-                    AssetDatabase.DeleteAsset(path);
-
-                    await UniTask.DelayFrame(10, cancellationToken: token);
-                }
-
-                Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
-            {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Remove was cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
-                    $"Remove Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Progress.UnregisterCancelCallback(progressId);
-            }
-        }
-
-        public static async UniTask RemoveAllUnusedIconsAsync() =>
-            await RemoveAllUnusedIconsAsync(CancellationToken.None);
-
-        public static void RemoveAllUnusedIcons() => RemoveAllUnusedIconsAsync().Forget();
-
         public static async UniTask ApplyPresetToAllIconsAsync(CancellationToken token)
         {
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
@@ -501,7 +329,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             {
                 if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
                     return false;
-                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by user.");
+                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by the user.");
                 cts.Cancel();
                 return true;
             });
