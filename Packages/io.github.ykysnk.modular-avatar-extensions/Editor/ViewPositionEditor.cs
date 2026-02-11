@@ -11,6 +11,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         [SerializeField] private VisualTreeAsset? uxml;
 
+        private SerializedProperty? _isLock;
+
+        protected override void OnEnable()
+        {
+            _isLock = serializedObject.FindProperty("isLock");
+        }
+
         protected override VisualElement CreateInnerInspectorGUI()
         {
             var tree = uxml!.CloneTree();
@@ -24,6 +31,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 if (target == null || target is not ModularAvatarExtensionsViewPosition viewPosition) return;
                 errorInfo.style.display = viewPosition.avatarDescriptor == null ? DisplayStyle.Flex : DisplayStyle.None;
             }
+        }
+
+        protected override void OnInnerInspectorGUI()
+        {
+            EditorGUILayout.PropertyField(_isLock, "label.view_position.is_lock".G());
         }
     }
 #endif

@@ -1,5 +1,6 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <ui:HelpBox name="errorInfo" text="label.view_position.info" message-type="Error"/>
-    <uie:PropertyField name="isLock" label="label.view_position.is_lock" binding-path="isLock"/>
+    <io.github.ykysnk.utils.Editor.UIElements.BooleanVector3Field binding-path="isLock"
+                                                                  label="label.view_position.is_lock" name="isLock"/>
     <ui:HelpBox name="info" text="label.view_position.info2" message-type="Info"/>
 </ui:UXML>
