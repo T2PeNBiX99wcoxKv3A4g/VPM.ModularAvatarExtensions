@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.utils.NonUdon.Extensions;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using nadena.dev.ndmf.runtime;
@@ -37,6 +38,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected bool shouldGenerateIcon;
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
+
+        private bool _forceShouldGenerateIcon;
 
         public Texture2D? IconTexture => iconTexture;
 
