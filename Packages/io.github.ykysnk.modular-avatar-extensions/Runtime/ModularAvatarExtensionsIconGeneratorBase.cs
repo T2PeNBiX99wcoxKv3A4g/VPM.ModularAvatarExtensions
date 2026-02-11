@@ -145,6 +145,64 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             Check().Forget();
         }
 
+        public static void ForceGenerateAllIcons() => ForceGenerateAllIconsAsync(CancellationToken.None).Forget();
+
+        public static async UniTask ForceGenerateAllIconsAsync() =>
+            await ForceGenerateAllIconsAsync(CancellationToken.None);
+
+        public static async UniTask ForceGenerateAllIconsAsync(CancellationToken token)
+        {
+#if UNITY_EDITOR
+            var iconGenerators = FindObjectsOfType<ModularAvatarExtensionsIconGeneratorBase>(true);
+            var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            var progressId = Progress.Start(
+                "Force Generate All Icons",
+                "Force Generating all icons...",
+                Progress.Options.Managed
+            );
+
+            Progress.RegisterCancelCallback(progressId, () =>
+            {
+                if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
+                    return false;
+                Utils.Log(nameof(ModularAvatarExtensionsIconGeneratorBase), "Cancel requested by the user.");
+                cts.Cancel();
+                return true;
+            });
+
+            var result = await Try.Run(async () =>
+            {
+                for (var i = 0; i < iconGenerators.Length; i++)
+                {
+                    var iconGenerator = iconGenerators[i];
+                    if (cts.IsCancellationRequested)
+                        throw new OperationCanceledException(cts.Token);
+
+                    Progress.Report(progressId, (float)i / iconGenerators.Length, $"Generating: {iconGenerator.name}");
+                    iconGenerator.ForceGenerateIcon();
+                    await UniTask.DelayFrame(10, cancellationToken: token);
+                }
+
+                Progress.Finish(progressId);
+            });
+
+            result.OnFailure(ex =>
+            {
+                if (ex is OperationCanceledException)
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Generate was canceled.");
+                }
+                else
+                {
+                    Progress.Finish(progressId, Progress.Status.Failed);
+                    Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
+                        $"Generate Error: {ex.Message}\n{ex.StackTrace}");
+                }
+            });
+#endif
+        }
+
         protected async UniTask GenerateIcon()
         {
 #if UNITY_EDITOR
