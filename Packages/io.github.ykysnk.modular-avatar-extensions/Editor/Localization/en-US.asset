@@ -330,3 +330,6 @@ MonoBehaviour:
   - key: label.root_transform_path_base.component_not_found
     translate: The required component is not found!
     tooltip: 
+  - key: label.icon.help
+    translate: This file is used to store the icon hash values.
+    tooltip: 

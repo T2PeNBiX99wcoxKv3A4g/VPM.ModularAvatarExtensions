@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:HelpBox message-type="Info" name="help" text="label.icon.help"/>
+        <ui:TextField picking-mode="Ignore" value="filler text" readonly="true" binding-path="iconNameWithLastTime"
+                      name="iconNameWithLastTime"/>
+        <uie:ObjectField type="UnityEngine.Texture2D, UnityEngine.CoreModule" name="icon"/>
+    </ui:VisualElement>
+</ui:UXML>
