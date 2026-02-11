@@ -35,11 +35,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected List<GameObject>? objects = new();
         [SerializeField] protected string objectsHash = "";
         [SerializeField] protected string iconName = "";
-        [SerializeField] protected bool shouldGenerateIcon;
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
-
         private bool _forceShouldGenerateIcon;
+
+        private bool _shouldGenerateIcon;
 
         public Texture2D? IconTexture => iconTexture;
 
@@ -73,14 +73,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual async UniTask Check()
         {
 #if UNITY_EDITOR
-            if (shouldGenerateIcon || _forceShouldGenerateIcon)
+            if (_shouldGenerateIcon || _forceShouldGenerateIcon)
             {
-                shouldGenerateIcon = false;
+                _shouldGenerateIcon = false;
                 _forceShouldGenerateIcon = false;
                 await GenerateIcon();
             }
             else
-                shouldGenerateIcon = ShouldGenerateIcon();
+                _shouldGenerateIcon = ShouldGenerateIcon();
 
             if (!IsFirst)
             {
@@ -110,7 +110,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             shapeKeyDatas = GetAllShapeKeyDatasFromAllGenerator().Distinct().OrderBy(x => x.shapeKeyName).ToList();
             iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(Path.Combine(FolderPath, $"{iconName}.png"));
             iconImporter = AssetImporter.GetAtPath(Path.Combine(FolderPath, $"{iconName}.png")) as TextureImporter;
-            shouldGenerateIcon = ShouldGenerateIcon();
+            _shouldGenerateIcon = ShouldGenerateIcon();
 #endif
         }
 
