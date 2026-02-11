@@ -44,11 +44,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public Texture2D? IconTexture => iconTexture;
 
 #if UNITY_EDITOR
-        public Preset? Preset
-        {
-            get => preset;
-            set => preset = value;
-        }
+        public Preset? Preset { get; set; }
 #endif
 
         public string IconName => iconName;
@@ -103,7 +99,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #if UNITY_EDITOR
             modularAvatarMenuItem = GetComponent<ModularAvatarMenuItem>();
             var guid = PlayerPrefs.GetString("ModularAvatarExtensionsIconGeneratorPresetGUID", "");
-            preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
+            Preset = AssetDatabase.LoadAssetAtPath<Preset>(AssetDatabase.GUIDToAssetPath(guid));
             if (!gameObject.activeSelf || !gameObject.IsSceneObject() || !IsFirst) return;
             objects = GetAllObjectsFromAllGenerator().Distinct().OrderBy(x => x.name).ToList();
             objectsHash = ListHash(objects.Select(RuntimeUtil.AvatarRootPath));
@@ -238,7 +234,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 if (iconImporter == null) return;
                 iconImporter.alphaIsTransparency = true;
                 iconImporter.alphaSource = TextureImporterAlphaSource.FromInput;
-                preset?.ApplyTo(iconImporter);
+                Preset?.ApplyTo(iconImporter);
                 iconImporter.SaveAndReimport();
                 if (this != null)
                     EditorUtility.SetDirty(this);
@@ -534,7 +530,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         }
 
         [SerializeField] protected TextureImporter? iconImporter;
-        [SerializeField] protected Preset? preset;
 #endif
     }
 }
