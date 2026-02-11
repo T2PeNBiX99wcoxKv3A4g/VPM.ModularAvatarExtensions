@@ -2,6 +2,7 @@ using io.github.ykysnk.utils.Editor;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
@@ -13,6 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         protected override void OnErrorHandleInspectorGUI()
         {
             OnInnerInspectorGUI();
+            GUI.enabled = true;
             EditorGUILayout.Separator();
             InternalLocalizationExtensions.Helper.SelectLanguageGUI();
 
