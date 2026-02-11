@@ -29,7 +29,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             if (property.serializedObject.targetObject is not ModularAvatarExtensionsChangeMaterialInBuild
                 targetComponent)
-                return BasicEditor.CreateErrorUI("Target object is not ModularAvatarExtensionsChangeMaterialInBuild.");
+                return BasicEditor.CreateErrorUI(
+                    "The target object is not ModularAvatarExtensionsChangeMaterialInBuild.");
 
             var renderer = targetComponent.Renderer;
             if (renderer == null)
@@ -83,6 +84,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 if (material == null) return;
                 previewMaterialField.value = material;
             }
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.HelpBox(position, "label.only_ui_toolkit".S(), MessageType.Info);
         }
     }
 }

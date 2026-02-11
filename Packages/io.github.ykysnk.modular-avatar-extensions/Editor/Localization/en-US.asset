@@ -333,3 +333,6 @@ MonoBehaviour:
   - key: label.icon.help
     translate: This file is used to store the icon hash values.
     tooltip: 
+  - key: label.only_ui_toolkit
+    translate: Unable to display override info in IMGUI.
+    tooltip: 
