@@ -389,7 +389,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
 
 #if UNITY_EDITOR
-        protected static string GetMaterialsSha256(MeshData meshData)
+        protected static string GetMaterialsSha256WithLastTime(MeshData meshData)
         {
             var guidWithTimes = meshData.Materials.Select(m =>
             {
@@ -401,11 +401,32 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             return ListHash(guidWithTimes);
         }
 
+        protected static string GetMaterialsSha256(MeshData meshData)
+        {
+            var guidWithTimes = meshData.Materials.Select(m =>
+            {
+                var path = AssetDatabase.GetAssetPath(m);
+                var guid = AssetDatabase.AssetPathToGUID(path);
+                return guid;
+            });
+            return ListHash(guidWithTimes);
+        }
+
         protected static string GetAssetPathFromMesh(MeshData meshData)
         {
             var path = AssetDatabase.GetAssetPath(meshData.Mesh);
             var fbxPath = AssetDatabase.GetAssetPath(AssetDatabase.LoadMainAssetAtPath(path));
             return fbxPath;
+        }
+
+        protected static string? GetFBXAssetSha256WithLastTime(MeshData meshData)
+        {
+            if (meshData.Mesh == null) return null;
+            var assetPath = GetAssetPathFromMesh(meshData);
+            if (string.IsNullOrEmpty(assetPath)) return null;
+            var assetGuid = AssetDatabase.AssetPathToGUID(assetPath);
+            var lastWriteTime = File.GetLastWriteTime(assetPath);
+            return $"{assetGuid}.{lastWriteTime:yyyyMMddHHmmss}";
         }
 
         protected static string? GetFBXAssetSha256(MeshData meshData)
@@ -414,8 +435,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             var assetPath = GetAssetPathFromMesh(meshData);
             if (string.IsNullOrEmpty(assetPath)) return null;
             var assetGuid = AssetDatabase.AssetPathToGUID(assetPath);
-            var lastWriteTime = File.GetLastWriteTime(assetPath);
-            return $"{assetGuid}.{lastWriteTime:yyyyMMddHHmmss}";
+            return assetGuid;
         }
 
         protected string GetIconName(MeshData[] meshData2)
