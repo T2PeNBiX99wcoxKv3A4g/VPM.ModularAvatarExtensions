@@ -67,6 +67,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         [PublicAPI]
         protected virtual void OnInnerInspectorGUI()
         {
+            EditorGUILayout.HelpBox("label.only_ui_toolkit".S(), MessageType.Info);
         }
 
         [PublicAPI]
