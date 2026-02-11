@@ -153,7 +153,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 Progress.Options.Managed | Progress.Options.Indefinite
             );
 
-            try
+            var result = await Try.Run(async () =>
             {
                 var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.gameObject)
                     .ToDictionary(x => x.Key,
@@ -184,13 +184,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
                 modularAvatarMenuItem.PortableControl.Icon = iconTexture;
                 EditorUtility.SetDirty(modularAvatarMenuItem);
-            }
-            catch (Exception ex)
+            });
+
+            result.OnFailure(ex =>
             {
                 Progress.Finish(progressId, Progress.Status.Failed);
                 Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
                     $"Generate Icon Error: {ex.Message}\n{ex.StackTrace}");
-            }
+            });
 #endif
         }
 
@@ -337,7 +338,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 return true;
             });
 
-            try
+            var result = await Try.Run(async () =>
             {
                 for (var i = 0; i < total; i++)
                 {
@@ -364,22 +365,22 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
 
                 Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
+            });
+
+            result.OnFailure(ex =>
             {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Apply was cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
-                    $"Apply Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Progress.UnregisterCancelCallback(progressId);
-            }
+                if (ex is OperationCanceledException)
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    Utils.LogWarning(nameof(ModularAvatarExtensionsIconGeneratorBase), "Apply was canceled.");
+                }
+                else
+                {
+                    Progress.Finish(progressId, Progress.Status.Failed);
+                    Utils.LogError(nameof(ModularAvatarExtensionsIconGeneratorBase),
+                        $"Apply Error: {ex.Message}\n{ex.StackTrace}");
+                }
+            });
         }
 
         public static async UniTask ApplyPresetToAllIconsAsync() =>
