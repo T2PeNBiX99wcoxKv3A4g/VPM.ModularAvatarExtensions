@@ -37,8 +37,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         [SerializeField] protected string iconName = "";
         [SerializeField] protected int scaleWidth = ScaleWidthAndHeight;
         [SerializeField] protected int scaleHeight = ScaleWidthAndHeight;
-        private bool _forceShouldGenerateIcon;
 
+        private bool _forceShouldGenerateIcon;
         private bool _shouldGenerateIcon;
 
         public Texture2D? IconTexture => iconTexture;
