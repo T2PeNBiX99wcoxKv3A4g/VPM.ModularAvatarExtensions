@@ -9,7 +9,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
         public static ModularAvatarExtensionsIcon GetOrCreate(string path)
         {
-            // Why the fuck this object be loaded in runtime?
+            // Why the fuck this object be loaded in avatar runtime build?
 #if UNITY_EDITOR
             var asset = AssetDatabase.LoadAssetAtPath<ModularAvatarExtensionsIcon>(path);
             if (asset != null) return asset;
