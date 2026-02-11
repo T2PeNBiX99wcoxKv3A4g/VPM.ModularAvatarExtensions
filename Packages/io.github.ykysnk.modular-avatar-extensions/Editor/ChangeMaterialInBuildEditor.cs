@@ -10,10 +10,23 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         [SerializeField] private VisualTreeAsset? uxml;
 
+        private SerializedProperty? _materialChangeDatas;
+
+        protected override void OnEnable()
+        {
+            _materialChangeDatas = serializedObject.FindProperty("materialChangeDatas");
+        }
+
         protected override VisualElement CreateInnerInspectorGUI()
         {
             var tree = uxml!.CloneTree();
             return tree;
+        }
+
+        protected override void OnInnerInspectorGUI()
+        {
+            GUI.enabled = false;
+            EditorGUILayout.PropertyField(_materialChangeDatas);
         }
     }
 }
