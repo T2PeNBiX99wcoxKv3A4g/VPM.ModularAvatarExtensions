@@ -73,9 +73,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         protected virtual async UniTask Check()
         {
 #if UNITY_EDITOR
-            if (shouldGenerateIcon)
+            if (shouldGenerateIcon || _forceShouldGenerateIcon)
             {
                 shouldGenerateIcon = false;
+                _forceShouldGenerateIcon = false;
                 await GenerateIcon();
             }
             else
@@ -96,7 +97,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             EditorUtility.SetDirty(modularAvatarMenuItem);
 #endif
         }
-
 
         protected override void OnChange()
         {
@@ -120,7 +120,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             if (objects == null) return false;
             var meshDatas = objects.Select(obj => new MeshData(obj)).ToArray();
             var newIconName = GetIconName(meshDatas);
-            return (iconName != newIconName || meshDatas.Length > 0 && iconTexture == null) &&
+            var newIconNameWithLastTime = GetIconNameWithLastTime(meshDatas);
+            var newIconPath = Path.Combine(FolderPath, newIconName);
+            var asset = ModularAvatarExtensionsIcon.GetOrCreate($"{newIconPath}.asset");
+            return (iconName != newIconName || asset.iconNameWithLastTime != newIconNameWithLastTime ||
+                    meshDatas.Length > 0 && iconTexture == null) &&
                    gameObject.IsSceneObject() && IsFirst;
 #else
             return false;
@@ -137,7 +141,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         {
             if (!IsFirst) return;
             OnChange();
-            shouldGenerateIcon = true;
+            _forceShouldGenerateIcon = true;
             Check().Forget();
         }
 
@@ -161,11 +165,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 var meshDatas = objects.Select(obj => new MeshData(obj))
                     .ToArray();
                 var newIconName = GetIconName(meshDatas);
+                var newIconNameWithLastTime = GetIconNameWithLastTime(meshDatas);
                 var newIconPath = Path.Combine(FolderPath, newIconName);
                 Progress.Report(progressId, 0, $"Generating: {newIconName}");
                 var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
                 if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
+                var asset = ModularAvatarExtensionsIcon.GetOrCreate($"{newIconPath}.asset");
                 iconName = newIconName;
+                asset.iconNameWithLastTime = newIconNameWithLastTime;
+                asset.Save();
                 AssetDatabase.Refresh();
                 iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>($"{newIconPath}.png");
                 iconImporter = AssetImporter.GetAtPath($"{newIconPath}.png") as TextureImporter;
@@ -439,6 +447,20 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             return assetGuid;
         }
 
+        protected string GetIconNameWithLastTime(MeshData[] meshData2)
+        {
+            var iconNames = meshData2.Select(meshData =>
+            {
+                if (meshData.Mesh == null) return "";
+                var fbxAssetGuid = GetFBXAssetSha256WithLastTime(meshData);
+                var matsSha256 = GetMaterialsSha256WithLastTime(meshData);
+                return $"{fbxAssetGuid}.{meshData.Mesh?.name}.{matsSha256}";
+            });
+            return StringHash(iconNames.ListString(),
+                shapeKeyDatas.Select(x => $"{RuntimeUtil.AvatarRootPath(x.gameObject)}/{x.shapeKeyName}/{x.value}")
+                    .ListString());
+        }
+
         protected string GetIconName(MeshData[] meshData2)
         {
             var iconNames = meshData2.Select(meshData =>
@@ -452,8 +474,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 shapeKeyDatas.Select(x => $"{RuntimeUtil.AvatarRootPath(x.gameObject)}/{x.shapeKeyName}/{x.value}")
                     .ListString());
         }
-#endif
-#if UNITY_EDITOR
+
         [SerializeField] protected TextureImporter? iconImporter;
         [SerializeField] protected Preset? preset;
 #endif
