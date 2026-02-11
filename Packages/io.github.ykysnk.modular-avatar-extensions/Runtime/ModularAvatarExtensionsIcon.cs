@@ -24,6 +24,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 #endif
         }
 
+#if UNITY_EDITOR
         public void Save() => EditorUtility.SetDirty(this);
+#else
+        public void Save() => throw new("Do not call this method in runtime.");
+#endif
     }
 }
