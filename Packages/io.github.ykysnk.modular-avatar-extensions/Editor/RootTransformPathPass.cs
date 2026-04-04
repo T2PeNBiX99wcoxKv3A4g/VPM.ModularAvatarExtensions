@@ -52,7 +52,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                             if (setComponent == null)
                             {
-                                LogNonFatal("error.root_transform_path_pass.root_transform_not_found", findType.Name,
+                                LogError("error.root_transform_path_pass.root_transform_not_found", findType.Name,
                                     component.FullName());
                                 continue;
                             }
@@ -63,7 +63,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                             if (string.IsNullOrEmpty(referencePath))
                             {
                                 if (!rootTransformPathBase.IsValid())
-                                    LogNonFatal("error.root_transform_path_pass.invalid_reference_path",
+                                    LogError("error.root_transform_path_pass.invalid_reference_path",
                                         component.FullName());
                                 continue;
                             }
