@@ -17,5 +17,5 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             return tree;
         }
     }
-#endif
 }
+#endif

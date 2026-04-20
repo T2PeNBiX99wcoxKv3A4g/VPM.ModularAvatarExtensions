@@ -62,5 +62,5 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             return false;
         }
     }
-#endif
 }
+#endif
