@@ -1,1 +1,0 @@
-Packages/io.github.ykysnk.modular-avatar-extensions/README.md
