@@ -73,7 +73,7 @@
       "dependencies": {}
     },
     "dev.sakurayuki.uniasset": {
-      "version": "1.4.0",
+      "version": "1.4.1",
       "dependencies": {}
     },
     "jp.lilxyzw.liltoon": {
@@ -91,7 +91,7 @@
       }
     },
     "d4rkpl4y3r.d4rkavataroptimizer": {
-      "version": "4.3.1",
+      "version": "4.3.4",
       "dependencies": {
         "com.vrchat.avatars": ">=3.9.0 <4.0.0-a"
       }
