@@ -2,6 +2,7 @@
   "name": "io.github.ykysnk.modular-avatar-extensions",
   "displayName": "Modular Avatar Extensions",
   "version": "0.19.7",
+  "unity": "2022.3",
   "description": "Extensions for ModularAvatar",
   "gitDependencies": {},
   "vpmDependencies": {
@@ -17,5 +18,6 @@
   },
   "legacyFolders": {},
   "legacyFiles": {},
-  "localPath": "L:\\VRChatProjects\\VPM.ModularAvatarExtensions\\Packages\\io.github.ykysnk.modular-avatar-extensions"
+  "changelogUrl": "https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/blob/main/CHANGELOG.md",
+  "license": "MIT"
 }
