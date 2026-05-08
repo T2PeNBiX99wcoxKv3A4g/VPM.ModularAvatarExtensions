@@ -136,7 +136,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         {
             var dummy = fx.AddLayer(new(0), DummyLayerName);
             var s = dummy.StateMachine!.DefaultState = dummy.StateMachine.AddState("Dummy");
-            var s2 = dummy.StateMachine.AddState("Dummy2", position: new Vector2(0, 1));
+            var s2 = dummy.StateMachine.AddState("Dummy2", position: new Vector2(0, 4));
             var behaviours = new List<StateMachineBehaviour>();
             var driver = ScriptableObject.CreateInstance<VRCAvatarParameterDriver>();
             var parameter = fx.Parameters.FirstOrDefault(x => x.Key == DummyParameterName);
@@ -180,6 +180,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             };
 
             sTos2.Conditions = sTos2Conditions.ToImmutableList();
+            s.Transitions = ImmutableList.Create(sTos2);
             newLayers.Add(dummy);
         }
     }
