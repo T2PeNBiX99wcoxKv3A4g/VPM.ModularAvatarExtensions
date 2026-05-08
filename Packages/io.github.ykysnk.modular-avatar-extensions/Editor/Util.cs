@@ -72,7 +72,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             foreach (var ty in assembly.GetTypes())
-                if (typeof(AvatarMaexComponent).IsAssignableFrom(ty) && !ty.IsAbstract)
+                if ((typeof(AvatarMaexComponent).IsAssignableFrom(ty) ||
+                     typeof(AvatarMaexStateMachine).IsAssignableFrom(ty)) && !ty.IsAbstract)
                 {
                     var path = $"Packages/io.github.ykysnk.modular-avatar-extensions/Runtime/{ty.Name}.cs";
 

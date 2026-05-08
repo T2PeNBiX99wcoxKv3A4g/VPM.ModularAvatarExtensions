@@ -1,5 +1,6 @@
 using io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition;
 using nadena.dev.ndmf;
+using nadena.dev.ndmf.animator;
 using UnityEngine;
 
 [assembly: ExportsPlugin(typeof(PluginDefinition))]
@@ -43,7 +44,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
 #endif
             });
 
-            seq = InPhase(BuildPhase.Transforming);
+            seq = InPhase(BuildPhase.Optimizing);
+            seq.AfterPlugin("nadena.dev.modular-avatar");
+            seq.WithRequiredExtensions(new[]
+            {
+                typeof(AnimatorServicesContext), typeof(ModularAvatarExtensionsContext)
+            }, s => { s.Run(LayerIndexControlPass.Instance); });
+
+            seq = InPhase(BuildPhase.PlatformFinish);
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>
                 s.Run("Purge ModularAvatar EX components", ctx =>
                 {
