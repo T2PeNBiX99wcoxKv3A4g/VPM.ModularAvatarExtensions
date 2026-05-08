@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.20.3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.2..0.20.3) - 2026-05-08
+
+### 🐛 Bug Fixes
+
+- Adjust dummy state position and assign transitions in `LayerIndexControlPass` - ([9dc2b20](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/9dc2b208a26e6f5ea5271ef7eb897965b5f1cfc4))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.20.3 in `package.json` - ([4b7e8b4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/4b7e8b4f95fa94abe63d86dcb9476a608a1ec31e))
+
+### Action
+
+- Update `CHANGELOG.md` - ([744196b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/744196b8be6b606e1a05400cec8eeb5d128b83ba))
+
+
 ## [0.20.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.1..0.20.2) - 2026-05-08
 
 ### 🐛 Bug Fixes
