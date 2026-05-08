@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.20.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.0..0.20.1) - 2026-05-08
+
+### 🐛 Bug Fixes
+
+- Correct type name for `VRCAvatarParameterDriver` in `LayerIndexControlPass` - ([1c19556](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/1c1955630bedf0a06c4a987f7024514522955bd2))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.20.1 in `package.json` - ([798b3bf](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/798b3bf143c970eb33683f54dc8f0802ab463c36))
+- Update TODO comment in `LayerIndexControlPass.cs` - ([0a6943a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/0a6943ad2fc18a32a5ff20124b3cc36cebd55597))
+
+### Action
+
+- Update `CHANGELOG.md` - ([a556d8c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/a556d8c9abc83dd9aad2a205de5616512aeccc03))
+
+## New Contributors ❤️
+
+* @github-actions[bot] made their first contribution
+
 ## [0.20.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.19.7..0.20.0) - 2026-05-08
 
 ### ⛰️  Features
