@@ -17,7 +17,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         private const string MergeBlendTreeLayerName = "ModularAvatar: Merge Blend Tree";
         private const string DummyLayerName = "Modular Avatar Extensions: MMD Dummy";
         private const string DummyParameterName = "__MAEX/Internal/IsDummy";
-        private const string IsLocalParameterName = "IsLocal";
         private const int MmdLayerMustIndex = 2;
 
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.LayerIndexControl";
@@ -28,6 +27,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var avatar = ctx.AvatarRootObject;
             var layerFix = avatar.GetComponentInChildren<ModularAvatarExtensionsLayerFix>(true);
 
+            // TODO: Move to new pass
             if (layerFix != null && layerFix.FixMmdLayer)
             {
                 var asc = ctx.Extension<AnimatorServicesContext>();
@@ -145,8 +145,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 fx.Parameters = fx.Parameters.Add(DummyParameterName, new()
                 {
                     name = DummyParameterName,
-                    type = AnimatorControllerParameterType.Int,
-                    defaultInt = 0
+                    type = AnimatorControllerParameterType.Bool,
+                    defaultBool = false
                 });
 
             driver.parameters = new()
@@ -154,8 +154,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 new()
                 {
                     name = DummyParameterName,
-                    type = VRC_AvatarParameterDriver.ChangeType.Copy,
-                    source = IsLocalParameterName
+                    type = VRC_AvatarParameterDriver.ChangeType.Set,
+                    value = 1
                 }
             };
 
@@ -173,9 +173,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             {
                 new()
                 {
-                    parameter = IsLocalParameterName,
-                    mode = AnimatorConditionMode.NotEqual,
-                    threshold = 0
+                    parameter = DummyParameterName,
+                    mode = AnimatorConditionMode.IfNot,
+                    threshold = 1
                 }
             };
 
