@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.20.4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.3..0.20.4) - 2026-05-08
+
+### 🐛 Bug Fixes
+
+- Update dummy parameter type and logic in `LayerIndexControlPass` - ([3072813](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/30728132ffed19013b4d492943aa952e73845b56))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.20.4 in `package.json` - ([7e2171c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/7e2171c6a4d9a854fc79a75bb8f6bb7b93c5d777))
+
+### Action
+
+- Update `CHANGELOG.md` - ([0d60870](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/0d60870038dda0a71d50534ba7c088a6c224b478))
+
+
 ## [0.20.3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.2..0.20.3) - 2026-05-08
 
 ### 🐛 Bug Fixes
