@@ -139,7 +139,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             var s2 = dummy.StateMachine.AddState("Dummy2");
             s.Motion = VirtualClip.Create("_");
             var behaviours = new List<StateMachineBehaviour>();
-            var driver = ScriptableObject.CreateInstance<VRC_AvatarParameterDriver>();
+            var driver = ScriptableObject.CreateInstance<VRCAvatarParameterDriver>();
 
             var parameter = fx.Parameters.FirstOrDefault(x => x.Key == DummyParameterName);
 
