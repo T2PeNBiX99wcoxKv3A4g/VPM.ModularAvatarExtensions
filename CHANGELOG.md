@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.20.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.1..0.20.2) - 2026-05-08
+
+### 🐛 Bug Fixes
+
+- Ensure `Motion` is properly assigned to dummy states in `LayerIndexControlPass` - ([0593265](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/05932652807545db6a41a353852ac67510ba7fa8))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.20.2 in `package.json` - ([e8a3376](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/e8a33766022006a8ca49830d681c9971480e7916))
+
+### Action
+
+- Update `CHANGELOG.md` - ([c313e78](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/c313e789c0f8c455ecb6daa1aee26157db70ca7d))
+
+
 ## [0.20.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.0..0.20.1) - 2026-05-08
 
 ### 🐛 Bug Fixes
