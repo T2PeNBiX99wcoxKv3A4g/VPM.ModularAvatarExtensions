@@ -79,7 +79,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     {
                         for (var i = 0; i < MmdLayerMustIndex; i++)
                         {
-                            if (i == MmdLayerMustIndex - 1)
+                            if (i is > 0 and < MmdLayerMustIndex)
                             {
                                 CreateDummyLayer(fx, newLayers);
                                 continue;
