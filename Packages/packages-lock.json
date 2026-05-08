@@ -324,6 +324,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "one.razgriz.rats": {
+      "version": "file:one.razgriz.rats",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "vrchat.blackstartx.gesture-manager": {
       "version": "file:vrchat.blackstartx.gesture-manager",
       "depth": 0,
