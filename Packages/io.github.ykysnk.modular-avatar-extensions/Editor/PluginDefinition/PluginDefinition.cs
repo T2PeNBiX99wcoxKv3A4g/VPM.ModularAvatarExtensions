@@ -1,3 +1,4 @@
+using io.github.ykysnk.ModularAvatarExtensions.Editor.Animation;
 using io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.animator;
@@ -35,21 +36,42 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
                 s.Run(EditorOnlyPass.Instance);
                 s.Run(ChangeMaterialInBuildPass.Instance);
 #if MAEX_VRCSDK3_BASE
-                s.Run(ViewPositionPass.Instance);
+                s.OnPlatforms(new[]
+                {
+                    WellKnownPlatforms.VRChatAvatar30
+                }, s2 => s2.Run(ViewPositionPass.Instance));
 #endif
                 s.Run(WorldScalePass.Instance);
                 s.Run(IconGeneratorPass.Instance);
+            });
+
+            seq = InPhase(BuildPhase.Transforming);
+            seq.AfterPlugin("nadena.dev.modular-avatar");
+            seq.WithRequiredExtensions(new[]
+            {
+                typeof(AnimatorServicesContext), typeof(ModularAvatarExtensionsContext)
+            }, s =>
+            {
 #if MAEX_VRCSDK3_BASE
-                s.Run(ParamOnlyObjectPass.Instance);
+                s.WithRequiredExtension(typeof(ReadablePropertyExtension),
+                    s2 => { s2.Run(ParamOnlyObjectPass.Instance); });
 #endif
             });
 
+#if MAEX_VRCSDK3_BASE
             seq = InPhase(BuildPhase.Optimizing);
             seq.AfterPlugin("nadena.dev.modular-avatar");
             seq.WithRequiredExtensions(new[]
             {
                 typeof(AnimatorServicesContext), typeof(ModularAvatarExtensionsContext)
-            }, s => { s.Run(LayerIndexControlPass.Instance); });
+            }, s =>
+            {
+                s.OnPlatforms(new[]
+                {
+                    WellKnownPlatforms.VRChatAvatar30
+                }, s2 => s2.Run(MmdLayerFixPass.Instance));
+            });
+#endif
 
             seq = InPhase(BuildPhase.PlatformFinish);
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>

@@ -17,7 +17,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     internal class ParamOnlyObjectPass : MaexPass<ParamOnlyObjectPass>
     {
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.ParamOnlyObject";
-        public override string DisplayName => "Modular Avatar Extensions Param Only Object";
+        public override string DisplayName => "Modular Avatar Extensions Param-Only Object";
 
         // TODO: Search anim clip then change them, Preview
         // TODO: Should replace to AnimatorServicesContext
