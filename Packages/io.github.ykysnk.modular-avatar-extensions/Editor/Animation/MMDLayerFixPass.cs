@@ -21,6 +21,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
         private const string DummyParameterName = "__MAEX/Internal/IsDummy";
         private const int MmdLayerMustIndex = 2;
 
+        private int _index;
+
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.MMDLayerFix";
         public override string DisplayName => "Modular Avatar Extensions MMD Layer Fix";
 
@@ -132,28 +134,27 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             fx.Layers = newLayers.Concat(currentLayers).ToArray();
         }
 
-        private static void CreateDummyLayer(VirtualAnimatorController fx, List<VirtualLayer> newLayers)
+        private void CreateDummyLayer(VirtualAnimatorController fx, List<VirtualLayer> newLayers)
         {
             var dummy = fx.AddLayer(new(0), DummyLayerName);
             var s = dummy.StateMachine!.DefaultState = dummy.StateMachine.AddState("Dummy");
-            var s2 = dummy.StateMachine.AddState("Dummy2", position: new Vector2(0, -10));
+            var s2 = dummy.StateMachine.AddState("Dummy2", position: new Vector2(0, -20));
             var behaviours = new List<StateMachineBehaviour>();
             var driver = ScriptableObject.CreateInstance<VRCAvatarParameterDriver>();
-            var parameter = fx.Parameters.FirstOrDefault(x => x.Key == DummyParameterName);
+            var dummyParameterName = $"{DummyParameterName}##{_index++}";
 
-            if (parameter.Value == null)
-                fx.Parameters = fx.Parameters.Add(DummyParameterName, new()
-                {
-                    name = DummyParameterName,
-                    type = AnimatorControllerParameterType.Bool,
-                    defaultBool = false
-                });
+            fx.Parameters = fx.Parameters.SetItem(dummyParameterName, new()
+            {
+                name = dummyParameterName,
+                type = AnimatorControllerParameterType.Bool,
+                defaultBool = false
+            });
 
             driver.parameters = new()
             {
                 new()
                 {
-                    name = DummyParameterName,
+                    name = dummyParameterName,
                     type = VRC_AvatarParameterDriver.ChangeType.Set,
                     value = 1
                 }
@@ -173,7 +174,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             {
                 new()
                 {
-                    parameter = DummyParameterName,
+                    parameter = dummyParameterName,
                     mode = AnimatorConditionMode.IfNot,
                     threshold = 1
                 }
