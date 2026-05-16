@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.21.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.21.1..0.21.2) - 2026-05-16
+
+### 🚜 Refactor
+
+- Dynamically generate unique dummy parameter names in `MMDLayerFixPass`, adjust state positions - ([fff6ea6](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/fff6ea658b77b524bc93f258a15c413a6ec18b22))
+- Adjust `Dummy2` state position and add TODO for extended MMD clip parameters - ([ff0708d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/ff0708d0ff5f16b0ed0b23b7a7dac55d503a85f7))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.21.2 in `package.json` - ([68250bd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/68250bde56793a2854c328ee8332caa8318ae897))
+
+### Action
+
+- Update `CHANGELOG.md` - ([3c40b31](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/3c40b316c62a96a2810ff12f952d301370e26118))
+
+
 ## [0.21.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.21.0..0.21.1) - 2026-05-16
 
 ### 🚜 Refactor
