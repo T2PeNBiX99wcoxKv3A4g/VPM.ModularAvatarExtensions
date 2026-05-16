@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.animator;
 using UnityEditor;
@@ -9,6 +10,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 {
     // Copy from nadena.dev.modular_avatar.animation.ReadablePropertyExtension
+    [DependsOnContext(typeof(AnimatorServicesContext))]
     internal class ReadablePropertyExtension : IExtensionContext
     {
         private AnimatorServicesContext? _asc;
@@ -20,6 +22,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 
         private Dictionary<EditorCurveBinding, string> ProxyProps => _retained.ProxyProps;
 
+        [PublicAPI]
         public IEnumerable<(EditorCurveBinding, string)> ActiveProxyProps =>
             ProxyProps.Select(kvp => (kvp.Key, kvp.Value));
 
@@ -66,9 +69,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             return prop;
         }
 
+        [PublicAPI]
         public class Retained
         {
-            public Dictionary<EditorCurveBinding, string> ProxyProps = new();
+            public readonly Dictionary<EditorCurveBinding, string> ProxyProps = new();
         }
     }
 }

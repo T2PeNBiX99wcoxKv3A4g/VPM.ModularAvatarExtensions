@@ -11,6 +11,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
     [RunsOnAllPlatforms]
     internal class PluginDefinition : Plugin<PluginDefinition>
     {
+        private const string ModularAvatarQualifiedName = "nadena.dev.modular-avatar";
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions";
         public override string DisplayName => "Modular Avatar Extensions";
         public override Color? ThemeColor => new Color(0x00 / 255f, 0xa0 / 255f, 0xe9 / 255f, 1);
@@ -36,41 +37,31 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
                 s.Run(EditorOnlyPass.Instance);
                 s.Run(ChangeMaterialInBuildPass.Instance);
 #if MAEX_VRCSDK3_BASE
-                s.OnPlatforms(new[]
-                {
-                    WellKnownPlatforms.VRChatAvatar30
-                }, s2 => s2.Run(ViewPositionPass.Instance));
+                s.Run(ViewPositionPass.Instance);
 #endif
                 s.Run(WorldScalePass.Instance);
                 s.Run(IconGeneratorPass.Instance);
             });
 
             seq = InPhase(BuildPhase.Transforming);
-            seq.AfterPlugin("nadena.dev.modular-avatar");
-            seq.WithRequiredExtensions(new[]
-            {
-                typeof(AnimatorServicesContext), typeof(ModularAvatarExtensionsContext)
-            }, s =>
-            {
+            seq.AfterPlugin(ModularAvatarQualifiedName);
 #if MAEX_VRCSDK3_BASE
-                s.WithRequiredExtension(typeof(ReadablePropertyExtension),
-                    s2 => { s2.Run(ParamOnlyObjectPass.Instance); });
+            seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext),
+                s =>
+                {
+                    s.WithRequiredExtension(typeof(AnimatorServicesContext),
+                        s2 => { s2.Run(ParamOnlyObjectPass.Instance); });
+                });
 #endif
-            });
 
 #if MAEX_VRCSDK3_BASE
             seq = InPhase(BuildPhase.Optimizing);
-            seq.AfterPlugin("nadena.dev.modular-avatar");
-            seq.WithRequiredExtensions(new[]
-            {
-                typeof(AnimatorServicesContext), typeof(ModularAvatarExtensionsContext)
-            }, s =>
-            {
-                s.OnPlatforms(new[]
+            seq.AfterPlugin(ModularAvatarQualifiedName);
+            seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext),
+                s =>
                 {
-                    WellKnownPlatforms.VRChatAvatar30
-                }, s2 => s2.Run(MmdLayerFixPass.Instance));
-            });
+                    s.WithRequiredExtension(typeof(AnimatorServicesContext), s2 => { s2.Run(MmdLayerFixPass.Instance); });
+                });
 #endif
 
             seq = InPhase(BuildPhase.PlatformFinish);
