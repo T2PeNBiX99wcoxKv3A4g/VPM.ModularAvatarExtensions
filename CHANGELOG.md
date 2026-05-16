@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.21.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.21.0..0.21.1) - 2026-05-16
+
+### 🚜 Refactor
+
+- Remove unused `highPriority` field and related bindings, update XML namespaces, and simplify `ParamOnlyObjectPass` logic - ([9afc7d9](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/9afc7d9d4664059a9f4907f8fff8d854a7b37682))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.21.1 in `package.json` - ([552faf3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/552faf38c064f1fcbb1992978902c051e57d8a39))
+
+### Action
+
+- Update `CHANGELOG.md` - ([31c9dd8](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/31c9dd81aec520242d06a538c7170500ae8e09f5))
+
+
 ## [0.21.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.4..0.21.0) - 2026-05-16
 
 ### ⛰️  Features
