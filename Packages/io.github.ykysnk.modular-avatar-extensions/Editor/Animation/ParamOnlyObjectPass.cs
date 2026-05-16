@@ -16,7 +16,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
     internal class ParamOnlyObjectPass : MaexPass<ParamOnlyObjectPass>
     {
         private readonly Dictionary<GameObject, ParamPassData> _gameObjectWithParamData = new();
-        private readonly Dictionary<ParamPassData, List<GameObject>> _paramDataWithGameObject = new();
+        private readonly HashSet<string> _paramNames = new();
 
         public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.ParamOnlyObject";
         public override string DisplayName => "Modular Avatar Extensions Param-Only Object";
@@ -46,8 +46,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                             : components.First().reverse;
                         var passData = new ParamPassData(allParams, reverse);
                         _gameObjectWithParamData.TryAdd(gameObject, passData);
-                        _paramDataWithGameObject.TryAdd(passData, new());
-                        _paramDataWithGameObject[passData].Add(gameObject);
+                        _paramNames.UnionWith(allParams.Select(x => x.paramName));
                     }
                     catch (Exception e)
                     {
@@ -91,13 +90,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             state.WriteDefaultValues = true;
             state.Motion = asc.ControllerContext.Clone(blendTree);
 
-            foreach (var (data, _) in _paramDataWithGameObject)
-            foreach (var paramData in data.ParamDatas)
+            foreach (var paramName in _paramNames.Where(paramName => !fx.Parameters.TryGetValue(paramName, out _)))
             {
-                if (fx.Parameters.TryGetValue(paramData.paramName, out _)) continue;
-                fx.Parameters = fx.Parameters.Add(paramData.paramName, new()
+                fx.Parameters = fx.Parameters.Add(paramName, new()
                 {
-                    name = paramData.paramName,
+                    name = paramName,
                     type = AnimatorControllerParameterType.Float,
                     defaultFloat = 0
                 });
