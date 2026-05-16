@@ -40,6 +40,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             var mmdLayerIndex = 0;
             var mergeBlendTreeLayerIndex = 0;
 
+            // TODO: Add extra parameters to mmd clip
+            // asc.AnimationIndex.GetClipsForBinding()
+
             foreach (var layer in fx.Layers)
             {
                 if (found > 1) break;
@@ -133,7 +136,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
         {
             var dummy = fx.AddLayer(new(0), DummyLayerName);
             var s = dummy.StateMachine!.DefaultState = dummy.StateMachine.AddState("Dummy");
-            var s2 = dummy.StateMachine.AddState("Dummy2", position: new Vector2(0, 4));
+            var s2 = dummy.StateMachine.AddState("Dummy2", position: new Vector2(0, -10));
             var behaviours = new List<StateMachineBehaviour>();
             var driver = ScriptableObject.CreateInstance<VRCAvatarParameterDriver>();
             var parameter = fx.Parameters.FirstOrDefault(x => x.Key == DummyParameterName);
