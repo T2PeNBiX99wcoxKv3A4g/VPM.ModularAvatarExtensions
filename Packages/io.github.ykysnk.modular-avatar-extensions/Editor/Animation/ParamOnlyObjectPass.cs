@@ -101,7 +101,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             }
         }
 
-        private static void Toggling(AnimatorServicesContext asc, AnimationClip clip, List<GameObject> gameObjects,
+        private static void Toggling(AnimatorServicesContext asc, AnimationClip clip, GameObject[] gameObjects,
             bool active)
         {
             var curve = new AnimationCurve();
@@ -114,7 +114,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
         }
 
         private static void Toggling(AnimatorServicesContext asc, AnimationClip clip, GameObject gameObject,
-            bool active) => Toggling(asc, clip, new List<GameObject>
+            bool active) => Toggling(asc, clip, new[]
         {
             gameObject
         }, active);
