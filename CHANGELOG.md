@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.21.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.4..0.21.0) - 2026-05-16
+
+### ⛰️  Features
+
+- Add `ReadablePropertyExtension` and integrate with `ParamOnlyObjectPass` - ([52b1d3b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/52b1d3b52b115dd0a7b7a49e527adcb02d20d46a))
+
+### 🚜 Refactor
+
+- Simplify `Toggling` method by replacing `List<GameObject>` with `GameObject[]` for improved clarity and efficiency - ([61d98dc](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/61d98dc643a38a203123a4dd25826c6a27c36187))
+- Replace `_paramDataWithGameObject` with `_paramNames` in `ParamOnlyObjectPass` for simplified parameter tracking - ([04084f3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/04084f3e44b8ec6b06f46a075bb8f2d51544ce9d))
+- Simplify `ParamOnlyObjectPass` and related logic, introduce `GameObjectDelayDisablePass`, update dependencies - ([7093a80](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/7093a803774820d2d01333adca11f4cfbd5bb19d))
+- Split `LayerIndexControlPass` logic into `MMDLayerFixPass` and update related components - ([0a12159](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/0a12159e3c5ed7714c5a490875f592e6383cdfac))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.21.0 and update `nadena.dev.modular-avatar` dependency - ([203e54d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/203e54d59b17eb055d551f271e663cdc1961e6fe))
+- Reformat `asmdef` file with consistent indentation - ([f5b6b72](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/f5b6b72db445ff33de1abf1518da612b7d01774a))
+- Update locked package versions in `vpm-manifest.json` - ([695e070](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/695e070cedd885a072c6630bd2105227f98f2d6f))
+
+### Action
+
+- Update `CHANGELOG.md` - ([88e5f9b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/88e5f9bb6f2d6bf391a5285b4df43ea3eb9cd413))
+
+
 ## [0.20.4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.20.3..0.20.4) - 2026-05-08
 
 ### 🐛 Bug Fixes
