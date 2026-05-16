@@ -6,7 +6,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     public abstract class ModularAvatarExtensionsParamOnlyObjectBase : AvatarMaexComponent
     {
         public bool reverse;
-        public bool highPriority;
 
         public abstract List<ParamData> ParamDatas { get; }
     }

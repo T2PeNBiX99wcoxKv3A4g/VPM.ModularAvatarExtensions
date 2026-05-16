@@ -5,7 +5,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [DisallowMultipleComponent]
-    [AddComponentMenu("Modular Avatar EX/MAEX Friends Only Object")]
+    [AddComponentMenu("Modular Avatar EX/MAEX Friends-Only Object")]
     public class ModularAvatarExtensionsFriendsOnlyObject : ModularAvatarExtensionsParamOnlyObjectBase
     {
         public override List<ParamData> ParamDatas => new()

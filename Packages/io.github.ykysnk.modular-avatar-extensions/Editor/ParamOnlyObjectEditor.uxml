@@ -1,6 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <ui:Toggle label="label.param_only_object.reverse" binding-path="reverse" name="reverse"/>
-    <ui:Toggle label="label.param_only_object.high_priority" name="highPriority" binding-path="highPriority"/>
     <ui:ListView name="paramDatas" show-add-remove-footer="true" header-title="paramDatas" reorderable="true"
                  selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
                  virtualization-method="DynamicHeight" show-border="true" binding-path="paramDatas"

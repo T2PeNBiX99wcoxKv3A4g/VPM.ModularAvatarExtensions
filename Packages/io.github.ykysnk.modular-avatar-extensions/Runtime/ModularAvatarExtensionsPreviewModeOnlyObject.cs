@@ -5,7 +5,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [DisallowMultipleComponent]
-    [AddComponentMenu("Modular Avatar EX/MAEX Preview Mode Only Object")]
+    [AddComponentMenu("Modular Avatar EX/MAEX Preview Mode-Only Object")]
     public class ModularAvatarExtensionsPreviewModeOnlyObject : ModularAvatarExtensionsParamOnlyObjectBase
     {
         public override List<ParamData> ParamDatas => new()

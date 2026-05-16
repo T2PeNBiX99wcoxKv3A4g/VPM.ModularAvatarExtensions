@@ -91,14 +91,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             state.Motion = asc.ControllerContext.Clone(blendTree);
 
             foreach (var paramName in _paramNames.Where(paramName => !fx.Parameters.TryGetValue(paramName, out _)))
-            {
                 fx.Parameters = fx.Parameters.Add(paramName, new()
                 {
                     name = paramName,
                     type = AnimatorControllerParameterType.Float,
                     defaultFloat = 0
                 });
-            }
         }
 
         private static void Toggling(AnimatorServicesContext asc, AnimationClip clip, GameObject[] gameObjects,
@@ -124,76 +122,66 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
         {
             var clip = new AnimationClip
             {
-                name = "Disable"
+                name = data.Reverse ? "Enable" : "Disable"
             };
 
-            Toggling(asc, clip, gameObject, false);
+            Toggling(asc, clip, gameObject, data.Reverse);
 
-            var childMotions = new List<ChildMotion>();
-            var newParamDatas = data.ParamDatas.ToDictionary(x => x.paramName, x => x);
-
-            foreach (var (param, _) in newParamDatas)
-            {
-                var motion = !data.Reverse
-                    ? new ChildMotion
+            return data.ParamDatas.Select(paramData => paramData.paramValue > 0
+                ? new ChildMotion
+                {
+                    motion = new BlendTree
                     {
-                        motion = new BlendTree
+                        name = $"{gameObject.name} - {paramData.paramName} - {paramData.paramValue}",
+                        blendType = BlendTreeType.Simple1D,
+                        useAutomaticThresholds = false,
+                        blendParameter = paramData.paramName,
+                        children = new[]
                         {
-                            name = $"{gameObject.name} - {param} - False",
-                            blendType = BlendTreeType.Simple1D,
-                            useAutomaticThresholds = false,
-                            blendParameter = param,
-                            children = new[]
+                            new ChildMotion
                             {
-                                new ChildMotion
-                                {
-                                    motion = clip,
-                                    timeScale = 1,
-                                    threshold = 0
-                                },
-                                new ChildMotion
-                                {
-                                    motion = nullMotion,
-                                    timeScale = 1,
-                                    threshold = 1
-                                }
+                                motion = clip,
+                                timeScale = 1,
+                                threshold = 0
+                            },
+                            new ChildMotion
+                            {
+                                motion = nullMotion,
+                                timeScale = 1,
+                                threshold = paramData.paramValue
                             }
-                        },
-                        directBlendParameter = GameObjectDelayDisablePass.AlwaysOne,
-                        timeScale = 1
-                    }
-                    : new ChildMotion
+                        }
+                    },
+                    directBlendParameter = GameObjectDelayDisablePass.AlwaysOne,
+                    timeScale = 1
+                }
+                : new()
+                {
+                    motion = new BlendTree
                     {
-                        motion = new BlendTree
+                        name = $"{gameObject.name} - {paramData.paramName} - {paramData.paramValue}",
+                        blendType = BlendTreeType.Simple1D,
+                        useAutomaticThresholds = false,
+                        blendParameter = paramData.paramName,
+                        children = new[]
                         {
-                            name = $"{gameObject.name} - {param} - True",
-                            blendType = BlendTreeType.Simple1D,
-                            useAutomaticThresholds = false,
-                            blendParameter = param,
-                            children = new[]
+                            new ChildMotion
                             {
-                                new ChildMotion
-                                {
-                                    motion = nullMotion,
-                                    timeScale = 1,
-                                    threshold = 0
-                                },
-                                new ChildMotion
-                                {
-                                    motion = clip,
-                                    timeScale = 1,
-                                    threshold = 1
-                                }
+                                motion = nullMotion,
+                                timeScale = 1,
+                                threshold = paramData.paramValue
+                            },
+                            new ChildMotion
+                            {
+                                motion = clip,
+                                timeScale = 1,
+                                threshold = 1
                             }
-                        },
-                        directBlendParameter = GameObjectDelayDisablePass.AlwaysOne,
-                        timeScale = 1
-                    };
-
-                childMotions.Add(motion);
-            }
-
-            return childMotions.ToArray();
+                        }
+                    },
+                    directBlendParameter = GameObjectDelayDisablePass.AlwaysOne,
+                    timeScale = 1
+                }).ToArray();
         }
     }
 }
