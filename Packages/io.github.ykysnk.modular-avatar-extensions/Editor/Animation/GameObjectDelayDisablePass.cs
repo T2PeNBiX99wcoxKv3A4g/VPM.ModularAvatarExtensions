@@ -9,7 +9,7 @@ using VRC.SDK3.Avatars.Components;
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 {
     // Copy from nadena.dev.modular_avatar.animation.GameObjectDelayDisablePass
-    internal class GameObjectDelayDisablePass : Pass<GameObjectDelayDisablePass>
+    internal class GameObjectDelayDisablePass : MaexPass<GameObjectDelayDisablePass>
     {
         internal const string AlwaysOne = "__ModularAvatarInternal/One";
 
