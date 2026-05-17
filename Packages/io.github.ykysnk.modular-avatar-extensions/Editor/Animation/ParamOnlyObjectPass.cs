@@ -33,6 +33,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             if (paramOnlyObjectBases.Count < 1) return;
 
             var asc = ctx.Extension<AnimatorServicesContext>();
+            var objectSaver = ctx.Extension<ParamOnlyObjectExtension>();
 
             foreach (var (gameObject, components) in paramOnlyObjectBases)
                 using (ErrorReport.WithContextObject(gameObject))
@@ -47,6 +48,18 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                         var passData = new ParamPassData(allParams, reverse);
                         _gameObjectWithParamData.TryAdd(gameObject, passData);
                         _paramNames.UnionWith(allParams.Select(x => x.paramName));
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        return;
+                    }
+
+            foreach (var (gameObject, data) in _gameObjectWithParamData)
+                using (ErrorReport.WithContextObject(gameObject))
+                    try
+                    {
+                        objectSaver.AddGameObject(gameObject, data.Reverse);
                     }
                     catch (Exception e)
                     {

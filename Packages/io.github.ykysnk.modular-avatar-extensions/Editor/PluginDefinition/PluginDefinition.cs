@@ -43,15 +43,24 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
                 s.Run(IconGeneratorPass.Instance);
             });
 
+#if MAEX_VRCSDK3_BASE
             seq = InPhase(BuildPhase.Transforming);
             seq.BeforePlugin(ModularAvatarQualifiedName);
-#if MAEX_VRCSDK3_BASE
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext),
                 s =>
                 {
                     s.WithRequiredExtension(typeof(AnimatorServicesContext),
-                        s2 => { s2.Run(ParamOnlyObjectPass.Instance); });
+                        s2 =>
+                        {
+                            s2.WithRequiredExtension(typeof(ParamOnlyObjectExtension),
+                                s3 => { s3.Run(ParamOnlyObjectPass.Instance); });
+                        });
                 });
+
+            seq = InPhase(BuildPhase.Transforming);
+            seq.AfterPlugin(ModularAvatarQualifiedName);
+            seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext),
+                s => { s.Run(ParamOnlyObjectDelayDisablePass.Instance); });
 #endif
 
 #if MAEX_VRCSDK3_BASE
