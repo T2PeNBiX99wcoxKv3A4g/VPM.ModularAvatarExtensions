@@ -45,6 +45,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             });
         }
 
+        [PublicAPI]
         public string GetActiveSelfProxy(GameObject obj)
         {
             var path = Asc.ObjectPathRemapper.GetVirtualPathForObject(obj);
