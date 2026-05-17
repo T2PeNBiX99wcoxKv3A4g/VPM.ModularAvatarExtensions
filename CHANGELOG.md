@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.22.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.21.2..0.22.0) - 2026-05-17
+
+### ⛰️  Features
+
+- Add `ParamOnlyObjectExtension` and `ParamOnlyObjectDelayDisablePass` for enhanced parameter-based object management - ([82f5ec0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/82f5ec026bb35f6fa262f858f876f7e10c517281))
+
+### 🚜 Refactor
+
+- Rename `GameObjectDelayDisablePass` base class to `MaexPass` for consistency - ([48f97ff](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/48f97ffff6c3d40b614bcf29205c9c142975b77e))
+- Add `[PublicAPI]` attribute to `GetActiveSelfProxy` method in `ReadablePropertyExtension` - ([ae4aa45](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/ae4aa45bd71b60ec826cec316bb28e0d80e269f1))
+- Change plugin sequence order and simplify `ParamOnlyObjectPass` logic - ([d67df6a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/d67df6a40dd7539e1176fbf7d1ca7e4f446f7f2b))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.22.0 in `package.json` - ([170a95a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/170a95ac902f74f45e10906efa81b573dd89cb2e))
+- Bump `nadena.dev.modular-avatar` to 1.17.1 and `nadena.dev.ndmf` to 1.13.1 in `vpm-manifest.json` - ([e2cf5ab](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/e2cf5abe0e3f7ac395997c057ba46eda704f3ed5))
+
+### Action
+
+- Update `CHANGELOG.md` - ([4bb46dd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/4bb46dda382290af204c90d789376db340d36f71))
+
+
 ## [0.21.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.21.1..0.21.2) - 2026-05-16
 
 ### 🚜 Refactor
