@@ -54,18 +54,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                         return;
                     }
 
-            foreach (var (gameObject, data) in _gameObjectWithParamData)
-                using (ErrorReport.WithContextObject(gameObject))
-                    try
-                    {
-                        gameObject.SetActive(data.Reverse);
-                    }
-                    catch (Exception e)
-                    {
-                        ErrorReport.ReportException(e);
-                        return;
-                    }
-
             var fx = asc.ControllerContext.Controllers[VRCAvatarDescriptor.AnimLayerType.FX];
             if (fx == null) return;
 
@@ -84,7 +72,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             };
 
             var layer = fx.AddLayer(new(999999), "Modular Avatar EX: Param Only");
-            var state = layer.StateMachine!.AddState("ParamOnly");
+            var state = layer.StateMachine!.AddState("Param Only");
             layer.StateMachine.DefaultState = state;
 
             state.WriteDefaultValues = true;

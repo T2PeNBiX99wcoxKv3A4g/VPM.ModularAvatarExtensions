@@ -44,7 +44,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
             });
 
             seq = InPhase(BuildPhase.Transforming);
-            seq.AfterPlugin(ModularAvatarQualifiedName);
+            seq.BeforePlugin(ModularAvatarQualifiedName);
 #if MAEX_VRCSDK3_BASE
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext),
                 s =>
