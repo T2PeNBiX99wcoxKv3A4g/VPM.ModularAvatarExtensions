@@ -22,6 +22,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
             // TODO: Maybe Validate
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>
             {
+                s.Run(GetFullNamePass.Instance);
                 s.Run(NewNamePass.Instance);
                 s.Run(MoveToRootPass.Instance);
             });
