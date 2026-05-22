@@ -51,22 +51,22 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                         constraint.Locked = true;
                         constraint.IsActive = true;
 #else
-                    var constraint = obj.AddComponent<ScaleConstraint>();
-                    var newSource = new ConstraintSource
-                    {
-                        sourceTransform = worldPrefab.transform,
-                        weight = 1f
-                    };
-                    constraint.AddSource(newSource);
-                    constraint.locked = true;
-                    constraint.constraintActive = true;
+                        var constraint = obj.AddComponent<ScaleConstraint>();
+                        var newSource = new ConstraintSource
+                        {
+                            sourceTransform = worldPrefab.transform,
+                            weight = 1f
+                        };
+                        constraint.AddSource(newSource);
+                        constraint.locked = true;
+                        constraint.constraintActive = true;
 #endif
                         LogC($"Add world scale constraint to {obj.FullName()}");
                     }
                     catch (Exception e)
                     {
                         ErrorReport.ReportException(e);
-                        return;
+                        throw;
                     }
         }
     }

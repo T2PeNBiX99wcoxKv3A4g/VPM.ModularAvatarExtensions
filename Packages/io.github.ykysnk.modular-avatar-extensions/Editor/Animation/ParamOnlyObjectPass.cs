@@ -52,7 +52,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                     catch (Exception e)
                     {
                         ErrorReport.ReportException(e);
-                        return;
+                        throw;
                     }
 
             foreach (var (gameObject, data) in _gameObjectWithParamData)
@@ -64,7 +64,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                     catch (Exception e)
                     {
                         ErrorReport.ReportException(e);
-                        return;
+                        throw;
                     }
 
             var fx = asc.ControllerContext.Controllers[VRCAvatarDescriptor.AnimLayerType.FX];

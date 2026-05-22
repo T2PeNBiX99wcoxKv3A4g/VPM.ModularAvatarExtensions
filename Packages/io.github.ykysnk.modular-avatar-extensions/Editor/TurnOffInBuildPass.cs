@@ -36,7 +36,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                     catch (Exception e)
                     {
                         ErrorReport.ReportException(e);
-                        return;
+                        throw;
                     }
         }
     }
