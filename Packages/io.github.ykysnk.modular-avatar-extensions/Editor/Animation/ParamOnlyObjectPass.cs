@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition;
 using io.github.ykysnk.utils.Extensions;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.animator;
@@ -34,11 +35,21 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 
             var asc = ctx.Extension<AnimatorServicesContext>();
             var objectSaver = ctx.Extension<ParamOnlyObjectExtension>();
+            var fullNameSaver = ctx.GetState<ModularAvatarExtensionsContext.Retained>().ComponentFullPathProps;
 
             foreach (var (gameObject, components) in paramOnlyObjectBases)
                 using (ErrorReport.WithContextObject(gameObject))
                     try
                     {
+                        if (!gameObject)
+                        {
+                            // TODO: Localization
+                            LogSimple(
+                                $"GameObject ({fullNameSaver.GetValueOrDefault(components.First(), "Unknown Path")}) is a null in param only object pass!",
+                                severity: ErrorSeverity.NonFatal);
+                            continue;
+                        }
+
                         var allParams = components.SelectMany(x => x.ParamDatas).GroupBy(x => x.ParamName)
                             .Select(x => x.First())
                             .ToArray();
@@ -121,6 +132,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
         private static ChildMotion[] GenerateChild(AnimatorServicesContext asc, Motion nullMotion, GameObject gameObject,
             ParamPassData data)
         {
+            if (!gameObject)
+            {
+                // TODO: Localization
+                LogSimple("GameObject is a null in generate child method!", severity: ErrorSeverity.Error);
+                throw new ArgumentNullException(nameof(gameObject));
+            }
+
             var clip = new AnimationClip
             {
                 name = data.Reverse ? "Enable" : "Disable"

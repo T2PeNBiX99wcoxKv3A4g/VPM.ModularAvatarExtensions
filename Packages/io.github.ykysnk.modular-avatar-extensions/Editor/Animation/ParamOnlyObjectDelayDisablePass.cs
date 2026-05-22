@@ -19,9 +19,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                     {
                         if (data.GameObject == null)
                         {
-                            LogSimple($"Game Object ({data.Path}) is gone", severity: ErrorSeverity.NonFatal);
                             // TODO: Localization
-                            // LogNonFatal();
+                            LogSimple($"Game Object ({data.Path}) is gone", severity: ErrorSeverity.NonFatal);
                             continue;
                         }
 
