@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using io.github.ykysnk.utils.Extensions;
 using JetBrains.Annotations;
 using nadena.dev.ndmf;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
     {
         private Retained _retained = null!;
 
-        private Dictionary<GameObject, bool> GameObjectProps => _retained.GameObjectProps;
+        private Dictionary<ObjectSaverData, bool> GameObjectProps => _retained.GameObjectProps;
 
         public void OnActivate(BuildContext context)
         {
@@ -23,13 +24,14 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
         [PublicAPI]
         public void AddGameObject(GameObject gameObject, bool isActive)
         {
-            GameObjectProps[gameObject] = isActive;
+            if (gameObject == null) return;
+            GameObjectProps[new(gameObject, gameObject.FullName() ?? gameObject.name)] = isActive;
         }
 
         [PublicAPI]
         public class Retained
         {
-            public readonly Dictionary<GameObject, bool> GameObjectProps = new();
+            public readonly Dictionary<ObjectSaverData, bool> GameObjectProps = new();
         }
     }
 }
