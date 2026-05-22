@@ -27,7 +27,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 if (!x.gameObject.TryGetComponent<SkinnedMeshRenderer>(out var skinnedMeshRenderer)) return false;
                 var mesh = skinnedMeshRenderer.sharedMesh;
                 var shapeNames = Enumerable.Range(0, mesh.blendShapeCount)
-                    .Select(y => mesh.GetBlendShapeName(y))
+                    .Select(mesh.GetBlendShapeName)
                     .ToList();
                 return shapeNames.Contains(x.shapeKeyName);
             }).Select(x => new ShapeKeyData(x.gameObject, x.shapeKeyName, x.value)).ToList();
