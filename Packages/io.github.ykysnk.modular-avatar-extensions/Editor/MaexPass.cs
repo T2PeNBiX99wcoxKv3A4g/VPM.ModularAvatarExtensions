@@ -21,5 +21,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
         protected void LogNonFatal(string key, params object?[] args) =>
             ErrorReport.ReportError(Localization.L, ErrorSeverity.NonFatal, key, args);
+
+        protected void LogSimple(string title, string detail = "", string hint = "",
+            ErrorSeverity severity = ErrorSeverity.Information) =>
+            ErrorReport.ReportError(new SimpleStringError(title, detail, hint, severity));
     }
 }
