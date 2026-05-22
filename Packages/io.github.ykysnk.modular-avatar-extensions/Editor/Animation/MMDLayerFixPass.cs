@@ -68,9 +68,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 
             if (found < 1)
             {
-                LogSimple("MA MMD layer and merge blend tree layer are not found!", severity: ErrorSeverity.NonFatal);
                 // TODO: Localization
-                // LogNonFatal();
+                LogSimple("MA MMD layer and merge blend tree layer are not found!", severity: ErrorSeverity.NonFatal);
                 return;
             }
 
