@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.23.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.22.0..0.23.0) - 2026-05-22
+
+### ⛰️  Features
+
+- Implement `IEquatable` for `ObjectSaverData` to enable equality comparisons and improve hashing - ([7396e4f](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/7396e4ff17bc6fc78e1a18fdc34cf52aee5e2628))
+- Add `LogSimple` method to `MaexPass` for streamlined error reporting - ([560fbf9](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/560fbf9c670cfac96ad6091606495bf47d4fbdbc))
+- Integrate `ObjectSaverData` into `ParamOnlyObjectExtension` for improved data handling, add null-checks - ([f50af2d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/f50af2d7403e52da231dfdf18b3864cf60569585))
+- Enhance `ParamOnlyObjectDelayDisablePass` with error handling and null-checks, add `ObjectSaverData` class - ([fbf3bd4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/fbf3bd4b52cf9769150dbe2af906d77143c6d692))
+
+### 🚜 Refactor
+
+- Simplify lambda syntax in blend shape name selection for improved readability - ([970b796](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/970b796db0387bc58d0c58b75ab940874e35c49a))
+- Optimize icon generation workflow by adding async support and reducing frame delays - ([7dd4939](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/7dd4939beee46c1eafbd6420c719066f2eda3183))
+- Replace `return` with `throw` in exception handling across multiple passes for consistency and improved error propagation - ([9c408fc](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/9c408fc36f5041a77cbd70b6b27c4caa9830700f))
+- Remove unnecessary blank line in `SimpleStringError` constructor - ([851376c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/851376cb1ff5f68c2699aaa7abaeee332c7daed9))
+- Convert structs to classes and add properties for encapsulation across multiple components - ([db08fb1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/db08fb153a922d2c57b7a47b8d9339b0e3609061))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.23.0 in `package.json` - ([d096da4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/d096da4ee69e0dee6a82e52f228cbfb462f8c6d6))
+
+### Action
+
+- Update `CHANGELOG.md` - ([14c6774](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/14c6774604616a21262bd21233c1e25563b6ddcd))
+
+
 ## [0.22.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.21.2..0.22.0) - 2026-05-17
 
 ### ⛰️  Features
