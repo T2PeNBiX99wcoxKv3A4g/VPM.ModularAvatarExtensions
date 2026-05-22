@@ -9,7 +9,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
     {
         private readonly string _detail;
         private readonly string _hint;
-
         private readonly string _title;
 
         public SimpleStringError(string title, string detail, string hint, ErrorSeverity severity)
