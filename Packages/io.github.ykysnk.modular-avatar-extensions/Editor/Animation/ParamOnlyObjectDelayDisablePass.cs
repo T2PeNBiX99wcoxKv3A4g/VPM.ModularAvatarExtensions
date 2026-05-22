@@ -1,3 +1,4 @@
+using System;
 using nadena.dev.ndmf;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
@@ -12,8 +13,25 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             var objectSaver = context.GetState<ParamOnlyObjectExtension.Retained>().GameObjectProps;
             if (objectSaver.Count < 1) return;
 
-            foreach (var (gameObject, active) in objectSaver)
-                gameObject.SetActive(active);
+            foreach (var (data, active) in objectSaver)
+                using (ErrorReport.WithContextObject(data.GameObject))
+                    try
+                    {
+                        if (data.GameObject == null)
+                        {
+                            LogSimple($"Game Object ({data.Path}) is gone", severity: ErrorSeverity.NonFatal);
+                            // TODO: Localization
+                            // LogNonFatal();
+                            continue;
+                        }
+
+                        data.GameObject.SetActive(active);
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorReport.ReportException(e);
+                        throw;
+                    }
         }
     }
 }
