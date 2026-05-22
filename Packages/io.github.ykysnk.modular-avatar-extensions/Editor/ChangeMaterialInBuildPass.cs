@@ -36,9 +36,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                             newMaterials[i] = renderer.sharedMaterials[i];
 
                         foreach (var materialChangeData in materialChangeDatas)
-                            if (!newMaterials.TrySetValue(materialChangeData.materialIndex, materialChangeData.material))
-                                throw new ArgumentOutOfRangeException(nameof(materialChangeData.materialIndex),
-                                    $"Material index {materialChangeData.materialIndex} is out of range.");
+                            if (!newMaterials.TrySetValue(materialChangeData.MaterialIndex, materialChangeData.Material))
+                                throw new ArgumentOutOfRangeException(nameof(materialChangeData.MaterialIndex),
+                                    $"Material index {materialChangeData.MaterialIndex} is out of range.");
 
                         renderer.materials = newMaterials;
                     }

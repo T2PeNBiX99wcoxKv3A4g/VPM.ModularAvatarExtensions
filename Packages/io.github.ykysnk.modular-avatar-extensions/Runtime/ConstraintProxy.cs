@@ -7,7 +7,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [PublicAPI]
-    public readonly struct ConstraintProxy
+    public class ConstraintProxy
     {
         private readonly Component _component;
         private readonly string _propertyName;

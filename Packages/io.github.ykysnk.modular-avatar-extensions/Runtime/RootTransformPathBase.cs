@@ -11,10 +11,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     public abstract class RootTransformPathBase<T> : AvatarMaexComponent, IRootTransformPathBase where T : Component
     {
         public T? component;
-        public AvatarObjectReference? reference;
+        public AvatarObjectReference reference = new();
         [PublicAPI] protected virtual string RootTransformFieldName => "rootTransform";
 
-        public AvatarObjectReference? Reference
+        public AvatarObjectReference Reference
         {
             get => reference;
             set => reference = value;

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [PublicAPI]
-    public readonly struct RootTransformProxy
+    public class RootTransformProxy
     {
         private readonly Component _component;
         private readonly string _fieldName;

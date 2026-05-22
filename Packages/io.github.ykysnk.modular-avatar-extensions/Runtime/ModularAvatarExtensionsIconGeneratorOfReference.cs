@@ -30,12 +30,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     .Select(y => mesh.GetBlendShapeName(y))
                     .ToList();
                 return shapeNames.Contains(x.shapeKeyName);
-            }).Select(x => new ShapeKeyData
-            {
-                gameObject = x.gameObject,
-                shapeKeyName = x.shapeKeyName,
-                value = x.value
-            }).ToList();
+            }).Select(x => new ShapeKeyData(x.gameObject, x.shapeKeyName, x.value)).ToList();
         }
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [Serializable]
-    public struct MaterialChangeData : IEquatable<MaterialChangeData>
+    public class MaterialChangeData : IEquatable<MaterialChangeData>
     {
-        public int materialIndex;
-        public Material? material;
+        [SerializeField] private int materialIndex;
+        [SerializeField] private Material? material;
 
         public MaterialChangeData(int materialIndex, Material? material)
         {
@@ -15,10 +15,13 @@ namespace io.github.ykysnk.ModularAvatarExtensions
             this.material = material;
         }
 
+        public int MaterialIndex => materialIndex;
+        public Material? Material => material;
+
         public bool Equals(MaterialChangeData other) => materialIndex == other.materialIndex;
 
         public override bool Equals(object? obj) => obj is MaterialChangeData other && Equals(other);
 
-        public override int GetHashCode() => materialIndex.GetHashCode();
+        public override int GetHashCode() => MaterialIndex.GetHashCode();
     }
 }

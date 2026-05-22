@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 {
-    internal readonly struct ParamPassData : IEquatable<ParamPassData>
+    internal class ParamPassData : IEquatable<ParamPassData>
     {
         internal readonly ParamData[] ParamDatas;
         internal readonly bool Reverse;

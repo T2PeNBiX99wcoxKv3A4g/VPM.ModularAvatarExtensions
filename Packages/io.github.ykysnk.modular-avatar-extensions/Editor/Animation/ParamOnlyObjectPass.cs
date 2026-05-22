@@ -39,7 +39,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                 using (ErrorReport.WithContextObject(gameObject))
                     try
                     {
-                        var allParams = components.SelectMany(x => x.ParamDatas).GroupBy(x => x.paramName)
+                        var allParams = components.SelectMany(x => x.ParamDatas).GroupBy(x => x.ParamName)
                             .Select(x => x.First())
                             .ToArray();
                         var reverse = components.Any(x => x is ModularAvatarExtensionsParamOnlyObject)
@@ -47,7 +47,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                             : components.First().reverse;
                         var passData = new ParamPassData(allParams, reverse);
                         _gameObjectWithParamData.TryAdd(gameObject, passData);
-                        _paramNames.UnionWith(allParams.Select(x => x.paramName));
+                        _paramNames.UnionWith(allParams.Select(x => x.ParamName));
                     }
                     catch (Exception e)
                     {
@@ -128,15 +128,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
 
             Toggling(asc, clip, gameObject, data.Reverse);
 
-            return data.ParamDatas.Select(paramData => paramData.paramValue > 0
+            return data.ParamDatas.Select(paramData => paramData.ParamValue > 0
                 ? new ChildMotion
                 {
                     motion = new BlendTree
                     {
-                        name = $"{gameObject.name} - {paramData.paramName} - {paramData.paramValue}",
+                        name = $"{gameObject.name} - {paramData.ParamName} - {paramData.ParamValue}",
                         blendType = BlendTreeType.Simple1D,
                         useAutomaticThresholds = false,
-                        blendParameter = paramData.paramName,
+                        blendParameter = paramData.ParamName,
                         children = new[]
                         {
                             new ChildMotion
@@ -149,7 +149,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                             {
                                 motion = nullMotion,
                                 timeScale = 1,
-                                threshold = paramData.paramValue
+                                threshold = paramData.ParamValue
                             }
                         }
                     },
@@ -160,17 +160,17 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                 {
                     motion = new BlendTree
                     {
-                        name = $"{gameObject.name} - {paramData.paramName} - {paramData.paramValue}",
+                        name = $"{gameObject.name} - {paramData.ParamName} - {paramData.ParamValue}",
                         blendType = BlendTreeType.Simple1D,
                         useAutomaticThresholds = false,
-                        blendParameter = paramData.paramName,
+                        blendParameter = paramData.ParamName,
                         children = new[]
                         {
                             new ChildMotion
                             {
                                 motion = nullMotion,
                                 timeScale = 1,
-                                threshold = paramData.paramValue
+                                threshold = paramData.ParamValue
                             },
                             new ChildMotion
                             {

@@ -55,12 +55,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 .Select(x =>
                 {
                     var go = x.Object.Get(this);
-                    return new ShapeKeyData
-                    {
-                        gameObject = go,
-                        shapeKeyName = x.ShapeName,
-                        value = x.ChangeType == ShapeChangeType.Set ? x.Value : 100f
-                    };
+                    return new ShapeKeyData(go, x.ShapeName, x.ChangeType == ShapeChangeType.Set ? x.Value : 100f);
                 }).ToList();
         }
     }

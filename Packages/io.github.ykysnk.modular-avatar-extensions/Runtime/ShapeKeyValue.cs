@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    public readonly struct ShapeKeyValue
+    public readonly struct ShapeKeyValue : IEquatable<ShapeKeyValue>
     {
         public readonly int ShapeKeyIndex;
         public readonly float Value;
@@ -15,5 +16,11 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 ShapeKeyIndex = -1;
             Value = value;
         }
+
+        public bool Equals(ShapeKeyValue other) => ShapeKeyIndex == other.ShapeKeyIndex && Value.Equals(other.Value);
+
+        public override bool Equals(object? obj) => obj is ShapeKeyValue other && Equals(other);
+
+        public override int GetHashCode() => HashCode.Combine(ShapeKeyIndex, Value);
     }
 }

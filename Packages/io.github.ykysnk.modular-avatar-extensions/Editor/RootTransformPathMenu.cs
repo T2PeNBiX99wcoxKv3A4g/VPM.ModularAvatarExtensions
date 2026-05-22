@@ -1,7 +1,6 @@
 using System.Linq;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
-using nadena.dev.modular_avatar.core;
 using UnityEditor;
 using UnityEngine;
 
@@ -50,7 +49,6 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                     if (addComponent is not IRootTransformPathBase rootTransformPathBase) continue;
 
-                    var reference = new AvatarObjectReference();
                     var rootTransform = componentProxy.rootTransform;
 
                     if (rootTransform == null)
@@ -60,8 +58,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                         continue;
                     }
 
-                    reference.Set(rootTransform.gameObject);
-                    rootTransformPathBase.Reference = reference;
+                    rootTransformPathBase.Reference = new(rootTransform.gameObject);
                 }
             }
         }

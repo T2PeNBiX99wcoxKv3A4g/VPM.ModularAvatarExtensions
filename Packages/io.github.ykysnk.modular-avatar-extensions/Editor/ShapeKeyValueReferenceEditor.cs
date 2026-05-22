@@ -55,7 +55,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                 {
                     var mesh = skinnedMeshRenderer.sharedMesh;
                     shapeNames = Enumerable.Range(0, mesh.blendShapeCount)
-                        .Select(x => mesh.GetBlendShapeName(x))
+                        .Select(mesh.GetBlendShapeName)
                         .ToList();
                 }
 

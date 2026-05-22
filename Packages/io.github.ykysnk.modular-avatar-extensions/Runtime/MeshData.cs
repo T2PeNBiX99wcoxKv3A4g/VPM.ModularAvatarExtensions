@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    public readonly struct MeshData
+    public class MeshData
     {
         public readonly GameObject GameObject;
-        public readonly Mesh? Mesh;
         public readonly Material[] Materials;
+        public readonly Mesh? Mesh;
         public readonly Renderer? Renderer;
 
         public MeshData(GameObject gameObject)

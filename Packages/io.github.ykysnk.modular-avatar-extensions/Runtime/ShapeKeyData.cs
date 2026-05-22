@@ -4,17 +4,28 @@ using UnityEngine;
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
     [Serializable]
-    public struct ShapeKeyData : IEquatable<ShapeKeyData>
+    public class ShapeKeyData : IEquatable<ShapeKeyData>
     {
-        public GameObject gameObject;
-        public string shapeKeyName;
-        public float value;
+        [SerializeField] private GameObject gameObject;
+        [SerializeField] private string shapeKeyName;
+        [SerializeField] private float value;
+
+        public ShapeKeyData(GameObject gameObject, string shapeKeyName, float value)
+        {
+            this.gameObject = gameObject;
+            this.shapeKeyName = shapeKeyName;
+            this.value = value;
+        }
+
+        public GameObject GameObject => gameObject;
+        public string ShapeKeyName => shapeKeyName;
+        public float Value => value;
 
         public bool Equals(ShapeKeyData other) => gameObject == other.gameObject && shapeKeyName == other.shapeKeyName &&
-                                                  Mathf.Approximately(value, other.value);
+                                                  value.Equals(other.value);
 
         public override bool Equals(object? obj) => obj is ShapeKeyData other && Equals(other);
 
-        public override int GetHashCode() => HashCode.Combine(gameObject, shapeKeyName, value);
+        public override int GetHashCode() => HashCode.Combine(GameObject, ShapeKeyName, Value);
     }
 }

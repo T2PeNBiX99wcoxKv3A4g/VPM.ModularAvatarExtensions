@@ -7,7 +7,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [PublicAPI]
     public interface IRootTransformPathBase
     {
-        AvatarObjectReference? Reference { get; set; }
+        AvatarObjectReference Reference { get; set; }
         Component? Component { get; set; }
         bool IsValid();
     }
