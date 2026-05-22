@@ -13,16 +13,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
         protected void LogC(object message) => Utils.Log(DisplayName, message);
 
-        protected void Log(string key, params object?[] args) =>
+        protected static void Log(string key, params object?[] args) =>
             ErrorReport.ReportError(Localization.L, ErrorSeverity.Information, key, args);
 
-        protected void LogError(string key, params object?[] args) =>
+        protected static void LogError(string key, params object?[] args) =>
             ErrorReport.ReportError(Localization.L, ErrorSeverity.Error, key, args);
 
-        protected void LogNonFatal(string key, params object?[] args) =>
+        protected static void LogNonFatal(string key, params object?[] args) =>
             ErrorReport.ReportError(Localization.L, ErrorSeverity.NonFatal, key, args);
 
-        protected void LogSimple(string title, string detail = "", string hint = "",
+        protected static void LogSimple(string title, string detail = "", string hint = "",
             ErrorSeverity severity = ErrorSeverity.Information) =>
             ErrorReport.ReportError(new SimpleStringError(title, detail, hint, severity));
     }
