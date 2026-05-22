@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.24.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.23.0..0.24.0) - 2026-05-22
+
+### ⛰️  Features
+
+- Add `AddComponent` method and `Retained` class to manage component paths in build context - ([4c124b1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/4c124b1ef26fc0420be0164379e29d750d10576c))
+- Add `GetFullNamePass` to process full names of avatar components during build steps - ([78d6cdd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/78d6cddea0761653d6f8abda11642d7389d03111))
+
+### 🚜 Refactor
+
+- Improve null-check logging and streamline error handling in `ParamOnlyObjectPass` and related methods - ([fb6697f](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/fb6697f1ed4719f5dbeaf25a5f92551834017420))
+- Remove commented-out logging code in `MMDLayerFixPass` for cleaner readability - ([9fcc097](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/9fcc09735c0d74f5dd28c61b9b80f033ccea72a0))
+- Make logging methods in `MaexPass` static for improved consistency and clarity - ([5da4617](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/5da46179b398618fd312149dc1d1e289bffbb076))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.24.0 in `package.json` - ([dbce2b9](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/dbce2b9763b2ae63bd18e28c008f4ea7e769af52))
+
+### Action
+
+- Update `CHANGELOG.md` - ([76c72c9](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/76c72c95fb403fca580ce12a989198615133444b))
+
+
 ## [0.23.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.22.0..0.23.0) - 2026-05-22
 
 ### ⛰️  Features
