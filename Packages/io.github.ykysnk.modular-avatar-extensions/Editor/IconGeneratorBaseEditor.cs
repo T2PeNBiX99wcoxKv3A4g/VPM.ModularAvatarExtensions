@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using nadena.dev.modular_avatar.core;
 using UnityEditor;
@@ -24,7 +25,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             button.clicked += () =>
             {
                 if (target == null || target is not ModularAvatarExtensionsIconGeneratorBase iconGeneratorBase) return;
-                iconGeneratorBase.ForceGenerateIcon();
+                iconGeneratorBase.ForceGenerateIcon().Forget();
             };
 
             var presetField = tree.Q<ObjectField>("preset");

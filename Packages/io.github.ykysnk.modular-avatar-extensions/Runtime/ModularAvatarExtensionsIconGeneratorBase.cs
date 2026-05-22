@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -133,12 +134,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions
         public static string StringHash(params string[] strings) =>
             HashUtils.ComputeHash(string.Join("|", strings), HashUtils.HashType.SHA1);
 
-        public void ForceGenerateIcon()
+        public async UniTask ForceGenerateIcon()
         {
             if (!IsFirst) return;
             OnChange();
             _forceShouldGenerateIcon = true;
-            Check().Forget();
+            await Check();
         }
 
         public static void ForceGenerateAllIcons() => ForceGenerateAllIconsAsync(CancellationToken.None).Forget();
@@ -175,8 +176,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                         throw new OperationCanceledException(cts.Token);
 
                     Progress.Report(progressId, (float)i / iconGenerators.Length, $"Generating: {iconGenerator.name}");
-                    iconGenerator.ForceGenerateIcon();
-                    await UniTask.DelayFrame(10, cancellationToken: token);
+                    await iconGenerator.ForceGenerateIcon();
+                    await UniTask.Yield(token);
                 }
 
                 Progress.Finish(progressId);
@@ -213,6 +214,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             var result = await Try.Run(async () =>
             {
+                var stopwatch = Stopwatch.StartNew();
                 var shapeKeyValues = shapeKeyDatas.GroupBy(x => x.GameObject)
                     .ToDictionary(x => x.Key,
                         x => x.Select(y => new ShapeKeyValue(x.Key, y.ShapeKeyName, y.Value)).ToList());
@@ -224,11 +226,18 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 Progress.Report(progressId, 0, $"Generating: {newIconName}");
                 var bytes = SaveMeshAsPng(meshDatas, shapeKeyValues, scaleWidth, scaleHeight);
                 if (bytes != null) await File.WriteAllBytesAsync($"{newIconPath}.png", bytes);
+
+                if (stopwatch.ElapsedMilliseconds > 30)
+                {
+                    await UniTask.Yield();
+                    stopwatch.Restart();
+                }
+
                 var asset = ModularAvatarExtensionsIcon.GetOrCreate($"{newIconPath}.asset");
                 iconName = newIconName;
                 asset.iconNameWithLastTime = newIconNameWithLastTime;
                 asset.Save();
-                AssetDatabase.Refresh();
+                AssetDatabase.ImportAsset($"{newIconPath}.png", ImportAssetOptions.ForceUpdate);
                 iconTexture = AssetDatabase.LoadAssetAtPath<Texture2D>($"{newIconPath}.png");
                 iconImporter = AssetImporter.GetAtPath($"{newIconPath}.png") as TextureImporter;
                 if (iconImporter == null) return;
@@ -239,13 +248,15 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 if (this != null)
                     EditorUtility.SetDirty(this);
                 Progress.Finish(progressId);
-                await UniTask.DelayFrame(10);
 
                 if (modularAvatarMenuItem == null || iconTexture == null ||
                     iconTexture == modularAvatarMenuItem.PortableControl.Icon) return;
                 Undo.RecordObject(modularAvatarMenuItem, "Change Icon");
                 modularAvatarMenuItem.PortableControl.Icon = iconTexture;
                 EditorUtility.SetDirty(modularAvatarMenuItem);
+
+                if (stopwatch.ElapsedMilliseconds > 30)
+                    await UniTask.Yield();
             });
 
             result.OnFailure(ex =>
@@ -273,7 +284,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 transform =
                 {
                     position = Vector3.zero
-                }
+                },
+                hideFlags = HideFlags.HideAndDontSave
             };
 
             var cloneShapeKeyDatas = new Dictionary<GameObject, List<ShapeKeyValue>>();
@@ -302,7 +314,10 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                 }
             }
 
-            var camObj = new GameObject("TempCam");
+            var camObj = new GameObject("TempCam")
+            {
+                hideFlags = HideFlags.HideAndDontSave
+            };
             var cam = camObj.AddComponent<Camera>();
             cam.clearFlags = CameraClearFlags.Nothing;
             cam.backgroundColor = Color.clear;
@@ -402,6 +417,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
 
             var result = await Try.Run(async () =>
             {
+                var stopwatch = Stopwatch.StartNew();
+
                 for (var i = 0; i < total; i++)
                 {
                     if (cts.IsCancellationRequested)
@@ -423,7 +440,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions
                     preset.ApplyTo(iconImporter);
                     iconImporter.SaveAndReimport();
 
-                    await UniTask.DelayFrame(10, cancellationToken: token);
+                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    await UniTask.Yield(token);
+                    stopwatch.Restart();
                 }
 
                 Progress.Finish(progressId);
