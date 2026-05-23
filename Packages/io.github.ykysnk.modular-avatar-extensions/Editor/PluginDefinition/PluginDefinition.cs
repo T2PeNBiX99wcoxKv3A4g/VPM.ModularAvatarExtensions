@@ -60,8 +60,12 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
 
             seq = InPhase(BuildPhase.Transforming);
             seq.AfterPlugin(ModularAvatarQualifiedName);
-            seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext),
-                s => { s.Run(ParamOnlyObjectDelayDisablePass.Instance); });
+            seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>
+            {
+                s.Run(ParamOnlyObjectDelayDisablePass.Instance);
+                s.Run(TurnOffInBuildDelayPass.Instance);
+                s.Run(TurnOnInBuildDelayPass.Instance);
+            });
 #endif
 
 #if MAEX_VRCSDK3_BASE
