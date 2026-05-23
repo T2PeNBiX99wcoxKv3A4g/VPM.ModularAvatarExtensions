@@ -1,3 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <ui:Toggle label="label.turn_on_in_build.is_delay" binding-path="isDelay" name="isDelay"/>
     <ui:HelpBox message-type="Info" text="label.turn_on_in_build.info"/>
 </ui:UXML>
