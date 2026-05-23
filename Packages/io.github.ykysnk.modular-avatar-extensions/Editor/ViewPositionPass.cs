@@ -24,7 +24,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
             if (viewPositions.Length < 1) return;
             if (!ctx.AvatarRootObject.TryGetComponent<VRC_AvatarDescriptor>(out var avatarDescriptor))
             {
-                LogError("error.view_position_pass.avatar_descriptor_not_found");
+                using (ErrorReport.WithContextObject(avatar))
+                    LogError("error.view_position_pass.avatar_descriptor_not_found");
                 return;
             }
 

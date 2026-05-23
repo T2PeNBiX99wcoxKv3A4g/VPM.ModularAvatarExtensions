@@ -30,6 +30,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                         var constraint = constraintDisabler.constraint;
                         if (constraint == null)
                         {
+                            // TODO: Remove full name
                             LogError("error.constraint_disabler_pass.constraint_not_found",
                                 constraintDisabler.FullName());
                             continue;
@@ -48,6 +49,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                                     constraintProxy.constraintActive = true;
                                 break;
                             default:
+                                // TODO: Remove full name
                                 LogError("error.constraint_disabler_pass.unknown_constraint_type",
                                     constraintDisabler.FullName());
                                 break;

@@ -52,6 +52,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                         if (string.IsNullOrEmpty(referencePath))
                         {
+                            // TODO: Remove full name
                             LogError("error.move_to_root_of_reference_pass.invalid_reference_path",
                                 moveToRootOfTransform?.FullName());
                             continue;
@@ -61,6 +62,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                         if (found == null)
                         {
+                            // TODO: Remove full name
                             LogError("error.reference_path_not_found", referencePath, moveToRootOfTransform?.FullName());
                             continue;
                         }

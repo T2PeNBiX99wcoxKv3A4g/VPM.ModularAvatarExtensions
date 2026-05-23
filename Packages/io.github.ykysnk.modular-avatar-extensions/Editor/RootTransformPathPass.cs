@@ -52,6 +52,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                             if (setComponent == null)
                             {
+                                // TODO: Remove full name
                                 LogError("error.root_transform_path_pass.root_transform_not_found", findType.Name,
                                     component.FullName());
                                 continue;
@@ -62,6 +63,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                             if (string.IsNullOrEmpty(referencePath))
                             {
+                                // TODO: Remove full name
                                 if (!rootTransformPathBase.IsValid())
                                     LogError("error.root_transform_path_pass.invalid_reference_path",
                                         component.FullName());
@@ -71,6 +73,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
                             var rootTransform = ctx.AvatarRootTransform.Find(referencePath);
                             if (rootTransform == null)
                             {
+                                // TODO: Remove full name
                                 LogError("error.reference_path_not_found", referencePath, component.FullName());
                                 continue;
                             }

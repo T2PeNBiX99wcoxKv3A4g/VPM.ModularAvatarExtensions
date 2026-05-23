@@ -27,6 +27,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 
                         if (string.IsNullOrEmpty(newName))
                         {
+                            // TODO: Remove full name
                             LogError("error.new_name_pass.new_name_is_empty", obj.FullName());
                             continue;
                         }
