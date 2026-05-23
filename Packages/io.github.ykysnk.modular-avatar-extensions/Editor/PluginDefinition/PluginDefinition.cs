@@ -57,16 +57,18 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
                                 s3 => { s3.Run(ParamOnlyObjectPass.Instance); });
                         });
                 });
+#endif
 
             seq = InPhase(BuildPhase.Transforming);
             seq.AfterPlugin(ModularAvatarQualifiedName);
             seq.WithRequiredExtension(typeof(ModularAvatarExtensionsContext), s =>
             {
+#if MAEX_VRCSDK3_BASE
                 s.Run(ParamOnlyObjectDelayDisablePass.Instance);
+#endif
                 s.Run(TurnOffInBuildDelayPass.Instance);
                 s.Run(TurnOnInBuildDelayPass.Instance);
             });
-#endif
 
 #if MAEX_VRCSDK3_BASE
             seq = InPhase(BuildPhase.Optimizing);
