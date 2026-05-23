@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.24.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.24.0..0.24.1) - 2026-05-23
+
+### 🚜 Refactor
+
+- Enhance error logging context and add TODOs for `FullName` removal in multiple passes - ([72102e0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/72102e01e6f8fb0acde7d0f0e7ef48a477b991fa))
+- Improve error handling and add null-check safeguards in `ParamOnlyObjectPass` - ([034d71c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/034d71c335a380bdeb14f597f7e9b80aac290961))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.24.1 in `package.json` - ([914b7c2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/914b7c27f65e100faafb691614edae31d10b0b28))
+
+### Action
+
+- Update `CHANGELOG.md` - ([e6265ab](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/e6265abd68046d63099c711af7b8ad35654c93a6))
+
+
 ## [0.24.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.23.0..0.24.0) - 2026-05-22
 
 ### ⛰️  Features
