@@ -53,6 +53,16 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                         var allParams = components.SelectMany(x => x.ParamDatas).GroupBy(x => x.ParamName)
                             .Select(x => x.First())
                             .ToArray();
+
+                        if (allParams.Length < 1)
+                        {
+                            // TODO: Localization
+                            LogSimple(
+                                $"GameObject ({gameObject.FullName()}) has no param datas in param only object pass!",
+                                severity: ErrorSeverity.NonFatal);
+                            continue;
+                        }
+
                         var reverse = components.Any(x => x is ModularAvatarExtensionsParamOnlyObject)
                             ? components.Any(x => x is ModularAvatarExtensionsParamOnlyObject { reverse: true })
                             : components.First().reverse;
@@ -91,7 +101,20 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
                 blendType = BlendTreeType.Direct,
                 useAutomaticThresholds = false,
                 children = _gameObjectWithParamData
-                    .SelectMany(prop => GenerateChild(asc, nullMotion, prop.Key, prop.Value))
+                    .Where(prop => prop.Key && prop.Value.ParamDatas.Any())
+                    .SelectMany(prop =>
+                    {
+                        using (ErrorReport.WithContextObject(prop.Key))
+                            try
+                            {
+                                return GenerateChild(asc, nullMotion, prop.Key, prop.Value);
+                            }
+                            catch (Exception e)
+                            {
+                                ErrorReport.ReportException(e);
+                                throw;
+                            }
+                    })
                     .ToArray()
             };
 
@@ -133,11 +156,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Animation
             ParamPassData data)
         {
             if (!gameObject)
-            {
-                // TODO: Localization
-                LogSimple("GameObject is a null in generate child method!", severity: ErrorSeverity.Error);
                 throw new ArgumentNullException(nameof(gameObject));
-            }
 
             var clip = new AnimationClip
             {
