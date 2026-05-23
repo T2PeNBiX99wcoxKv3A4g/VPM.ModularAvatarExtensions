@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.25.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.24.1..0.25.0) - 2026-05-23
+
+### ⛰️  Features
+
+- Add `isDelay` toggle to `TurnOnInBuildEditor` and `TurnOffInBuildEditor` UXML for delayed build configuration - ([bc62a6c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/bc62a6c6cb1ef08c4b480f5fe3f48933d9bf5e30))
+- Add delayed `TurnOnInBuild` and `TurnOffInBuild` passes with `isDelay` property to enhance modular avatar build handling - ([02b81ba](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/02b81bab958a2d284fc40d5ce01634d4be1f18c3))
+
+### 🚜 Refactor
+
+- Adjust preprocessor directives for better phase-specific pass execution in `PluginDefinition.cs` - ([568630a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/568630a781428c456908b0e9bb407634ff8ed3ad))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.25.0 in `package.json` - ([24ae087](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/24ae087a0bc0be5e78421b2ef22993d4e1e818c7))
+
+### Action
+
+- Update `CHANGELOG.md` - ([f521ea6](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/f521ea698ef51884b3598097163498977dd12ba7))
+
+
 ## [0.24.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.24.0..0.24.1) - 2026-05-23
 
 ### 🚜 Refactor
