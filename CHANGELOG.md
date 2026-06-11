@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.26.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.0..0.26.1) - 2026-06-11
+
+### ⛰️  Features
+
+- Add `preview` toggle to `TurnOnInBuildEditor` and `TurnOffInBuildEditor` UXML and integrate `Preview` property into build logic - ([5bd292a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/5bd292a86d535eea88b6cb41fac024f143fd6f86))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.26.1 in `package.json` - ([6772d30](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/6772d309ddd47532252b8c430f93e8a890da5c2d))
+
+### Action
+
+- Update `CHANGELOG.md` - ([b5d19bd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/b5d19bd7c1e399d3c45e225fd8f353269b0b464b))
+
+
 ## [0.26.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.25.1..0.26.0) - 2026-06-11
 
 ### ⛰️  Features
