@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.26.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.25.1..0.26.0) - 2026-06-11
+
+### ⛰️  Features
+
+- Integrate `TurnOnOffPreview` into `TurnOffInBuildEarlyPass` pipeline - ([f39edf1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/f39edf1453e5be3efa7258c356609d2b2a8b89d9))
+- Add `TurnOnOffPreview` render filter for modular avatar extensions - ([8d3f52d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/8d3f52df61c1f96ae22a401995b823d970c69b72))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.26.0 in `package.json` - ([0e7fe3d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/0e7fe3d96318292f2240e514f2f6ad8d0ad2e855))
+
+### Action
+
+- Update `CHANGELOG.md` - ([9c87201](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/9c87201f28e51560cb8f75443337797bec4e3b10))
+
+
 ## [0.25.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.25.0..0.25.1) - 2026-06-11
 
 ### 🚜 Refactor
