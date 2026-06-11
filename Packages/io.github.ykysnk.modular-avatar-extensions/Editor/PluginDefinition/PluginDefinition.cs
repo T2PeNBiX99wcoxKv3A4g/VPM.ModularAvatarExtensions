@@ -1,5 +1,6 @@
 using io.github.ykysnk.ModularAvatarExtensions.Editor.Animation;
 using io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition;
+using io.github.ykysnk.ModularAvatarExtensions.Editor.ReactiveObjects;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.animator;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
             {
                 s.Run(ConstraintDisablerPass.Instance);
                 s.Run(RootTransformPathPass.Instance);
-                s.Run(TurnOffInBuildEarlyPass.Instance);
+                s.Run(TurnOffInBuildEarlyPass.Instance).PreviewingWith(new TurnOnOffPreview());
                 s.Run(TurnOnInBuildEarlyPass.Instance);
                 s.Run(EditorOnlyPass.Instance);
                 s.Run(ChangeMaterialInBuildPass.Instance);
