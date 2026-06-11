@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <ui:Toggle label="label.is_early" binding-path="isEarly" name="isDelay"/>
+    <ui:Toggle label="label.preview" binding-path="preview" name="preview"/>
     <ui:HelpBox message-type="Info" text="label.turn_on_in_build.info"/>
 </ui:UXML>

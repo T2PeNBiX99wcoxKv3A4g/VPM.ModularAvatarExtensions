@@ -46,9 +46,9 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.ReactiveObjects
                 var currentlyEnabled = context.ActiveInHierarchy(renderer.gameObject);
                 var overrideEnabled = currentlyEnabled;
 
-                if (renderer.GetComponent<ModularAvatarExtensionsTurnOffInBuild>())
+                if (renderer.TryGetComponent<ModularAvatarExtensionsTurnOffInBuild>(out var turnOff) && turnOff.Preview)
                     overrideEnabled = false;
-                else if (renderer.GetComponent<ModularAvatarExtensionsTurnOnInBuild>())
+                else if (renderer.TryGetComponent<ModularAvatarExtensionsTurnOnInBuild>(out var turnOn) && turnOn.Preview)
                     overrideEnabled = true;
 
                 if (overrideEnabled != currentlyEnabled)
