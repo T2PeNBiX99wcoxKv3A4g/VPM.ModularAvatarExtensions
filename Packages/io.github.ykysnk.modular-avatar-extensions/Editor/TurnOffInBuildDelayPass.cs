@@ -14,7 +14,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor
         {
             var avatar = ctx.AvatarRootObject;
             var turnOffInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOffInBuild>(true)
-                .Where(c => c && c.IsDelay).ToArray();
+                .Where(c => c && !c.IsEarly).ToArray();
 
             LogC($"Find {turnOffInBuilds.Length} turn off in build delay inside \"{avatar.FullName()}\"");
 

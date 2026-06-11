@@ -6,8 +6,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions
     [DisallowMultipleComponent]
     public abstract class TurnInBuild : AvatarMaexComponent
     {
-        [SerializeField] private bool isDelay;
+        [SerializeField] private bool isEarly;
 
-        [PublicAPI] public bool IsDelay => isDelay;
+        [PublicAPI] public bool IsEarly => isEarly;
     }
 }

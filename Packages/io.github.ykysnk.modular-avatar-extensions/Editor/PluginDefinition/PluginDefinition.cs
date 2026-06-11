@@ -33,8 +33,8 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.PluginDefinition
             {
                 s.Run(ConstraintDisablerPass.Instance);
                 s.Run(RootTransformPathPass.Instance);
-                s.Run(TurnOffInBuildPass.Instance);
-                s.Run(TurnOnInBuildPass.Instance);
+                s.Run(TurnOffInBuildEarlyPass.Instance);
+                s.Run(TurnOnInBuildEarlyPass.Instance);
                 s.Run(EditorOnlyPass.Instance);
                 s.Run(ChangeMaterialInBuildPass.Instance);
 #if MAEX_VRCSDK3_BASE

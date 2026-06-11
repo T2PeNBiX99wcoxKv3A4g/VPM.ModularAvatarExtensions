@@ -5,16 +5,16 @@ using nadena.dev.ndmf;
 
 namespace io.github.ykysnk.ModularAvatarExtensions.Editor
 {
-    internal class TurnOnInBuildPass : MaexPass<TurnOnInBuildPass>
+    internal class TurnOnInBuildEarlyPass : MaexPass<TurnOnInBuildEarlyPass>
     {
-        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOnInBuild";
-        public override string DisplayName => "Modular Avatar Extensions Turn On In Build";
+        public override string QualifiedName => "io.github.ykysnk.ModularAvatarExtensions.TurnOnInBuildEarly";
+        public override string DisplayName => "Modular Avatar Extensions Turn On In Build Early";
 
         protected override void Execute(BuildContext ctx)
         {
             var avatar = ctx.AvatarRootObject;
             var turnOnInBuilds = avatar.GetComponentsInChildren<ModularAvatarExtensionsTurnOnInBuild>(true)
-                .Where(c => c && !c.IsDelay).ToArray();
+                .Where(c => c && c.IsEarly).ToArray();
 
             LogC($"Find {turnOnInBuilds.Length} turn on in build inside \"{avatar.FullName()}\"");
 
