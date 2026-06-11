@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.25.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.25.0..0.25.1) - 2026-06-11
+
+### 🚜 Refactor
+
+- Rename delayed build passes and related properties from `isDelay` to `isEarly` for clarity and consistency - ([06df22f](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/06df22f9d368374ca5d9ae69c79a529edfde2fee))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.25.1 in `package.json` - ([c1658f4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/c1658f491968e63a1ed39ed17b04a8e6fb85e655))
+
+### Action
+
+- Update `CHANGELOG.md` - ([391bf5e](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/391bf5ef131844b9c7d0c903323efec06c1df10a))
+
+
 ## [0.25.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.24.1..0.25.0) - 2026-05-23
 
 ### ⛰️  Features
