@@ -236,6 +236,18 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
+    "com.ygdr.animator": {
+      "version": "file:com.ygdr.animator",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.ygdr.mdv": {
+      "version": "file:com.ygdr.mdv",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "d4rkpl4y3r.d4rkavataroptimizer": {
       "version": "file:d4rkpl4y3r.d4rkavataroptimizer",
       "depth": 0,
@@ -320,12 +332,6 @@
     },
     "net.nekobako.editor-patcher": {
       "version": "file:net.nekobako.editor-patcher",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "one.razgriz.rats": {
-      "version": "file:one.razgriz.rats",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
