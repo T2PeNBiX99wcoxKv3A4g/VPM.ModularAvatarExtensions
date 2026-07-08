@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.26.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.1..0.26.2) - 2026-07-08
+
+### ⛰️  Features
+
+- Add patch loader for Modular Avatar Extensions with D4Rk Avatar Optimizer support - ([e4d5193](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/e4d5193c26c59eb9fccf05d2cf332a8c6b67a53a))
+
+### 🚜 Refactor
+
+- Restructure and enhance `D4RkAvatarOptimizerPatches` for improved modularity and maintainability - ([be0c464](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/be0c464bda6d3bb4d24be03f7144faa5a816f359))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.26.2 in `package.json` - ([aabf102](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/aabf102d4eaa7b2dc24d2732de8ac3b6f81a9882))
+- Reduce `m_DefaultShaderChunkSizeInMB` from 16 to 4 in project settings - ([83a7283](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/83a728332486f098d071bca0370dff8538793a65))
+- Update dependencies in `vpm-manifest.json` and `packages-lock.json`, replace `one.razgriz.rats` with `com.ygdr.animator` and `com.ygdr.mdv` - ([6d3e50a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/6d3e50a38c71e6f190ac928d4ae7af5076bb1158))
+
+### Action
+
+- Update `CHANGELOG.md` - ([9ed5172](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/9ed5172c84ba98444466232b4c3a7dfb22911ab7))
+
+
 ## [0.26.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.0..0.26.1) - 2026-06-11
 
 ### ⛰️  Features
