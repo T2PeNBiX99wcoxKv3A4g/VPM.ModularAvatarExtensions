@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.26.3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.2..0.26.3) - 2026-07-09
+
+### 🚜 Refactor
+
+- Enhance `D4RkAvatarOptimizerPatches` with new reverse patching structure for improved maintainability - ([43f1d92](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/43f1d9235fbd2b7ee462240c14707d5fec7893cf))
+- Update `Loader.Load` method to accept `Harmony` instance - ([3f2d4d5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/3f2d4d5c425dcd6aa35d0aa3ba72b081427ab42e))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.26.3 in `package.json` - ([691113f](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/691113f973efa4fddc60162aa8181e3f77d34e16))
+- Update dependencies in `vpm-manifest.json` (bump versions for `yky-toolkit`, `utils`, and `com.ygdr.animator`) - ([b58de4d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/b58de4dda2412926349153bea034839740afc149))
+
+### Action
+
+- Update `CHANGELOG.md` - ([3ca8b87](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/3ca8b87fd1f82bceeb54e626b28afe1d7fe14939))
+
+
 ## [0.26.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.1..0.26.2) - 2026-07-08
 
 ### ⛰️  Features
