@@ -19,15 +19,19 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Patches
         private static readonly MethodInfo GetAllExcludedTransformsMethod =
             AccessTools.Method(typeof(d4rkAvatarOptimizer), nameof(d4rkAvatarOptimizer.GetAllExcludedTransforms));
 
-        protected override void Execute()
+        protected override void Execute(Harmony harmony)
         {
-            Harmony!.CreateReversePatcher(GetAllExcludedTransformsMethod,
-                new(typeof(D4RkAvatarOptimizerPatches), nameof(OrigGetAllExcludedTransforms))).Patch();
         }
 
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        private static HashSet<Transform> OrigGetAllExcludedTransforms(d4rkAvatarOptimizer instance) =>
-            throw new NotImplementedException("HarmonyReversePatch is fucked");
+        private class OrigGetAllExcludedTransforms : ReversePatchMethod<OrigGetAllExcludedTransforms>
+        {
+            public override MethodInfo TargetMethod => GetAllExcludedTransformsMethod;
+            public override string ReverseMethod => nameof(Reverse);
+
+            [SuppressMessage("ReSharper", "UnusedParameter.Local")]
+            internal static HashSet<Transform> Reverse(d4rkAvatarOptimizer instance) =>
+                throw new NotImplementedException($"{nameof(OrigGetAllExcludedTransforms)} is fucked");
+        }
 
         [UsedImplicitly]
         private class GetAllExcludedTransforms : PatchMethod<GetAllExcludedTransforms>
@@ -47,7 +51,7 @@ namespace io.github.ykysnk.ModularAvatarExtensions.Editor.Patches
                     return false;
                 }
 
-                var origList = OrigGetAllExcludedTransforms(__instance);
+                var origList = OrigGetAllExcludedTransforms.Reverse(__instance);
                 var exExclusions = new List<Transform>();
                 exExclusions.AddRange(__instance.transform
                     .GetComponentsInChildren<ModularAvatarExtensionsD4RkAvatarOptimizerExclude>(true)
