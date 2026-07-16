@@ -147,7 +147,7 @@
       "dependencies": {}
     },
     "com.ygdr.animator": {
-      "version": "1.0.5",
+      "version": "1.0.6",
       "dependencies": {
         "com.ygdr.mdv": "^1.0.0"
       }
