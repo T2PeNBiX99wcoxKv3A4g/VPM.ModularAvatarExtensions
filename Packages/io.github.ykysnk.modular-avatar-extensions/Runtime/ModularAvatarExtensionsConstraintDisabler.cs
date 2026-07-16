@@ -8,7 +8,6 @@ using VRC.Dynamics;
 
 namespace io.github.ykysnk.ModularAvatarExtensions
 {
-    [DisallowMultipleComponent]
     [AddComponentMenu("Modular Avatar EX/MAEX Constraint Disabler")]
     public class ModularAvatarExtensionsConstraintDisabler : AvatarMaexComponent
     {
