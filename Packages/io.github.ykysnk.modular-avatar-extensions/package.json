@@ -1,7 +1,7 @@
 {
   "name": "io.github.ykysnk.modular-avatar-extensions",
   "displayName": "Modular Avatar Extensions",
-  "version": "0.26.3",
+  "version": "1.0.0",
   "unity": "2022.3",
   "description": "Extensions for ModularAvatar",
   "gitDependencies": {},
