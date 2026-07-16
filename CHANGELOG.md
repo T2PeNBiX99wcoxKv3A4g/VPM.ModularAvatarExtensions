@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.0.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.3..1.0.0) - 2026-07-16
+
+### 🚜 Refactor
+
+- Remove redundant `[DisallowMultipleComponent]` attribute from `ModularAvatarExtensionsConstraintDisabler` - ([4aaec6d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/4aaec6d6286bc069523d55e927c965cd8e030eda))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.0.0 in `package.json` - ([799a2a0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/799a2a02583f65b9cf3bd0c21ec7d219528539aa))
+- Update `com.ygdr.animator` to version 1.0.6 in `vpm-manifest.json` - ([673472c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/673472c02c68453da819e66bf60a498bd41eecde))
+
+### Action
+
+- Update `CHANGELOG.md` - ([24cbfc2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/commit/24cbfc20233a5a091d4ffc723829b2ec699c30a0))
+
+
 ## [0.26.3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.ModularAvatarExtensions/compare/0.26.2..0.26.3) - 2026-07-09
 
 ### 🚜 Refactor
